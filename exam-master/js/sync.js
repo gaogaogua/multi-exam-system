@@ -125,17 +125,17 @@ const Sync = {
 
   /** 收集本地数据 */
   _collect() {
-    // 只收集有 AI 解析的题目（id + answer + analysis），不传整本题库
+    // 只同步最近新增/修改过 AI 解析的题目，最多 100 条，避免数据膨胀
     const allQ = Storage.get(Storage.KEYS.QUESTIONS) || [];
     const aiQuestions = [];
     const seen = new Set();
-    allQ.forEach(q => {
+    for (const q of allQ) {
+      if (aiQuestions.length >= 100) break; // 上限 100 条
       if (!seen.has(q.id) && q.analysis && q.analysis.trim().length > 10) {
         aiQuestions.push({ id: q.id, answer: q.answer, analysis: q.analysis });
         seen.add(q.id);
-        if (aiQuestions.length >= 500) return; // 上限 500 条
       }
-    });
+    }
 
     return {
       version: 2,
