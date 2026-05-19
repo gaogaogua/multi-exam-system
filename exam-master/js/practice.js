@@ -254,7 +254,7 @@ const Practice = {
         // Prefer weak category questions first, then fill with rest
         const weakQ = questions.filter(q => q.category === this.categoryFilter);
         const otherQ = questions.filter(q => q.category !== this.categoryFilter);
-        questions = [...weakQ, ...this.shuffle(otherQ)];
+        questions = [...weakQ, ...Utils.shuffle(otherQ)];
         if (questions.length === 0) {
           App.showToast(this._poolDiagnose(), 'error');
           return;
@@ -264,7 +264,7 @@ const Practice = {
         }
         break;
       case 'random':
-        questions = this.shuffle([...this._getFilteredPool()]);
+        questions = Utils.shuffle([...this._getFilteredPool()]);
         if (questions.length === 0) {
           App.showToast(this._poolDiagnose(), 'error');
           return;
@@ -331,7 +331,7 @@ const Practice = {
       const proportion = typePool.length / total;
       const extra = Math.round(remaining * proportion);
       const take = Math.min(1 + extra, typePool.length);
-      const shuffled = this.shuffle([...typePool]);
+      const shuffled = Utils.shuffle([...typePool]);
       result.push(...shuffled.slice(0, take));
     });
 
@@ -339,7 +339,7 @@ const Practice = {
     if (result.length < count) {
       const usedIds = new Set(result.map(q => q.id));
       const unused = pool.filter(q => !usedIds.has(q.id));
-      const extra = this.shuffle(unused).slice(0, count - result.length);
+      const extra = Utils.shuffle(unused).slice(0, count - result.length);
       result.push(...extra);
     }
 
@@ -420,7 +420,7 @@ const Practice = {
         ${navHtml}
         <div class="practice-question-card">
           <span class="question-type-badge">${App.getTypeName(q.type)}</span>
-          <div class="question-text">${current}. ${this.escapeHtml(q.title)}</div>
+          <div class="question-text">${current}. ${Utils.escapeHtml(q.title)}</div>
           ${this._renderOptions(q)}
           ${this._renderResult(q)}
         </div>
@@ -438,7 +438,7 @@ const Practice = {
       const isCur = ni === this.currentIndex;
       h += `<button class="pq-nav-btn ${isCur ? 'pq-cur' : ''} ${answered ? 'pq-answered' : ''}"
         onclick="event.stopPropagation();Practice.goToQuestion(${ni})"
-        title="${this.escapeHtml((nq.title||'').substring(0,40))}">${ni+1}${icons[nq.type]||''}</button>`;
+        title="${Utils.escapeHtml((nq.title||'').substring(0,40))}">${ni+1}${icons[nq.type]||''}</button>`;
     });
     return h + '</div>';
   },
@@ -457,7 +457,7 @@ const Practice = {
     if (!q.options || q.options.length === 0) {
       const saved = this.userAnswers[q.id] || '';
       return `<div class="form-group">
-        <textarea id="essay-answer" rows="4" placeholder="请输入你的答案..." onchange="Practice.saveEssayAnswer('${q.id}', this.value)">${this.escapeHtml(saved)}</textarea>
+        <textarea id="essay-answer" rows="4" placeholder="请输入你的答案..." onchange="Practice.saveEssayAnswer('${q.id}', this.value)">${Utils.escapeHtml(saved)}</textarea>
       </div>`;
     }
     const savedAnswer = this.userAnswers[q.id] || '';
@@ -477,7 +477,7 @@ const Practice = {
       }
       h += `<div class="${cls}" onclick="Practice.selectOption('${q.id}','${opt.label}','${inputType}')">
         <input type="${inputType}" name="q_${q.id}" value="${opt.label}" ${savedAnswer.includes(opt.label)?'checked':''} style="pointer-events:none;">
-        <span class="option-label">${opt.label}.</span> ${this.escapeHtml(opt.text)}
+        <span class="option-label">${opt.label}.</span> ${Utils.escapeHtml(opt.text)}
       </div>`;
     });
     return h + '</div>';
@@ -498,14 +498,14 @@ const Practice = {
       h += `<div style="font-size:16px;font-weight:700;margin-bottom:8px;color:#667eea;">📖 背题模式</div>`;
     } else {
       h += `<div style="font-size:18px;font-weight:700;margin-bottom:8px;">${isCorrect ? '✓ 回答正确！' : '✗ 回答错误'}</div>
-        <div style="margin-bottom:6px;"><strong>你的答案：</strong>${this.escapeHtml(userAns || '未作答')}</div>`;
+        <div style="margin-bottom:6px;"><strong>你的答案：</strong>${Utils.escapeHtml(userAns || '未作答')}</div>`;
     }
-    h += `<div style="margin-bottom:6px;color:var(--success);"><strong>正确答案：</strong>${this.escapeHtml(q.answer)}</div>
+    h += `<div style="margin-bottom:6px;color:var(--success);"><strong>正确答案：</strong>${Utils.escapeHtml(q.answer)}</div>
       <div style="margin-bottom:6px;"><strong>题型：</strong>${App.getTypeName(q.type)}</div>`;
 
     // 解析 + AI 按钮
     if (q.analysis && q.analysis.trim().length > 5) {
-      h += `<div style="margin-top:8px;padding:12px;background:#fff;border-radius:4px;line-height:1.8;"><strong>📖 解析：</strong><br>${this.escapeHtml(q.analysis)}</div>`;
+      h += `<div style="margin-top:8px;padding:12px;background:#fff;border-radius:4px;line-height:1.8;"><strong>📖 解析：</strong><br>${Utils.escapeHtml(q.analysis)}</div>`;
       h += `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._aiAnalyze('${q.id}')" style="margin-top:4px;color:var(--accent);border-color:var(--accent);font-size:11px;">🔄 AI重新解析</button><span id="ai-key-hint-${q.id}"></span>`;
       if (this._chatHistory) {
         h += `<div style="margin-top:6px;display:flex;gap:4px;"><input id="ai-followup-input-${q.id}" placeholder="追问AI..." onkeydown="if(event.key==='Enter'){event.preventDefault();Practice._aiFollowUp('${q.id}')}" style="flex:1;padding:3px 8px;border:1px solid #d9d9d9;border-radius:4px;font-size:12px;"><button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._aiFollowUp('${q.id}')" style="font-size:11px;color:var(--primary);">发送</button></div><div id="ai-followup-result-${q.id}"></div>`;
@@ -743,12 +743,12 @@ const Practice = {
     try {
       const answer = await ApiConfig.aiFollowUp(this._chatHistory, question);
       if (resultDiv) {
-        resultDiv.innerHTML = `<div style="padding:8px;background:#fafafa;border-radius:4px;margin-top:4px;font-size:12px;line-height:1.6;border-left:2px solid var(--primary);">${this.escapeHtml(answer)}</div>`;
+        resultDiv.innerHTML = `<div style="padding:8px;background:#fafafa;border-radius:4px;margin-top:4px;font-size:12px;line-height:1.6;border-left:2px solid var(--primary);">${Utils.escapeHtml(answer)}</div>`;
       }
       this._chatHistory.push({ role: 'user', content: question });
       this._chatHistory.push({ role: 'assistant', content: answer });
     } catch(e) {
-      if (resultDiv) resultDiv.innerHTML = `<span style="color:var(--danger);font-size:11px;">追问失败: ${this.escapeHtml(e.message)}</span>`;
+      if (resultDiv) resultDiv.innerHTML = `<span style="color:var(--danger);font-size:11px;">追问失败: ${Utils.escapeHtml(e.message)}</span>`;
     }
     input.disabled = false;
     input.focus();
@@ -779,11 +779,11 @@ const Practice = {
         </div>
         <div class="form-group" style="margin-bottom:6px;">
           <label style="font-size:11px;">正确答案</label>
-          <input id="edit-answer-${id}" value="${this.escapeHtml(q.answer || '')}" style="width:100%;padding:4px;border-radius:4px;border:1px solid #d9d9d9;">
+          <input id="edit-answer-${id}" value="${Utils.escapeHtml(q.answer || '')}" style="width:100%;padding:4px;border-radius:4px;border:1px solid #d9d9d9;">
         </div>
         <div class="form-group" style="margin-bottom:6px;">
           <label style="font-size:11px;">解析</label>
-          <textarea id="edit-analysis-${id}" rows="3" style="width:100%;padding:4px;border-radius:4px;border:1px solid #d9d9d9;">${this.escapeHtml(q.analysis || '')}</textarea>
+          <textarea id="edit-analysis-${id}" rows="3" style="width:100%;padding:4px;border-radius:4px;border:1px solid #d9d9d9;">${Utils.escapeHtml(q.analysis || '')}</textarea>
         </div>
         <div style="display:flex;gap:6px;justify-content:flex-end;">
           <button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._showEdit('${id}')">取消</button>
@@ -843,12 +843,12 @@ const Practice = {
           <div style="padding:10px;background:#fff;border-radius:4px;border-left:3px solid ${scoreColor};margin-top:6px;font-size:13px;line-height:1.6;">
             <strong>AI评分：</strong><span style="color:${scoreColor};font-size:16px;font-weight:700;">${result.score}分</span>
             ${result.isCorrect ? ' ✓' : ''}
-            <div style="margin-top:4px;"><strong>评语：</strong>${this.escapeHtml(result.feedback)}</div>
-            ${result.correctAnswer ? `<div style="margin-top:4px;"><strong>标准要点：</strong>${this.escapeHtml(result.correctAnswer)}</div>` : ''}
+            <div style="margin-top:4px;"><strong>评语：</strong>${Utils.escapeHtml(result.feedback)}</div>
+            ${result.correctAnswer ? `<div style="margin-top:4px;"><strong>标准要点：</strong>${Utils.escapeHtml(result.correctAnswer)}</div>` : ''}
           </div>`;
       }
     } catch(e) {
-      if (resultDiv) resultDiv.innerHTML = `<span style="color:var(--danger);font-size:12px;">批改失败: ${this.escapeHtml(e.message)}</span>`;
+      if (resultDiv) resultDiv.innerHTML = `<span style="color:var(--danger);font-size:12px;">批改失败: ${Utils.escapeHtml(e.message)}</span>`;
       App.showToast('AI批改失败: ' + e.message, 'error');
     }
   },
@@ -890,14 +890,14 @@ const Practice = {
         resultDiv.innerHTML = `
           <div style="padding:10px;background:#fff;border-radius:4px;border-left:3px solid #722ed1;margin-top:6px;font-size:13px;line-height:1.6;">
             <strong>✓ 变体题已生成并加入题库</strong>
-            <div style="margin-top:4px;color:var(--primary);">${this.escapeHtml(variant.title)}</div>
-            <div style="margin-top:4px;font-size:12px;color:var(--text-secondary);">答案: ${this.escapeHtml(variant.answer)} | 分类: ${this.escapeHtml(variant.category || q.category)}</div>
+            <div style="margin-top:4px;color:var(--primary);">${Utils.escapeHtml(variant.title)}</div>
+            <div style="margin-top:4px;font-size:12px;color:var(--text-secondary);">答案: ${Utils.escapeHtml(variant.answer)} | 分类: ${Utils.escapeHtml(variant.category || q.category)}</div>
           </div>`;
       }
       App.updateStats();
       App.showToast('变体题已加入题库', 'success');
     } catch(e) {
-      if (resultDiv) resultDiv.innerHTML = `<span style="color:var(--danger);font-size:12px;">生成失败: ${this.escapeHtml(e.message)}</span>`;
+      if (resultDiv) resultDiv.innerHTML = `<span style="color:var(--danger);font-size:12px;">生成失败: ${Utils.escapeHtml(e.message)}</span>`;
       App.showToast('变体题生成失败: ' + e.message, 'error');
     }
   },
@@ -1059,7 +1059,7 @@ const Practice = {
       .slice(0, 3)
       .map(e => e[0]);
 
-    const extra = this.shuffle(
+    const extra = Utils.shuffle(
       allQ.filter(q => topCats.includes(q.category) && !usedIds.has(q.id))
     ).slice(0, 30);
 
@@ -1069,15 +1069,7 @@ const Practice = {
   /**
    * 洗牌算法
    */
-  shuffle(arr) {
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-    return arr;
-  },
-
-  /**
+/**
    * HTML转义
    */
   escapeHtml(str) {

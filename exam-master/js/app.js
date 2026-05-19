@@ -238,7 +238,7 @@ const App = {
         <div class="question-num">${globalIdx}</div>
         <div class="question-content">
           <div class="question-title">
-            ${this.escapeHtml(q.title)}
+            ${Utils.escapeHtml(q.title)}
             ${missing ? '<span class="tag tag-danger">缺答案</span>' : ''}
             ${noAnalysis && !missing ? '<span class="tag tag-warning">缺解析</span>' : ''}
             ${isPracticed ? '<span class="tag tag-done">已练</span>' : ''}
@@ -350,7 +350,7 @@ const App = {
         <div class="question-item" style="${e.mastered ? 'opacity:0.6;' : ''}" onclick="App.showQuestionDetail('${e.questionId}')">
           <div class="question-num">${idx + 1}</div>
           <div class="question-content">
-            <div class="question-title">${this.escapeHtml(title)}</div>
+            <div class="question-title">${Utils.escapeHtml(title)}</div>
             <div class="question-meta">
               <span class="question-tag tag-type">${this.getTypeName(e.questionType)}</span>
               <span class="question-tag tag-category">${e.questionCategory || '未分类'}</span>
@@ -518,7 +518,7 @@ const App = {
       return `
         <div class="import-batch-item" id="batch-${b.id}">
           <div class="import-batch-info">
-            <span class="import-batch-name" title="${this.escapeHtml(b.filename)}">${this.escapeHtml(b.filename.length > 28 ? b.filename.slice(0,28) + '...' : b.filename)}</span>
+            <span class="import-batch-name" title="${Utils.escapeHtml(b.filename)}">${Utils.escapeHtml(b.filename.length > 28 ? b.filename.slice(0,28) + '...' : b.filename)}</span>
             <span class="import-batch-meta">${b.questionCount} 题 | ${sizeStr} | ${date}</span>
             ${b.engine ? `<span class="question-tag tag-type" style="font-size:10px;">${b.engine}</span>` : ''}
           </div>
@@ -570,12 +570,12 @@ const App = {
         <span class="question-tag tag-category">${q.category || '未分类'}</span>
         ${q.difficulty ? `<span class="question-tag tag-difficulty">${q.difficulty}</span>` : ''}
       </div>
-      <p style="font-size:16px;font-weight:600;margin-bottom:16px;line-height:1.7;">${this.escapeHtml(q.title)}</p>`;
+      <p style="font-size:16px;font-weight:600;margin-bottom:16px;line-height:1.7;">${Utils.escapeHtml(q.title)}</p>`;
 
     if (q.options && q.options.length > 0) {
       html += `<div style="margin-bottom:16px;">`;
       q.options.forEach(opt => {
-        html += `<p style="padding:6px 0;${q.answer.includes(opt.label) ? 'color:var(--success);font-weight:600;' : ''}">${opt.label}. ${this.escapeHtml(opt.text)}</p>`;
+        html += `<p style="padding:6px 0;${q.answer.includes(opt.label) ? 'color:var(--success);font-weight:600;' : ''}">${opt.label}. ${Utils.escapeHtml(opt.text)}</p>`;
       });
       html += `</div>`;
     }
@@ -591,7 +591,7 @@ const App = {
 
     if (q.analysis) {
       html += `<div style="background:#f8f9ff;padding:14px;border-radius:8px;margin-top:12px;">
-        <strong>解析：</strong><br>${this.escapeHtml(q.analysis)}
+        <strong>解析：</strong><br>${Utils.escapeHtml(q.analysis)}
       </div>`;
     }
 
@@ -631,7 +631,7 @@ const App = {
       </div>
       <div class="form-group">
         <label>题目内容</label>
-        <textarea id="q-title" rows="3" placeholder="请输入题目内容...">${q ? this.escapeHtml(q.title) : ''}</textarea>
+        <textarea id="q-title" rows="3" placeholder="请输入题目内容...">${q ? Utils.escapeHtml(q.title) : ''}</textarea>
       </div>
       <div class="form-group" id="options-container" style="display:${q && (q.type === 'essay' || q.type === 'fill') ? 'none' : 'block'};">
         <label>选项 <small>(点击选项前字母标记正确答案)</small></label>
@@ -692,7 +692,7 @@ const App = {
       <div class="option-editor-row">
         <input type="checkbox" class="option-correct-toggle" title="标记正确答案" ${q.answer.includes(opt.label) ? 'checked' : ''}>
         <strong style="width:20px;text-align:center;">${opt.label}</strong>
-        <input type="text" class="option-text" value="${this.escapeHtml(opt.text)}" placeholder="选项${opt.label}内容...">
+        <input type="text" class="option-text" value="${Utils.escapeHtml(opt.text)}" placeholder="选项${opt.label}内容...">
       </div>`).join('');
   },
 
@@ -844,7 +844,7 @@ const App = {
       const title = q ? q.title : '(题目已删除)';
       return `
         <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);">
-          <span style="font-size:13px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-right:12px;">${this.escapeHtml(title.substring(0, 50))}</span>
+          <span style="font-size:13px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-right:12px;">${Utils.escapeHtml(title.substring(0, 50))}</span>
           <span style="font-size:12px;color:${entry.correct ? 'var(--success)' : 'var(--danger)'};font-weight:600;white-space:nowrap;">${entry.correct ? '✓ 正确' : '✗ 错误'}</span>
         </div>`;
     }).join('');

@@ -10,9 +10,7 @@ const Exam = {
   submitted: false,
 
   // Delegate shuffle to Practice utility
-  shuffle(arr) { return Practice.shuffle(arr); },
-
-  /**
+/**
    * 开始考试
    */
   start() {
@@ -44,27 +42,27 @@ const Exam = {
         const gongjiCount = Math.round(count * gongjiRatio / 100);
         const tumuCount = count - gongjiCount;
 
-        const shuffledGongji = Practice.shuffle([...gongji]).slice(0, Math.min(gongjiCount, gongji.length));
-        const shuffledTumu = Practice.shuffle([...tumu]).slice(0, Math.min(tumuCount, tumu.length));
+        const shuffledGongji = Utils.shuffle([...gongji]).slice(0, Math.min(gongjiCount, gongji.length));
+        const shuffledTumu = Utils.shuffle([...tumu]).slice(0, Math.min(tumuCount, tumu.length));
 
         let combined = [...shuffledGongji, ...shuffledTumu];
         // If not enough from target banks, fill from other
         if (combined.length < count) {
-          const fill = Practice.shuffle([...other, ...gongji.slice(shuffledGongji.length), ...tumu.slice(shuffledTumu.length)])
+          const fill = Utils.shuffle([...other, ...gongji.slice(shuffledGongji.length), ...tumu.slice(shuffledTumu.length)])
             .slice(0, count - combined.length);
           combined = [...combined, ...fill];
         }
-        this.questions = Practice.shuffle(combined).slice(0, count);
+        this.questions = Utils.shuffle(combined).slice(0, count);
         App.showToast(`公基 ${shuffledGongji.length} 题 + 土木 ${shuffledTumu.length} 题（${gongjiRatio}/${100-gongjiRatio}）`, 'info');
       } else {
         // One bank not available, fall back to random from whatever is present
-        this.questions = this.shuffle([...pool]).slice(0, Math.min(count, pool.length));
+        this.questions = Utils.shuffle([...pool]).slice(0, Math.min(count, pool.length));
         if (gongji.length === 0 && tumu.length === 0) {
           App.showToast('题库未标记bank，使用随机抽题', 'info');
         }
       }
     } else {
-      this.questions = this.shuffle([...pool]).slice(0, Math.min(count, pool.length));
+      this.questions = Utils.shuffle([...pool]).slice(0, Math.min(count, pool.length));
     }
 
     if (this.questions.length === 0) {
@@ -192,7 +190,7 @@ const Exam = {
     let html = `
       <div class="practice-question-card">
         <span class="question-type-badge">${App.getTypeName(q.type)} | ${q.category || '未分类'}</span>
-        <div class="question-text">${index + 1}. ${Practice.escapeHtml(q.title)}</div>`;
+        <div class="question-text">${index + 1}. ${Utils.escapeHtml(q.title)}</div>`;
 
     if (q.options && q.options.length > 0) {
       html += `<div class="options-list">`;
@@ -203,14 +201,14 @@ const Exam = {
         html += `
           <div class="option-item ${selected ? 'selected' : ''}" onclick="Exam.selectAnswer('${q.id}', '${opt.label}', '${inputType}')">
             <input type="${inputType}" name="exam_q_${q.id}" value="${opt.label}" ${selected ? 'checked' : ''} style="pointer-events:none;">
-            <span class="option-label">${opt.label}.</span> ${Practice.escapeHtml(opt.text)}
+            <span class="option-label">${opt.label}.</span> ${Utils.escapeHtml(opt.text)}
           </div>`;
       });
       html += `</div>`;
     } else {
       html += `
         <div class="form-group">
-          <textarea rows="4" placeholder="请输入答案..." onchange="Exam.saveTextAnswer('${q.id}', this.value)">${Practice.escapeHtml(savedAnswer)}</textarea>
+          <textarea rows="4" placeholder="请输入答案..." onchange="Exam.saveTextAnswer('${q.id}', this.value)">${Utils.escapeHtml(savedAnswer)}</textarea>
         </div>`;
     }
     html += `</div>`;
@@ -379,12 +377,12 @@ const Exam = {
           <div class="practice-question-card" style="border-left:3px solid ${isCorrect ? 'var(--success)' : 'var(--danger)'};">
             <div class="question-text">
               <span style="color:${isCorrect ? 'var(--success)' : 'var(--danger)'};font-weight:700;">${isCorrect ? '✓' : '✗'}</span>
-              ${i + 1}. ${Practice.escapeHtml(q.title)}
+              ${i + 1}. ${Utils.escapeHtml(q.title)}
             </div>
             <p style="color:var(--text-secondary);font-size:13px;"><strong>你的答案：</strong>${userAns || '未作答'}</p>
-            <p style="color:var(--success);"><strong>正确答案：</strong>${Practice.escapeHtml(q.answer)}</p>`;
+            <p style="color:var(--success);"><strong>正确答案：</strong>${Utils.escapeHtml(q.answer)}</p>`;
         if (q.analysis) {
-          html += `<div style="margin-top:8px;padding:12px;background:#fafafa;border-radius:4px;line-height:1.8;"><strong>📖 解析：</strong><br>${Practice.escapeHtml(q.analysis)}</div>`;
+          html += `<div style="margin-top:8px;padding:12px;background:#fafafa;border-radius:4px;line-height:1.8;"><strong>📖 解析：</strong><br>${Utils.escapeHtml(q.analysis)}</div>`;
         }
         html += `</div>`;
       });

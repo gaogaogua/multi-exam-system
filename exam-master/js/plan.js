@@ -541,7 +541,7 @@ const Plan = {
             <span style="font-size:18px;margin-left:auto;">${statusIcon}</span>
           </div>
           <div class="plan-task-body">
-            <strong>${this._esc(task.desc)}</strong>
+            <strong>${Utils.escapeHtml(task.desc)}</strong>
             <p style="font-size:12px;color:var(--text-secondary);margin-top:2px;">${task.source} | 预计${task.expectedCount}题</p>
             ${task.completed ? `<p style="font-size:12px;color:var(--success);margin-top:2px;">✓ ${task.correct}/${task.total}</p>` : ''}
             ${task.isPast ? '<p style="font-size:11px;color:#999;">⏰ 已过时</p>' : ''}
@@ -835,7 +835,7 @@ const Plan = {
     input.disabled = true;
 
     const chatDiv = document.getElementById('plan-ai-chat');
-    if (chatDiv) chatDiv.innerHTML += `<div style="margin-top:4px;font-size:12px;color:var(--primary);">🙋 ${this._esc(msg)}</div><div class="ai-thinking" style="font-size:11px;color:var(--text-secondary);">AI 思考中...</div>`;
+    if (chatDiv) chatDiv.innerHTML += `<div style="margin-top:4px;font-size:12px;color:var(--primary);">🙋 ${Utils.escapeHtml(msg)}</div><div class="ai-thinking" style="font-size:11px;color:var(--text-secondary);">AI 思考中...</div>`;
 
     const date = this._getDate(this.viewMode);
     const plans = this._getPlans();
@@ -854,7 +854,7 @@ const Plan = {
 
       if (chatDiv) {
         chatDiv.innerHTML = chatDiv.innerHTML.replace(/<div class="ai-thinking".*?<\/div>/, '');
-        chatDiv.innerHTML += `<div style="margin-top:4px;padding:8px;background:#f0f5ff;border-radius:6px;font-size:12px;line-height:1.6;">🤖 ${this._esc(reply)}</div>`;
+        chatDiv.innerHTML += `<div style="margin-top:4px;padding:8px;background:#f0f5ff;border-radius:6px;font-size:12px;line-height:1.6;">🤖 ${Utils.escapeHtml(reply)}</div>`;
       }
 
       // 保存对话历史
@@ -874,7 +874,7 @@ const Plan = {
         }
       }
     } catch(e) {
-      if (chatDiv) chatDiv.innerHTML += `<div style="color:var(--danger);font-size:11px;">AI 请求失败: ${this._esc(e.message)}</div>`;
+      if (chatDiv) chatDiv.innerHTML += `<div style="color:var(--danger);font-size:11px;">AI 请求失败: ${Utils.escapeHtml(e.message)}</div>`;
     }
     input.disabled = false;
     input.focus();
@@ -1005,7 +1005,7 @@ const Plan = {
     if (currentGoal) {
       html += `
         <div style="margin-top:8px;font-size:13px;line-height:1.8;">
-          <p>🎯 <strong>总目标：</strong>${this._esc(currentGoal.text || '未设定')}</p>
+          <p>🎯 <strong>总目标：</strong>${Utils.escapeHtml(currentGoal.text || '未设定')}</p>
           <p>📊 练习目标: <strong>${currentGoal.practiceTarget || 0}</strong> 题 |
              打卡目标: <strong>${currentGoal.checkinTarget || 0}</strong> 天 |
              掌握目标: <strong>${currentGoal.masterTarget || 0}</strong> 题</p>
@@ -1195,5 +1195,4 @@ const Plan = {
     const map = { '公基': '#722ed1', '一建': '#eb2f96', '国考': '#fa8c16', '土木': '#13c2c2', '写作': '#fa541c' };
     return map[subj] || '#666';
   },
-  _esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; },
 };
