@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>题库JSON导入工具</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, "Microsoft YaHei", sans-serif; background: #f0f2f5; padding: 24px; }
+.container { max-width: 800px; margin: 0 auto; }
+h1 { font-size: 20px; margin-bottom: 16px; color: #1a1a2e; }
+.card { background: #fff; border-radius: 8px; padding: 20px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+.card h2 { font-size: 16px; margin-bottom: 12px; color: #333; }
+.drop-zone { border: 2px dashed #d9d9d9; border-radius: 8px; padding: 40px; text-align: center; cursor: pointer; transition: .2s; }
+.drop-zone:hover, .drop-zone.drag-over { border-color: #1890ff; background: #e6f7ff; }
+.drop-zone p { color: #999; margin-top: 8px; font-size: 13px; }
+.btn { display: inline-block; padding: 8px 20px; border-radius: 4px; font-size: 14px; cursor: pointer; border: none; margin-right: 8px; margin-top: 8px; }
+.btn-primary { background: #1890ff; color: #fff; }
+.btn-primary:hover { background: #40a9ff; }
+.btn-primary:disabled { background: #d9d9d9; cursor: not-allowed; }
+.btn-danger { background: #ff4d4f; color: #fff; }
+.btn-default { background: #fff; color: #333; border: 1px solid #d9d9d9; }
+.progress { margin-top: 12px; }
+.progress-bar { height: 4px; background: #f0f0f0; border-radius: 2px; overflow: hidden; margin: 8px 0; }
+.progress-bar-fill { height: 100%; background: #1890ff; transition: width .3s; }
+.stats { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 12px; }
+.stat-item { background: #fafafa; padding: 12px 16px; border-radius: 6px; flex: 1; min-width: 120px; text-align: center; }
+.stat-value { font-size: 24px; font-weight: 700; color: #1890ff; }
+.stat-label { font-size: 12px; color: #999; margin-top: 4px; }
+.file-info { font-size: 13px; color: #666; margin-top: 8px; padding: 8px; background: #fafafa; border-radius: 4px; }
+.file-info code { color: #d4380d; }
+.log { margin-top: 12px; max-height: 200px; overflow-y: auto; font-size: 12px; color: #666; }
+.log .ok { color: #52c41a; }
+.log .warn { color: #faad14; }
+.log .err { color: #ff4d4f; }
+.warning { background: #fffbe6; border: 1px solid #ffe58f; border-radius: 4px; padding: 12px; margin-top: 12px; font-size: 13px; color: #ad6800; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>题库 JSON 导入工具</h1>
+
+<div class="card">
+  <h2>1. 选择JSON文件</h2>
+  <div class="drop-zone" id="dropZone">
+    <p style="font-size:32px;">📁</p>
+    <p><strong>拖拽JSON文件到此处</strong> 或 点击选择</p>
+    <p>支持 _complete.json 格式的题库文件</p>
+    <input type="file" id="fileInput" accept=".json" style="display:none" multiple>
+  </div>
+  <div id="fileList" style="margin-top:12px;"></div>
+</div>
+
+<div class="card">
+  <h2>2. 导入预览</h2>
+  <div id="preview">
+    <p style="color:#999;">请先选择JSON文件</p>
+  </div>
+</div>
+
+<div class="card">
+  <h2>3. 导入操作</h2>
+  <button class="btn btn-primary" id="btnImport" disabled>开始导入</button>
+  <button class="btn btn-danger" id="btnClearTumu" disabled onclick="clearBank('tumu')" style="margin-left:8px;">🗑 删除土木题库</button>
+  <button class="btn btn-danger" id="btnClearGongji" disabled onclick="clearBank('gongji')" style="margin-left:8px;">🗑 删除公基题库</button>
+  <button class="btn btn-danger" id="btnClear" style="float:right;">清空全部</button>
+  <div class="progress" id="progress" style="display:none;">
+    <div class="progress-bar"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+    <p style="font-size:12px;color:#666;" id="progressText"></p>
+  </div>
+  <div id="importResult" style="margin-top:12px;"></div>
+</div>
+
+<div class="card">
+  <h2>4. 当前题库状态</h2>
+  <div class="stats" id="currentStats">
+    <div class="stat-item"><div class="stat-value" id="statTotal">-</div><div class="stat-label">总题数</div></div>
+    <div class="stat-item"><div class="stat-value" id="statAnswered">-</div><div class="stat-label">有答案</div></div>
+    <div class="stat-item"><div class="stat-value" id="statCats">-</div><div class="stat-label">分类数</div></div>
+    <div class="stat-item" style="background:#f9f0ff;border:1px solid #d3adf7;"><div class="stat-value" style="color:#722ed1;" id="statGongji">-</div><div class="stat-label">公基</div></div>
+    <div class="stat-item" style="background:#e6fffb;border:1px solid #87e8de;"><div class="stat-value" style="color:#13c2c2;" id="statTumu">-</div><div class="stat-label">土木</div></div>
+  </div>
+  <div class="log" id="log"></div>
+</div>
+
+<p style="text-align:center; color:#999; font-size:12px; margin-top:16px;">
+  导入完成后返回 <a href="index.html" style="color:#1890ff;">主系统</a>
+</p>
+</div>
+
+<script>
+// ---- Storage wrapper (mirrors storage.js) ----
+const STORAGE_KEY = 'exam_questions';
+
+function getQuestions() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+  catch(e) { return []; }
+}
+function setQuestions(qs) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(qs)); return true; }
+  catch(e) { alert('存储空间不足！请先清理部分题目。'); return false; }
+}
+
+// ---- UI ----
+const dropZone = document.getElementById('dropZone');
+const fileInput = document.getElementById('fileInput');
+const btnImport = document.getElementById('btnImport');
+const btnClear = document.getElementById('btnClear');
+const logEl = document.getElementById('log');
+
+let selectedFiles = [];
+let parsedData = [];
+
+function log(msg, cls = '') {
+  const div = document.createElement('div');
+  div.className = cls;
+  div.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+  logEl.prepend(div);
+}
+
+function updateStats() {
+  const qs = getQuestions();
+  document.getElementById('statTotal').textContent = qs.length;
+  document.getElementById('statAnswered').textContent = qs.filter(q => q.answer).length;
+  const cats = new Set(qs.map(q => q.category).filter(Boolean));
+  document.getElementById('statCats').textContent = cats.size;
+  // Per-bank counts
+  const gj = qs.filter(q => q.bank === 'gongji').length;
+  const tm = qs.filter(q => q.bank === 'tumu').length;
+  const other = qs.filter(q => !q.bank || (q.bank !== 'gongji' && q.bank !== 'tumu')).length;
+  const elGj = document.getElementById('statGongji');
+  const elTm = document.getElementById('statTumu');
+  const elOther = document.getElementById('statOther');
+  if (elGj) elGj.textContent = gj;
+  if (elTm) elTm.textContent = tm;
+  if (elOther) elOther.textContent = other;
+  const btnGj = document.getElementById('btnClearGongji');
+  const btnTm = document.getElementById('btnClearTumu');
+  if (btnGj) btnGj.disabled = gj === 0;
+  if (btnTm) btnTm.disabled = tm === 0;
+}
+
+dropZone.addEventListener('click', () => fileInput.click());
+fileInput.addEventListener('change', handleFiles);
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+dropZone.addEventListener('drop', e => {
+  e.preventDefault();
+  dropZone.classList.remove('drag-over');
+  handleFileList(e.dataTransfer.files);
+});
+
+function handleFiles(e) { handleFileList(e.target.files); }
+function handleFileList(files) {
+  selectedFiles = Array.from(files).filter(f => f.name.endsWith('.json'));
+  if (selectedFiles.length === 0) { alert('请选择JSON文件'); return; }
+
+  const listEl = document.getElementById('fileList');
+  listEl.innerHTML = selectedFiles.map((f, i) =>
+    `<div class="file-info">${i+1}. <code>${f.name}</code> — ${(f.size/1024).toFixed(0)} KB</div>`
+  ).join('');
+
+  // Parse all files
+  let total = 0;
+  parsedData = [];
+  const bankCounts = { gongji: 0, tumu: 0, other: 0 };
+
+  Promise.all(selectedFiles.map(f => f.text().then(t => {
+    const data = JSON.parse(t);
+    if (!Array.isArray(data)) return;
+    // Detect bank from filename
+    let bank = 'other';
+    if (/公基|gongji/i.test(f.name)) bank = 'gongji';
+    else if (/土木|tumu/i.test(f.name)) bank = 'tumu';
+
+    data.forEach(q => {
+      q.bank = bank;
+      bankCounts[bank] = (bankCounts[bank] || 0) + 1;
+    });
+    parsedData.push(...data);
+    total += data.length;
+  }))).then(() => {
+    const withAns = parsedData.filter(q => q.answer).length;
+    let prev = `
+      <div class="stats">
+        <div class="stat-item"><div class="stat-value">${parsedData.length}</div><div class="stat-label">待导入题目</div></div>
+        <div class="stat-item"><div class="stat-value">${withAns}</div><div class="stat-label">有答案</div></div>
+        <div class="stat-item"><div class="stat-value">${parsedData.length - withAns}</div><div class="stat-label">缺答案</div></div>
+      </div>`;
+    if (bankCounts.gongji > 0 || bankCounts.tumu > 0) {
+      prev += `<div class="stats" style="margin-top:8px;">
+        <div class="stat-item"><div class="stat-value" style="color:#722ed1;">${bankCounts.gongji}</div><div class="stat-label">公基</div></div>
+        <div class="stat-item"><div class="stat-value" style="color:#13c2c2;">${bankCounts.tumu}</div><div class="stat-label">土木</div></div>
+        ${bankCounts.other > 0 ? `<div class="stat-item"><div class="stat-value" style="color:#999;">${bankCounts.other}</div><div class="stat-label">其他</div></div>` : ''}
+      </div>`;
+    }
+    document.getElementById('preview').innerHTML = prev;
+    btnImport.disabled = false;
+    log(`已解析 ${parsedData.length} 道题目 (公基${bankCounts.gongji} + 土木${bankCounts.tumu})`);
+  }).catch(e => {
+    alert('JSON解析失败: ' + e.message);
+    log('解析失败: ' + e.message, 'err');
+  });
+}
+
+// ---- Smart dedup + update ----
+function findDuplicate(newQ, existing) {
+  const fp1 = (newQ.title || '').replace(/\s/g, '').substring(0, 80);
+  for (let i = 0; i < existing.length; i++) {
+    const fp2 = (existing[i].title || '').replace(/\s/g, '').substring(0, 80);
+    if (fp1 === fp2) return i;
+  }
+  return -1;
+}
+
+// ---- Import ----
+btnImport.addEventListener('click', async () => {
+  if (parsedData.length === 0) return;
+
+  const existing = getQuestions();
+  let added = 0, skipped = 0;
+  const total = parsedData.length;
+
+  btnImport.disabled = true;
+  document.getElementById('progress').style.display = 'block';
+
+  for (let i = 0; i < parsedData.length; i++) {
+    const q = parsedData[i];
+    const dupIdx = findDuplicate(q, existing);
+
+    if (dupIdx >= 0) {
+      // Update existing question with new data (bank, category, options, answer, analysis)
+      const old = existing[dupIdx];
+      if (!old.bank && q.bank) old.bank = q.bank;
+      if (old.category === '未分类' && q.category && q.category !== '未分类') old.category = q.category;
+      if ((!old.options || old.options.length < 2) && q.options && q.options.length >= 2) old.options = q.options;
+      if (!old.answer && q.answer) old.answer = q.answer;
+      if (!old.analysis && q.analysis) old.analysis = q.analysis;
+      if (old.type !== q.type && q.type) old.type = q.type;
+      skipped++;
+      continue;
+    }
+
+    // Generate unique ID
+    q.id = 'q_' + Date.now().toString(36) + '_' + Math.random().toString(36).substr(2, 6) + '_' + i;
+    q.createdAt = q.createdAt || new Date().toISOString();
+    if (!q.category) q.category = '未分类';
+
+    // Ensure options format
+    if (!q.options) q.options = [];
+    q.options = q.options.map(o => {
+      if (typeof o === 'string') {
+        const m = o.match(/^([A-H])[.、\s]*(.*)/);
+        return m ? { label: m[1], text: m[2] } : { label: '', text: o };
+      }
+      return o;
+    });
+
+    existing.push(q);
+    added++;
+
+    // Update progress every 50 questions
+    if (i % 50 === 0) {
+      document.getElementById('progressFill').style.width = ((i/total)*100).toFixed(1) + '%';
+      document.getElementById('progressText').textContent = `${i}/${total}...`;
+      await new Promise(r => setTimeout(r, 0)); // yield to UI
+    }
+  }
+
+  if (!setQuestions(existing)) return;
+
+  // 同步更新分类列表
+  const allCats = [...new Set(existing.map(q => q.category).filter(Boolean))];
+  localStorage.setItem('exam_categories', JSON.stringify(allCats));
+
+  document.getElementById('progressFill').style.width = '100%';
+  document.getElementById('progressText').textContent = '完成!';
+
+  document.getElementById('importResult').innerHTML = `
+    <div class="stats">
+      <div class="stat-item"><div class="stat-value" style="color:#52c41a;">${added}</div><div class="stat-label">成功导入</div></div>
+      <div class="stat-item"><div class="stat-value" style="color:#faad14;">${skipped}</div><div class="stat-label">跳过重复</div></div>
+    </div>
+  `;
+
+  log(`导入完成: +${added}, 跳过${skipped}重复`, 'ok');
+  updateStats();
+  btnImport.disabled = true;
+});
+
+// ---- Selective Clear ----
+function clearBank(bank) {
+  const qs = getQuestions();
+  const before = qs.length;
+  const bankName = bank === 'gongji' ? '公基' : '土木';
+
+  // Count questions with and without bank tags
+  const taggedCount = qs.filter(q => q.bank === bank).length;
+  const untaggedCount = qs.filter(q => !q.bank).length;
+
+  if (taggedCount === 0) {
+    if (untaggedCount > 0) {
+      alert(`当前题库中有 ${untaggedCount} 道题目没有bank标记（可能是旧版本导入的）。\n\n请用上方\"1. 选择JSON文件\"重新拖入 ${bankName} 的JSON文件，然后点击\"开始导入\"。\n\n导入时会自动标记bank，之后即可单独删除。`);
+    } else {
+      alert(`没有找到标记为\"${bankName}\"的题目。`);
+    }
+    return;
+  }
+
+  const after = qs.filter(q => q.bank !== bank);
+  if (!confirm(`确定删除全部 ${bankName} 题目？\n\n将移除 ${before - after.length} 道题目（另有 ${untaggedCount} 道无标记题目会保留）。\n错题本中对应题目的记录也会一并清理。\n此操作不可恢复！`)) return;
+  setQuestions(after);
+
+  // 同步清理错题本
+  const errKey = 'exam_error_book';
+  try {
+    const errors = JSON.parse(localStorage.getItem(errKey) || '[]');
+    const afterBankIds = new Set(after.map(q => q.id));
+    localStorage.setItem(errKey, JSON.stringify(errors.filter(e => afterBankIds.has(e.questionId))));
+  } catch(e) { /* ignore */ }
+
+  log(`已删除 ${before - after.length} 道 ${bankName} 题目`, 'warn');
+  // 同步更新分类列表
+  const allCats = [...new Set(after.map(q => q.category).filter(Boolean))];
+  localStorage.setItem('exam_categories', JSON.stringify(allCats));
+  updateStats();
+  // 强制刷新按钮状态
+  location.reload();
+}
+
+btnClear.addEventListener('click', () => {
+  if (!confirm('确定清空全部题库？错题本和练习记录也会一并清理。此操作不可恢复！')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  localStorage.removeItem('exam_error_book');
+  localStorage.removeItem('exam_practice_log');
+  localStorage.removeItem('exam_exam_log');
+  localStorage.removeItem('exam_categories');
+  log('题库已清空', 'warn');
+  updateStats();
+});
+
+// ---- Init ----
+try { updateStats(); } catch(e) { console.error('init error:', e); }
+</script>
+</body>
+</html>

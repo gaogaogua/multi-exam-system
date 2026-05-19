@@ -1,0 +1,18 @@
+# 依赖
+node_modules/
+
+# 大文件原始数据（PDF/压缩包）
+考试资料/原始文件/
+
+# 临时产物
+*.tmp
+*.log
+.DS_Store
+Thumbs.db
+
+# Claude 本地配置
+.claude/
+
+# IDE
+.vscode/
+.idea/

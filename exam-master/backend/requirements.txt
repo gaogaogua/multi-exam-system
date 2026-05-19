@@ -1,0 +1,24 @@
+# ─── Web框架 ───
+fastapi>=0.109.0
+uvicorn[standard]>=0.27.0
+python-multipart>=0.0.6
+
+# ─── PDF解析引擎（按精确保真度排序） ───
+
+# 方案1【最高精度】: MinerU - 阿里开源，专为学术/考试PDF优化
+#   安装: pip install magic-pdf
+#   注意: 需额外安装PyTorch(自动依赖)，首次运行会自动下载模型(~2GB)
+#   适合: 有GPU/大内存服务器，追求最佳提取质量
+magic-pdf>=0.10.0
+
+# 方案2【推荐轻量】: PyMuPDF - 速度快，版面分析好
+#   安装: pip install pymupdf
+PyMuPDF>=1.23.0
+
+# 方案3【表格友好】: pdfplumber
+#   安装: pip install pdfplumber
+pdfplumber>=0.10.0
+
+# ─── 工具库 ───
+aiofiles>=23.0.0
+httpx>=0.27.0
