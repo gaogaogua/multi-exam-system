@@ -427,7 +427,6 @@ const Practice = {
       }
       html += `<div style="margin-bottom:6px;color:var(--success);"><strong>正确答案：</strong>${this.escapeHtml(q.answer)}</div>
           <div style="margin-bottom:6px;"><strong>题型：</strong>${typeName}</div>`;
-      }
       if (q.analysis && q.analysis.trim().length > 5) {
         html += `<div style="margin-top:8px;padding:12px;background:#fff;border-radius:4px;line-height:1.8;"><strong>📖 解析：</strong><br>${this.escapeHtml(q.analysis)}</div>`;
         html += `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._aiAnalyze('${q.id}')" style="margin-top:4px;color:var(--accent);border-color:var(--accent);font-size:11px;">🔄 AI重新解析</button>`;
