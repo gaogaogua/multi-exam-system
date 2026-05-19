@@ -137,7 +137,20 @@ const Practice = {
     if (!sel) return;
     const all = QuestionBank.getAll();
     const pool = this.bankFilter === 'all' ? all : all.filter(q => q.bank === this.bankFilter);
-    const cats = [...new Set(pool.map(q => q.category).filter(Boolean))].sort();
+    let cats = [...new Set(pool.map(q => q.category).filter(Boolean))];
+    // 土木按章节排序
+    if (this.bankFilter === 'tumu') {
+      const order = QuestionBank.CHAPTER_ORDER;
+      cats.sort((a, b) => {
+        const ai = order.indexOf(a), bi = order.indexOf(b);
+        if (ai === -1 && bi === -1) return a.localeCompare(b);
+        if (ai === -1) return 1;
+        if (bi === -1) return -1;
+        return ai - bi;
+      });
+    } else {
+      cats.sort();
+    }
     sel.innerHTML = '<option value="all">全部分类</option>' + cats.map(c => `<option value="${c}">${c}</option>`).join('');
     // Restore saved
     const saved = localStorage.getItem('practice_cat_filter');

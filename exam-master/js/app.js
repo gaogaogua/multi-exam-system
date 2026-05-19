@@ -189,10 +189,22 @@ const App = {
     const category = document.getElementById('bank-category-filter')?.value || '';
     const type = document.getElementById('bank-type-filter')?.value || '';
 
-    // 根据选中的bank更新分类选项
+    // 根据选中的bank更新分类选项（土木按章节顺序）
     let allQuestions = QuestionBank.getAll();
     if (bank) allQuestions = allQuestions.filter(q => q.bank === bank);
-    const categories = [...new Set(allQuestions.map(q => q.category).filter(Boolean))].sort();
+    let categories = [...new Set(allQuestions.map(q => q.category).filter(Boolean))];
+    if (bank === 'tumu') {
+      const order = QuestionBank.CHAPTER_ORDER;
+      categories.sort((a, b) => {
+        const ai = order.indexOf(a), bi = order.indexOf(b);
+        if (ai === -1 && bi === -1) return a.localeCompare(b);
+        if (ai === -1) return 1;
+        if (bi === -1) return -1;
+        return ai - bi;
+      });
+    } else {
+      categories.sort();
+    }
     const catSelect = document.getElementById('bank-category-filter');
     if (catSelect) {
       const prevVal = catSelect.value;
