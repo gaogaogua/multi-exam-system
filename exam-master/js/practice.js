@@ -316,6 +316,18 @@ const Practice = {
     return result.slice(0, count);
   },
 
+  /** 将题目从练习记录中移除（标记为未练） */
+  _markUnpracticed(questionId) {
+    const log = Storage.get(Storage.KEYS.PRACTICE_LOG) || [];
+    const before = log.length;
+    const filtered = log.filter(e => e.questionId !== questionId);
+    Storage.set(Storage.KEYS.PRACTICE_LOG, filtered);
+    if (filtered.length < before) {
+      App.showToast('已标记为未练', 'success');
+      this.renderQuestion();
+    }
+  },
+
   /**
    * 用指定题目列表开始练习
    */
@@ -428,8 +440,17 @@ const Practice = {
         html += `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._aiGradeEssay('${q.id}')" style="margin-top:4px;margin-left:4px;color:#722ed1;border-color:#722ed1;">📝 AI批改</button>`;
         html += `<div id="ai-grade-result-${q.id}" style="margin-top:8px;"></div>`;
       }
-      // 编辑按钮（始终显示）
+      // 检查是否已练习
+      const allLog = Storage.get(Storage.KEYS.PRACTICE_LOG) || [];
+      const practiced = allLog.some(e => e.questionId === q.id);
+      // 编辑按钮
       html += `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._showEdit('${q.id}')" style="margin-top:4px;margin-left:4px;color:#666;border-color:#d9d9d9;font-size:11px;">✏️ 编辑</button>`;
+      // 取消已练按钮
+      if (practiced) {
+        html += `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._markUnpracticed('${q.id}')" style="margin-top:4px;margin-left:4px;color:#999;border-color:#d9d9d9;font-size:11px;">↩ 取消已练</button>`;
+      } else {
+        html += `<span style="font-size:11px;color:#d9d9d9;margin-left:4px;">未练</span>`;
+      }
       html += `<div id="edit-area-${q.id}"></div>`;
       // 变体题按钮（答错时）
       if (!isCorrect) {
