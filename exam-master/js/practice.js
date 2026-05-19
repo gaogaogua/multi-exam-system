@@ -429,14 +429,14 @@ const Practice = {
           <div style="margin-bottom:6px;"><strong>题型：</strong>${typeName}</div>`;
       if (q.analysis && q.analysis.trim().length > 5) {
         html += `<div style="margin-top:8px;padding:12px;background:#fff;border-radius:4px;line-height:1.8;"><strong>📖 解析：</strong><br>${this.escapeHtml(q.analysis)}</div>`;
-        html += `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._aiAnalyze('${q.id}')" style="margin-top:4px;color:var(--accent);border-color:var(--accent);font-size:11px;">🔄 AI重新解析</button>`;
+        html += `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._aiAnalyze('${q.id}')" style="margin-top:4px;color:var(--accent);border-color:var(--accent);font-size:11px;">🔄 AI重新解析</button><span id="ai-key-hint-${q.id}"></span>`;
         // 追问区域
         if (this._chatHistory) {
           html += `<div style="margin-top:6px;display:flex;gap:4px;"><input id="ai-followup-input-${q.id}" placeholder="追问AI..." style="flex:1;padding:3px 8px;border:1px solid #d9d9d9;border-radius:4px;font-size:12px;" onkeydown="Practice._onFollowUpKey(event,'${q.id}')"><button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._aiFollowUp('${q.id}')" style="font-size:11px;color:var(--primary);">发送</button></div><div id="ai-followup-result-${q.id}"></div>`;
         }
       } else {
         html += `<div style="margin-top:8px;font-size:13px;color:var(--text-secondary);">（暂无详细解析）</div>`;
-        html += `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._aiAnalyze('${q.id}')" style="margin-top:4px;color:var(--accent);border-color:var(--accent);">🤖 AI解析此题</button>`;
+        html += `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._aiAnalyze('${q.id}')" style="margin-top:4px;color:var(--accent);border-color:var(--accent);">🤖 AI解析此题</button><span id="ai-key-hint-${q.id}"></span>`;
       }
       // AI 批改按钮（主观题）
       if (isEssayType && userAns && userAns.trim()) {
@@ -599,11 +599,18 @@ const Practice = {
    */
   async _aiAnalyze(id) {
     if (!ApiConfig.hasDeepSeekApiKey()) {
+      // 没有 API Key 时，在按钮旁边显示提示
+      const el = document.getElementById('ai-key-hint-' + id);
+      if (el) el.innerHTML = '<span style="color:var(--danger);font-size:11px;">⚠ 请先配置DeepSeek API Key（点左下角 AI/Sync）</span>';
       App.showToast('请先配置DeepSeek API Key', 'error');
       return;
     }
     const q = QuestionBank.getById(id);
     if (!q) return;
+
+    // 清除之前的提示
+    const el = document.getElementById('ai-key-hint-' + id);
+    if (el) el.innerHTML = '';
 
     const hasAnalysis = q.analysis && q.analysis.trim().length > 5;
     if (hasAnalysis && !confirm('此题已有解析，确定重新AI分析吗？')) return;
