@@ -43,8 +43,9 @@ const Sync = {
       }
       const remote = await resp.json();
       const result = this._merge(remote);
-      console.log('[Sync] 合并完成: +' + result.mergedErrors + '错题, +' + result.mergedPractice + '练习');
-      return { merged: result.mergedErrors + result.mergedPractice, remote };
+      const total = result.mergedErrors + result.mergedPractice + (result.mergedAI || 0);
+      console.log('[Sync] 合并: +' + result.mergedErrors + '错题, +' + result.mergedPractice + '练习, +' + (result.mergedAI || 0) + 'AI解析');
+      return { merged: total, remote };
     } catch (e) {
       console.warn('[Sync] 拉取失败:', e.message);
       return { merged: 0, remote: null, error: e.message };
@@ -124,18 +125,31 @@ const Sync = {
 
   /** 收集本地数据 */
   _collect() {
+    // 只收集有 AI 解析的题目（id + answer + analysis），不传整本题库
+    const allQ = Storage.get(Storage.KEYS.QUESTIONS) || [];
+    const aiQuestions = [];
+    const seen = new Set();
+    allQ.forEach(q => {
+      if (!seen.has(q.id) && q.analysis && q.analysis.trim().length > 10) {
+        aiQuestions.push({ id: q.id, answer: q.answer, analysis: q.analysis });
+        seen.add(q.id);
+        if (aiQuestions.length >= 500) return; // 上限 500 条
+      }
+    });
+
     return {
-      version: 1,
+      version: 2,
       updatedAt: new Date().toISOString(),
       errors: Storage.get(Storage.KEYS.ERROR_BOOK) || [],
       practiceLog: Storage.get(Storage.KEYS.PRACTICE_LOG) || [],
       examLog: Storage.get(Storage.KEYS.EXAM_LOG) || [],
+      aiQuestions, // 含 AI 解析的题目
     };
   },
 
-  /** 合并远程数据到本地（取并集，远程优先保留 errorId） */
+  /** 合并远程数据到本地（取并集） */
   _merge(remote) {
-    if (!remote || !remote.version) return { mergedErrors: 0, mergedPractice: 0 };
+    if (!remote || !remote.version) return { mergedErrors: 0, mergedPractice: 0, mergedAI: 0 };
 
     let mergedErrors = 0;
     const localErrors = Storage.get(Storage.KEYS.ERROR_BOOK) || [];
@@ -147,7 +161,6 @@ const Sync = {
         errorMap.set(e.id, e);
         mergedErrors++;
       } else {
-        // 合并：保留 mastered 状态、最新 reviewCount
         const local = errorMap.get(e.id);
         if (e.mastered && !local.mastered) local.mastered = true;
         if (e.reviewCount > (local.reviewCount || 0)) local.reviewCount = e.reviewCount;
@@ -155,6 +168,29 @@ const Sync = {
       }
     });
     Storage.set(Storage.KEYS.ERROR_BOOK, [...errorMap.values()]);
+
+    // 合并 AI 解析：远程有解析而本地没有 → 更新本地
+    let mergedAI = 0;
+    if (remote.aiQuestions && remote.aiQuestions.length > 0) {
+      const localQ = Storage.get(Storage.KEYS.QUESTIONS) || [];
+      const qMap = new Map(localQ.map(q => [q.id, q]));
+      remote.aiQuestions.forEach(rq => {
+        const lq = qMap.get(rq.id);
+        if (lq) {
+          let changed = false;
+          if ((!lq.answer || lq.answer.length < 2) && rq.answer && rq.answer.length >= 1) {
+            lq.answer = rq.answer; changed = true;
+          }
+          if ((!lq.analysis || lq.analysis.length < 10) && rq.analysis && rq.analysis.length > 10) {
+            lq.analysis = rq.analysis; changed = true;
+          }
+          if (changed) mergedAI++;
+        } else {
+          // 远程有 AI 解析但本地缺题（可能被清过），跳过
+        }
+      });
+      if (mergedAI > 0) Storage.set(Storage.KEYS.QUESTIONS, [...qMap.values()]);
+    }
 
     let mergedPractice = 0;
     const localPractice = Storage.get(Storage.KEYS.PRACTICE_LOG) || [];
@@ -170,6 +206,6 @@ const Sync = {
     });
     Storage.set(Storage.KEYS.PRACTICE_LOG, localPractice);
 
-    return { mergedErrors, mergedPractice };
+    return { mergedErrors, mergedPractice, mergedAI };
   },
 };

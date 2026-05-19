@@ -554,6 +554,12 @@ const Practice = {
     const q = QuestionBank.getById(id);
     if (!q) return;
 
+    // 已有完整解析 → 跳过，避免重复调用 AI
+    if (q.answer && q.answer.trim().length > 0 && q.analysis && q.analysis.trim().length > 10) {
+      App.showToast('此题已有解析，无需重复AI分析', 'info');
+      return;
+    }
+
     App.showToast('AI解析中...', 'info');
     try {
       const results = await ApiConfig.aiAnalyze([{
@@ -562,15 +568,15 @@ const Practice = {
       if (results.length > 0 && results[0].success) {
         const r = results[0];
         QuestionBank.update(id, { answer: r.answer, analysis: r.analysis });
-        // 更新当前题目缓存
         const idx = this.questions.findIndex(x => x.id === id);
         if (idx >= 0) {
           this.questions[idx].answer = r.answer;
           this.questions[idx].analysis = r.analysis;
         }
-        // 原地刷新，不弹窗
         this.renderQuestion();
         App.updateStats();
+        // AI 解析更新后同步推送到远程
+        Sync.push().catch(() => {});
       } else {
         App.showToast('AI解析失败: ' + (results[0]?.error || '未知错误'), 'error');
       }
