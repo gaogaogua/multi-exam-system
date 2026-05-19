@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-05-19T16:02:23.079Z",
+  "updatedAt": "2026-05-19T16:06:47.344Z",
   "errors": [
     {
       "id": "err_mpc0yaa7",
@@ -51,18 +51,18 @@
       "questionType": "essay",
       "questionCategory": "第1章 建筑设计技术",
       "correctAnswer": "(1)板状材料保温层；",
-      "userAnswer": "纤维、板状、整体\n",
+      "userAnswer": "",
       "notes": "",
-      "wrongCount": 1,
+      "wrongCount": 2,
       "firstWrongAt": "2026-05-19T03:09:18.922Z",
-      "lastWrongAt": "2026-05-19T03:09:18.922Z",
+      "lastWrongAt": "2026-05-19T16:06:06.370Z",
       "mastered": false,
       "reviewCount": 0,
       "sm2": {
         "interval": 1,
         "repetition": 0,
-        "efactor": 2.5,
-        "nextReviewAt": "2026-05-19"
+        "efactor": 2.3,
+        "nextReviewAt": "2026-05-20"
       }
     },
     {
@@ -2605,6 +2605,27 @@
         "efactor": 2.5,
         "nextReviewAt": "2026-05-20"
       }
+    },
+    {
+      "id": "err_mpctshw2",
+      "questionId": "q_mpc0xk69_5w3ibm_1280",
+      "questionTitle": "板状保温材料和纤维保温材料应检验哪些项目？(P123)",
+      "questionType": "essay",
+      "questionCategory": "第1章 建筑设计技术",
+      "correctAnswer": "(1)板状保温材料：表观密度(或干密度)、压缩强度(或抗压强度)、导热系数、燃烧性能。",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T16:06:41.042Z",
+      "lastWrongAt": "2026-05-19T16:06:41.042Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
     }
   ],
   "practiceLog": [
@@ -2725,13 +2746,6 @@
       "userAnswer": "天然橡胶支座、铅芯橡胶支座、高阻尼橡胶支座、弹性滑板、摩擦摆",
       "correct": true,
       "timestamp": "2026-05-19T03:07:33.929Z",
-      "mode": "random"
-    },
-    {
-      "questionId": "q_mpc0xk68_7q475p_1279",
-      "userAnswer": "纤维、板状、整体\n",
-      "correct": false,
-      "timestamp": "2026-05-19T03:09:18.913Z",
       "mode": "random"
     },
     {
@@ -3652,10 +3666,10 @@
       "mode": "sequential"
     },
     {
-      "questionId": "q_mpc0xk53_5h1dat_1233",
+      "questionId": "q_mpc0xk69_5w3ibm_1280",
       "userAnswer": "",
       "correct": false,
-      "timestamp": "2026-05-19T16:01:46.752Z",
+      "timestamp": "2026-05-19T16:06:41.031Z",
       "mode": "sequential"
     }
   ],
