@@ -21,6 +21,11 @@ const App = {
     // 首次加载时插入演示数据（仅当题库仍为空）
     this.initDemoData();
 
+    // 跨设备同步：拉取远程数据
+    Sync.pull().then(r => {
+      if (r.merged > 0) { this.updateStats(); this.renderErrorList(); }
+    });
+
     // 探测后端引擎
     this.detectEngine();
 
@@ -861,24 +866,30 @@ const App = {
   showApiKeyModal() {
     const currentKey = ApiConfig.getDeepSeekApiKey();
     const masked = currentKey ? currentKey.slice(0, 6) + '****' + currentKey.slice(-4) : '';
-    document.getElementById('apikey-modal-title').textContent = 'DeepSeek API 设置';
+    const ghToken = Sync.getToken();
+    const ghMasked = ghToken ? ghToken.slice(0, 4) + '****' + ghToken.slice(-4) : '';
+    document.getElementById('apikey-modal-title').textContent = 'API 设置';
     document.getElementById('apikey-modal-body').innerHTML = `
       <div class="form-group">
-        <label>API Key <small>(用于AI智能解析题目)</small></label>
+        <label>🤖 DeepSeek API Key <small>(AI智能解析)</small></label>
         <input type="password" id="apikey-input" value="${currentKey}" placeholder="sk-xxxxxxxxxxxxxxxx" autocomplete="off">
         ${currentKey ? `<p style="font-size:12px;color:var(--text-secondary);margin-top:4px;">当前: ${masked}</p>` : ''}
+        <div class="api-key-help" style="font-size:12px;margin-top:4px;">
+          获取: <a href="https://platform.deepseek.com/api_keys" target="_blank">platform.deepseek.com</a> | 费用 ¥1/百万token
+        </div>
       </div>
-      <div class="api-key-help">
-        <p>获取方式：</p>
-        <ol style="padding-left:16px;margin:4px 0;">
-          <li>访问 <a href="https://platform.deepseek.com/api_keys" target="_blank">platform.deepseek.com</a></li>
-          <li>注册/登录后创建 API Key</li>
-          <li>复制 Key 粘贴到上方输入框</li>
-          <li>费用: ¥1/百万token，非常便宜</li>
-        </ol>
+      <hr style="margin:16px 0;border:none;border-top:1px solid #f0f0f0;">
+      <div class="form-group">
+        <label>🔄 GitHub Token <small>(跨设备同步)</small></label>
+        <input type="password" id="github-token-input" value="${ghToken}" placeholder="ghp_xxxxxxxxxxxxxxxx" autocomplete="off">
+        ${ghToken ? `<p style="font-size:12px;color:var(--text-secondary);margin-top:4px;">当前: ${ghMasked}</p>` : ''}
+        <div class="api-key-help" style="font-size:12px;margin-top:4px;">
+          获取: <a href="https://github.com/settings/tokens/new?scopes=repo&description=multi-exam-sync" target="_blank">创建 Token</a> (勾选 repo) → 复制粘贴到这里
+        </div>
+        ${ghToken ? '<button class="btn btn-sm btn-outline" onclick="Sync.push().then(r=>App.showToast(r.pushed?\'同步成功\':\'同步失败:\'+r.error,r.pushed?\'success\':\'error\'))" style="margin-top:8px;">🔄 手动同步</button>' : ''}
       </div>
       <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:16px;">
-        ${currentKey ? '<button class="btn btn-outline btn-danger" onclick="App.clearApiKey()">清除Key</button>' : ''}
+        ${currentKey || ghToken ? '<button class="btn btn-outline btn-danger" onclick="App.clearAllKeys()">清除全部</button>' : ''}
         <button class="btn btn-outline" onclick="App.closeApiKeyModal()">取消</button>
         <button class="btn btn-primary" onclick="App.saveApiKey()">保存</button>
       </div>`;
@@ -890,38 +901,53 @@ const App = {
   },
 
   saveApiKey() {
-    const key = document.getElementById('apikey-input').value.trim();
-    if (!key) {
-      this.showToast('请输入API Key', 'error');
-      return;
+    const dsKey = document.getElementById('apikey-input').value.trim();
+    const ghKey = document.getElementById('github-token-input')?.value.trim() || '';
+
+    let saved = 0;
+    if (dsKey) {
+      if (!dsKey.startsWith('sk-')) {
+        this.showToast('DeepSeek Key 格式不正确，应以 sk- 开头', 'error');
+        return;
+      }
+      ApiConfig.setDeepSeekApiKey(dsKey);
+      saved++;
     }
-    if (!key.startsWith('sk-')) {
-      this.showToast('API Key格式不正确，应以sk-开头', 'error');
-      return;
+    if (ghKey) {
+      Sync.setToken(ghKey);
+      saved++;
     }
-    ApiConfig.setDeepSeekApiKey(key);
+
     this.updateApiKeyStatus();
     this.closeApiKeyModal();
-    this.showToast('DeepSeek API Key 已保存', 'success');
+    if (saved > 0) {
+      this.showToast('设置已保存' + (ghKey ? '（含同步Token）' : ''), 'success');
+    } else {
+      this.showToast('请至少填写一个 Key', 'error');
+    }
   },
 
-  clearApiKey() {
-    if (!confirm('确定清除已保存的 DeepSeek API Key 吗？')) return;
+  clearAllKeys() {
+    if (!confirm('确定清除所有 API Key 和同步 Token 吗？')) return;
     ApiConfig.setDeepSeekApiKey('');
+    Sync.setToken('');
     this.updateApiKeyStatus();
     this.closeApiKeyModal();
-    this.showToast('API Key 已清除', 'info');
+    this.showToast('全部已清除', 'info');
   },
 
   updateApiKeyStatus() {
     const el = document.getElementById('api-key-status');
     const link = document.querySelector('.api-key-link');
     if (!el || !link) return;
-    if (ApiConfig.hasDeepSeekApiKey()) {
-      el.textContent = 'AI Key ✓';
+    if (ApiConfig.hasDeepSeekApiKey() || Sync.hasToken()) {
+      const parts = [];
+      if (ApiConfig.hasDeepSeekApiKey()) parts.push('AI');
+      if (Sync.hasToken()) parts.push('Sync');
+      el.textContent = parts.join('/') + ' ✓';
       link.classList.add('configured');
     } else {
-      el.textContent = 'AI Key';
+      el.textContent = 'AI/Sync';
       link.classList.remove('configured');
     }
   },

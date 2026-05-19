@@ -309,6 +309,9 @@ const Exam = {
       const mainBank = gjCount >= tmCount ? 'gongji' : 'tumu';
       Plan.updateProgress(mainBank, correct, this.questions.length);
     }
+
+    // 跨设备同步
+    Sync.push().catch(() => {});
   },
 
   /**

@@ -568,6 +568,9 @@ const Practice = {
       const bank = this.bankFilter !== 'all' ? this.bankFilter : null;
       if (bank) Plan.updateProgress(bank, correct, total);
     }
+
+    // 跨设备同步：推送错题本和练习记录
+    Sync.push().catch(() => {});
   },
 
   /**
