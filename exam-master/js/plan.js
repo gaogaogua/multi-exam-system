@@ -248,7 +248,7 @@ const Plan = {
     }
 
     this.viewMode = mode;
-    this.render();
+    if (!this._autoGenerating) this.render();
   },
 
   /** 收集昨日练习统计 */
@@ -405,8 +405,12 @@ const Plan = {
     const container = document.getElementById('plan-content');
     if (!container) return;
 
-    // 自动修正：如果今日计划已过期，自动切到今日并重新生成
-    this._autoAdjust();
+    // 自动修正（防递归）
+    if (!this._rendering) {
+      this._rendering = true;
+      this._autoAdjust();
+      this._rendering = false;
+    }
 
     const mode = this.viewMode;
     let html = this._renderTabs();
@@ -437,7 +441,10 @@ const Plan = {
       const ratio = yesterdayPlan
         ? { gj: yesterdayPlan.gongjiRatio, tm: yesterdayPlan.tumuRatio }
         : { gj: 30, tm: 70 };
+      // silent mode: don't re-render (caller is already rendering)
+      this._autoGenerating = true;
       this.generateForDate('today', ratio.gj, ratio.tm);
+      this._autoGenerating = false;
       return;
     }
 
