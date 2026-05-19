@@ -333,7 +333,30 @@ const Practice = {
    */
   _startUI(questions, mode) {
     document.querySelectorAll('#page-practice .card-row').forEach(el => el.style.display = 'none');
-    document.getElementById('practice-area').style.display = 'block';
+    const area = document.getElementById('practice-area');
+    area.style.display = 'block';
+    // 事件委托：统一处理所有按钮点击
+    area.onclick = (e) => {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+      e.stopPropagation();
+      const qid = btn.dataset.qid;
+      if (!qid) return;
+      if (btn.classList.contains('ai-analyze-btn')) { this._aiAnalyze(qid); return; }
+      if (btn.classList.contains('ai-followup-btn')) { this._aiFollowUp(qid); return; }
+      if (btn.classList.contains('ai-grade-btn')) { this._aiGradeEssay(qid); return; }
+      if (btn.classList.contains('edit-btn')) { this._showEdit(qid); return; }
+      if (btn.classList.contains('unpractice-btn')) { this._markUnpracticed(qid); return; }
+      if (btn.classList.contains('variant-btn')) { this._aiGenVariant(qid); return; }
+    };
+    // 键盘委托：追问输入框回车
+    area.onkeydown = (e) => {
+      if (e.key === 'Enter' && e.target.classList.contains('ai-followup-input')) {
+        e.preventDefault();
+        const qid = e.target.dataset.qid;
+        if (qid) this._aiFollowUp(qid);
+      }
+    };
     this.renderQuestion();
   },
 
@@ -429,35 +452,30 @@ const Practice = {
           <div style="margin-bottom:6px;"><strong>题型：</strong>${typeName}</div>`;
       if (q.analysis && q.analysis.trim().length > 5) {
         html += `<div style="margin-top:8px;padding:12px;background:#fff;border-radius:4px;line-height:1.8;"><strong>📖 解析：</strong><br>${this.escapeHtml(q.analysis)}</div>`;
-        html += `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._aiAnalyze('${q.id}')" style="margin-top:4px;color:var(--accent);border-color:var(--accent);font-size:11px;">🔄 AI重新解析</button><span id="ai-key-hint-${q.id}"></span>`;
-        // 追问区域
+        html += `<button class="btn btn-sm btn-outline ai-analyze-btn" data-qid="${q.id}" style="margin-top:4px;color:var(--accent);border-color:var(--accent);font-size:11px;">🔄 AI重新解析</button><span id="ai-key-hint-${q.id}"></span>`;
         if (this._chatHistory) {
-          html += `<div style="margin-top:6px;display:flex;gap:4px;"><input id="ai-followup-input-${q.id}" placeholder="追问AI..." style="flex:1;padding:3px 8px;border:1px solid #d9d9d9;border-radius:4px;font-size:12px;" onkeydown="Practice._onFollowUpKey(event,'${q.id}')"><button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._aiFollowUp('${q.id}')" style="font-size:11px;color:var(--primary);">发送</button></div><div id="ai-followup-result-${q.id}"></div>`;
+          html += `<div style="margin-top:6px;display:flex;gap:4px;"><input id="ai-followup-input-${q.id}" class="ai-followup-input" data-qid="${q.id}" placeholder="追问AI..." style="flex:1;padding:3px 8px;border:1px solid #d9d9d9;border-radius:4px;font-size:12px;"><button class="btn btn-sm btn-outline ai-followup-btn" data-qid="${q.id}" style="font-size:11px;color:var(--primary);">发送</button></div><div id="ai-followup-result-${q.id}"></div>`;
         }
       } else {
         html += `<div style="margin-top:8px;font-size:13px;color:var(--text-secondary);">（暂无详细解析）</div>`;
-        html += `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._aiAnalyze('${q.id}')" style="margin-top:4px;color:var(--accent);border-color:var(--accent);">🤖 AI解析此题</button><span id="ai-key-hint-${q.id}"></span>`;
+        html += `<button class="btn btn-sm btn-outline ai-analyze-btn" data-qid="${q.id}" style="margin-top:4px;color:var(--accent);border-color:var(--accent);">🤖 AI解析此题</button><span id="ai-key-hint-${q.id}"></span>`;
       }
       // AI 批改按钮（主观题）
       if (isEssayType && userAns && userAns.trim()) {
-        html += `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._aiGradeEssay('${q.id}')" style="margin-top:4px;margin-left:4px;color:#722ed1;border-color:#722ed1;">📝 AI批改</button>`;
+        html += `<button class="btn btn-sm btn-outline ai-grade-btn" data-qid="${q.id}" style="margin-top:4px;margin-left:4px;color:#722ed1;border-color:#722ed1;">📝 AI批改</button>`;
         html += `<div id="ai-grade-result-${q.id}" style="margin-top:8px;"></div>`;
       }
-      // 检查是否已练习
       const allLog = Storage.get(Storage.KEYS.PRACTICE_LOG) || [];
       const practiced = allLog.some(e => e.questionId === q.id);
-      // 编辑按钮
-      html += `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._showEdit('${q.id}')" style="margin-top:4px;margin-left:4px;color:#666;border-color:#d9d9d9;font-size:11px;">✏️ 编辑</button>`;
-      // 取消已练按钮
+      html += `<button class="btn btn-sm btn-outline edit-btn" data-qid="${q.id}" style="margin-top:4px;margin-left:4px;color:#666;border-color:#d9d9d9;font-size:11px;">✏️ 编辑</button>`;
       if (practiced) {
-        html += `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._markUnpracticed('${q.id}')" style="margin-top:4px;margin-left:4px;color:#999;border-color:#d9d9d9;font-size:11px;">↩ 取消已练</button>`;
+        html += `<button class="btn btn-sm btn-outline unpractice-btn" data-qid="${q.id}" style="margin-top:4px;margin-left:4px;color:#999;border-color:#d9d9d9;font-size:11px;">↩ 取消已练</button>`;
       } else {
         html += `<span style="font-size:11px;color:#d9d9d9;margin-left:4px;">未练</span>`;
       }
       html += `<div id="edit-area-${q.id}"></div>`;
-      // 变体题按钮（答错时）
       if (!isCorrect) {
-        html += `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._aiGenVariant('${q.id}')" style="margin-top:4px;margin-left:4px;color:#eb2f96;border-color:#eb2f96;">🔄 生成变体题</button>`;
+        html += `<button class="btn btn-sm btn-outline variant-btn" data-qid="${q.id}" style="margin-top:4px;margin-left:4px;color:#eb2f96;border-color:#eb2f96;">🔄 生成变体题</button>`;
         html += `<div id="ai-variant-result-${q.id}" style="margin-top:8px;"></div>`;
       }
       html += `</div>`;
