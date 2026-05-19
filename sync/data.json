@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-05-19T15:03:25.341Z",
+  "updatedAt": "2026-05-19T16:15:32.890Z",
   "errors": [
     {
       "id": "err_mpc0yaa7",
@@ -51,18 +51,18 @@
       "questionType": "essay",
       "questionCategory": "第1章 建筑设计技术",
       "correctAnswer": "(1)板状材料保温层；",
-      "userAnswer": "纤维、板状、整体\n",
+      "userAnswer": "",
       "notes": "",
-      "wrongCount": 1,
+      "wrongCount": 2,
       "firstWrongAt": "2026-05-19T03:09:18.922Z",
-      "lastWrongAt": "2026-05-19T03:09:18.922Z",
+      "lastWrongAt": "2026-05-19T16:06:06.370Z",
       "mastered": false,
       "reviewCount": 0,
       "sm2": {
         "interval": 1,
         "repetition": 0,
-        "efactor": 2.5,
-        "nextReviewAt": "2026-05-19"
+        "efactor": 2.3,
+        "nextReviewAt": "2026-05-20"
       }
     },
     {
@@ -2521,6 +2521,195 @@
         "efactor": 2.5,
         "nextReviewAt": "2026-05-20"
       }
+    },
+    {
+      "id": "err_mpcrqjs8",
+      "questionId": "q_mpc0xk4z_33j2ji_1229",
+      "questionTitle": "装配式钢结构建筑的结构体系应符合哪些规定？（P35）",
+      "questionType": "essay",
+      "questionCategory": "第1章 建筑设计技术",
+      "correctAnswer": "①应具有明确的计算简图和合理的传力路径。",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T15:09:10.952Z",
+      "lastWrongAt": "2026-05-19T15:09:10.952Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpct88om",
+      "questionId": "q_mpc0xk52_lth3k9_1232",
+      "questionTitle": "常用保温隔热材料有哪些？（P65）",
+      "questionType": "essay",
+      "questionCategory": "第1章 建筑设计技术",
+      "correctAnswer": "1）聚氨酯泡沫塑料；2）改性酚醛泡沫塑料； 3) 聚苯乙烯泡沫塑料; 4) 岩棉、矿渣棉制品; 5) 玻璃棉制品。",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T15:50:55.990Z",
+      "lastWrongAt": "2026-05-19T15:50:55.990Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpctl0yn",
+      "questionId": "q_mpc0xk5b_qhdrl2_1244",
+      "questionTitle": "建筑物变形缝装置按照使用部位分为哪几类？",
+      "questionType": "essay",
+      "questionCategory": "第1章 建筑设计技术",
+      "correctAnswer": "(1)楼地面变形缝； (2) 内墙、顶棚吊顶变形缝 (3)外墙变形缝; (4) 屋面变形缝。",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T16:00:52.511Z",
+      "lastWrongAt": "2026-05-19T16:00:52.511Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpctm6tn",
+      "questionId": "q_mpc0xk53_5h1dat_1233",
+      "questionTitle": "影响保温材料导热系数的因素有哪些？(P65)",
+      "questionType": "essay",
+      "questionCategory": "第1章 建筑设计技术",
+      "correctAnswer": "材料的性质、表观密度与孔隙特征、湿度、温度、热流方向。",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T16:01:46.763Z",
+      "lastWrongAt": "2026-05-19T16:01:46.763Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpctshw2",
+      "questionId": "q_mpc0xk69_5w3ibm_1280",
+      "questionTitle": "板状保温材料和纤维保温材料应检验哪些项目？(P123)",
+      "questionType": "essay",
+      "questionCategory": "第1章 建筑设计技术",
+      "correctAnswer": "(1)板状保温材料：表观密度(或干密度)、压缩强度(或抗压强度)、导热系数、燃烧性能。",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T16:06:41.042Z",
+      "lastWrongAt": "2026-05-19T16:06:41.042Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpctw3wm",
+      "questionId": "q_mpc0xk6a_ng5ix2_1281",
+      "questionTitle": "泡沫混凝土保温层施工时应符合哪些规定？(P124)",
+      "questionType": "essay",
+      "questionCategory": "第1章 建筑设计技术",
+      "correctAnswer": "现浇泡沫混凝土保温层施工时，浇注出口离基层的高度不宜超过1m，泵送时应采取低压泵送；泡沫混凝土应分层浇筑，一次浇筑厚度不宜超过200mm，保湿养护时间不得少于7天。",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T16:09:29.542Z",
+      "lastWrongAt": "2026-05-19T16:09:29.542Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpctzoru",
+      "questionId": "q_mpc0xk6q_jxp8mu_1300",
+      "questionTitle": "防水材料选用应符合哪些规定？（P184）",
+      "questionType": "essay",
+      "questionCategory": "第1章 建筑设计技术",
+      "correctAnswer": "①材料性能应与工程使用环境条件相适应; ②每道防水层厚度应满足防水设防的最小厚度要求； ③防水材料影响环境的物质和有害物质限量应满足要求。",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T16:12:16.554Z",
+      "lastWrongAt": "2026-05-19T16:12:16.554Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcu3965",
+      "questionId": "q_mpc0xk76_q6g612_1313",
+      "questionTitle": "建筑设计的程序分为哪些阶段？（P208）",
+      "questionType": "essay",
+      "questionCategory": "第1章 建筑设计技术",
+      "correctAnswer": "建筑设计的程序一般可分为: 方案设计、初步设计、施工图设计、专项设计阶段。",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T16:15:02.957Z",
+      "lastWrongAt": "2026-05-19T16:15:02.957Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcu3s8p",
+      "questionId": "q_mpc0xk9v_mq8mei_1412",
+      "questionTitle": "写出建筑节能分部工程所包含的子分部工程。(P298)",
+      "questionType": "essay",
+      "questionCategory": "第1章 建筑设计技术",
+      "correctAnswer": "(1)监测控制节能工程、围护结构节能工程、配电照明节能工程、可再生能源节能工程、供暖空调节能工程等子分部工程。",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T16:15:27.673Z",
+      "lastWrongAt": "2026-05-19T16:15:27.673Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
     }
   ],
   "practiceLog": [
@@ -2641,13 +2830,6 @@
       "userAnswer": "天然橡胶支座、铅芯橡胶支座、高阻尼橡胶支座、弹性滑板、摩擦摆",
       "correct": true,
       "timestamp": "2026-05-19T03:07:33.929Z",
-      "mode": "random"
-    },
-    {
-      "questionId": "q_mpc0xk68_7q475p_1279",
-      "userAnswer": "纤维、板状、整体\n",
-      "correct": false,
-      "timestamp": "2026-05-19T03:09:18.913Z",
       "mode": "random"
     },
     {
@@ -3558,6 +3740,48 @@
       "userAnswer": "C",
       "correct": false,
       "timestamp": "2026-05-19T09:12:31.671Z",
+      "mode": "sequential"
+    },
+    {
+      "questionId": "q_mpc0xk5b_qhdrl2_1244",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T16:00:52.504Z",
+      "mode": "sequential"
+    },
+    {
+      "questionId": "q_mpc0xk69_5w3ibm_1280",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T16:06:41.031Z",
+      "mode": "sequential"
+    },
+    {
+      "questionId": "q_mpc0xk6a_ng5ix2_1281",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T16:09:29.535Z",
+      "mode": "sequential"
+    },
+    {
+      "questionId": "q_mpc0xk6q_jxp8mu_1300",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T16:12:16.544Z",
+      "mode": "sequential"
+    },
+    {
+      "questionId": "q_mpc0xk76_q6g612_1313",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T16:15:02.950Z",
+      "mode": "sequential"
+    },
+    {
+      "questionId": "q_mpc0xk9v_mq8mei_1412",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T16:15:27.663Z",
       "mode": "sequential"
     }
   ],
