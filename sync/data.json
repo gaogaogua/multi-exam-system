@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-05-19T16:00:58.824Z",
+  "updatedAt": "2026-05-19T16:02:23.079Z",
   "errors": [
     {
       "id": "err_mpc0yaa7",
@@ -2584,6 +2584,27 @@
         "efactor": 2.5,
         "nextReviewAt": "2026-05-20"
       }
+    },
+    {
+      "id": "err_mpctm6tn",
+      "questionId": "q_mpc0xk53_5h1dat_1233",
+      "questionTitle": "影响保温材料导热系数的因素有哪些？(P65)",
+      "questionType": "essay",
+      "questionCategory": "第1章 建筑设计技术",
+      "correctAnswer": "材料的性质、表观密度与孔隙特征、湿度、温度、热流方向。",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T16:01:46.763Z",
+      "lastWrongAt": "2026-05-19T16:01:46.763Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
     }
   ],
   "practiceLog": [
@@ -3628,6 +3649,13 @@
       "userAnswer": "",
       "correct": false,
       "timestamp": "2026-05-19T16:00:52.504Z",
+      "mode": "sequential"
+    },
+    {
+      "questionId": "q_mpc0xk53_5h1dat_1233",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T16:01:46.752Z",
       "mode": "sequential"
     }
   ],
