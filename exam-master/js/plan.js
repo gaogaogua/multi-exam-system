@@ -386,9 +386,10 @@ const Plan = {
     const container = document.getElementById('plan-content');
     if (!container) return;
 
-    const mode = this.viewMode;
+    // 自动修正：如果今日计划已过期，自动切到今日并重新生成
+    this._autoAdjust();
 
-    // Tab 导航
+    const mode = this.viewMode;
     let html = this._renderTabs();
 
     if (mode === 'week') {
@@ -400,6 +401,35 @@ const Plan = {
     }
 
     container.innerHTML = html;
+  },
+
+  /** 自动调整计划 */
+  _autoAdjust() {
+    const today = new Date().toISOString().split('T')[0];
+    const plans = this._getPlans();
+    const todayPlan = plans.find(p => p.date === today);
+
+    // 今日无计划 → 自动生成
+    if (!todayPlan) {
+      const yesterdayPlan = plans.find(p => {
+        const d = new Date(); d.setDate(d.getDate() - 1);
+        return p.date === d.toISOString().split('T')[0];
+      });
+      const ratio = yesterdayPlan
+        ? { gj: yesterdayPlan.gongjiRatio, tm: yesterdayPlan.tumuRatio }
+        : { gj: 30, tm: 70 };
+      this.generateForDate('today', ratio.gj, ratio.tm);
+      return;
+    }
+
+    // 检查已过时段，更新 isPast 标记
+    let changed = false;
+    todayPlan.tasks.forEach(t => {
+      const wasPast = t.isPast;
+      t.isPast = this._isSlotPast(t.time, today);
+      if (wasPast !== t.isPast) changed = true;
+    });
+    if (changed) this._savePlans(plans);
   },
 
   _renderTabs() {
@@ -577,6 +607,17 @@ const Plan = {
     });
     html += '</div>';
 
+    // 自动生成建议：对未安排的日子给出建议
+    html += '<div style="margin-top:12px;font-size:12px;color:var(--text-secondary);">';
+    const emptyDays = week.days.filter(d => d >= new Date().toISOString().split('T')[0] && !plans.find(p => p.date === d));
+    if (emptyDays.length > 0) {
+      html += `⚠️ ${emptyDays.length}天未安排计划。`;
+      html += ` <button class="btn btn-sm btn-primary" onclick="Plan._autoGenerateWeek('${week.start}')">一键生成周计划</button>`;
+    } else {
+      html += '✅ 本周每日均已安排计划';
+    }
+    html += '</div>';
+
     // 周统计
     const weekLog = log.filter(l => l.timestamp && l.timestamp >= week.start && l.timestamp <= week.end + 'T23:59:59');
     const wkCorrect = weekLog.filter(l => l.correct).length;
@@ -721,6 +762,36 @@ const Plan = {
 
   _getDays(today, date) {
     return Math.ceil((new Date(date) - new Date(today)) / 86400000);
+  },
+
+  /** 一键生成整周计划 */
+  _autoGenerateWeek(startDate) {
+    const week = this._getWeekRange();
+    const upcoming = (typeof ExamDates !== 'undefined') ? ExamDates.getUpcoming() : [];
+    const plans = this._getPlans();
+    let generated = 0;
+
+    week.days.forEach(day => {
+      if (day < new Date().toISOString().split('T')[0]) return; // 跳过已过
+      if (plans.find(p => p.date === day)) return; // 已有计划
+
+      // 确认当天是否有考试，调整科目比例
+      const examOnDay = upcoming.find(e => e.date === day);
+      let gjRatio = 30, tmRatio = 70;
+      if (examOnDay) {
+        if (examOnDay.subject.includes('一建') || examOnDay.subject.includes('土木')) {
+          gjRatio = 20; tmRatio = 80;
+        } else {
+          gjRatio = 60; tmRatio = 40;
+        }
+      }
+      this.generateForDate(day === new Date().toISOString().split('T')[0] ? 'today' : 'tomorrow', gjRatio, tmRatio);
+      generated++;
+    });
+
+    this.viewMode = 'week';
+    this.render();
+    App.showToast(`已生成 ${generated} 天计划`, 'success');
   },
 
   /** 编辑考试目标 */
