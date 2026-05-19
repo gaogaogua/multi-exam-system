@@ -1,56 +1,81 @@
 /**
- * 题库自动加载器 — 手机首次访问时自动从服务器拉取题库数据
- * 在 storage.js 之后加载，question-bank.js 之前加载
+ * 题库自动加载器 — 首次访问时自动从服务器拉取题库数据
+ * 按 bank 粒度检测，确保公基和土木各加载一次
  */
 const DataLoader = {
-  /**
-   * 检查并自动加载缺失的题库数据
-   */
+  _loadedBanks: {},
+
   async autoLoad() {
-    const questions = Storage.get(Storage.KEYS.QUESTIONS);
-    if (questions && questions.length > 0) {
-      console.log('[DataLoader] 题库已有 ' + questions.length + ' 题，跳过加载');
-      return;
-    }
-
-    console.log('[DataLoader] 题库为空，从服务器加载...');
-
     const banks = [
-      { key: '公基', file: '考试资料/最终题库/公基错题合集_complete.json' },
-      { key: '土木', file: '考试资料/最终题库/土木_questions_complete.json' },
+      { key: '公基', bank: 'gongji', file: 'data/gongji.json' },
+      { key: '土木', bank: 'tumu',   file: 'data/tumu.json' },
     ];
 
-    let allQuestions = [];
+    const questions = Storage.get(Storage.KEYS.QUESTIONS) || [];
+    let needReload = false;
+    let totalLoaded = 0;
 
     for (const bank of banks) {
+      // 检查该 bank 是否已加载（至少 10 题）
+      const bankExists = questions.filter(q => q.bank === bank.bank).length >= 10;
+      if (bankExists) {
+        console.log('[DataLoader] ' + bank.key + ' 题库已存在，跳过');
+        continue;
+      }
+
+      console.log('[DataLoader] ' + bank.key + ' 题库缺失，开始加载...');
+      this._showStatus('正在加载' + bank.key + '题库...');
+
       try {
         const resp = await fetch(bank.file);
-        if (resp.ok) {
-          const data = await resp.json();
-          const questions = Array.isArray(data) ? data : (data.questions || data.data || []);
-          // 确保每题有 bank 标记
-          questions.forEach(q => { if (!q.bank) q.bank = bank.key === '公基' ? 'gongji' : 'tumu'; });
-          allQuestions = allQuestions.concat(questions);
-          console.log(`[DataLoader] ${bank.key}: 加载 ${questions.length} 题`);
-        } else {
-          console.warn(`[DataLoader] ${bank.key}: HTTP ${resp.status}`);
+        if (!resp.ok) {
+          console.warn('[DataLoader] ' + bank.key + ' HTTP ' + resp.status);
+          continue;
         }
+        const data = await resp.json();
+        const qs = Array.isArray(data) ? data : (data.questions || data.data || []);
+        qs.forEach(q => { q.bank = q.bank || bank.bank; });
+
+        const current = Storage.get(Storage.KEYS.QUESTIONS) || [];
+        Storage.set(Storage.KEYS.QUESTIONS, current.concat(qs));
+
+        totalLoaded += qs.length;
+        needReload = true;
+        console.log('[DataLoader] ' + bank.key + ': ' + qs.length + ' 题');
       } catch (e) {
-        console.warn(`[DataLoader] ${bank.key} 加载失败:`, e.message);
+        console.warn('[DataLoader] ' + bank.key + ' 加载失败:', e.message);
+        this._showStatus(bank.key + '题库加载失败: ' + e.message);
+        await new Promise(r => setTimeout(r, 2000));
       }
     }
 
-    if (allQuestions.length > 0) {
-      // 去重后存入
-      const existing = QuestionBank.getAll();
-      if (existing.length === 0) {
-        QuestionBank.batchImport(allQuestions);
-        console.log('[DataLoader] 题库初始化完成: ' + allQuestions.length + ' 题');
-        // 刷新分类筛选
-        if (App.populateCategoryFilters) App.populateCategoryFilters();
-        if (App.updateStats) App.updateStats();
-        if (App.renderQuestionBank) App.renderQuestionBank();
-      }
+    if (needReload) {
+      this._showStatus('题库更新完成: +' + totalLoaded + ' 题，刷新中...');
+      Storage.remove('exam_categories');
+      setTimeout(() => { window.location.reload(); }, 600);
+    } else if (questions.length === 0) {
+      this._showStatus('题库加载失败，请检查网络连接');
+      this._hideStatus(4000);
+    } else {
+      this._hideStatus(1);
     }
+  },
+
+  _showStatus(msg) {
+    let el = document.getElementById('dataloader-status');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'dataloader-status';
+      el.style.cssText = 'position:fixed;top:0;left:0;right:0;padding:12px;background:#667eea;color:#fff;text-align:center;z-index:99999;font-size:14px;font-weight:600;';
+      document.body.insertBefore(el, document.body.firstChild);
+    }
+    el.textContent = msg;
+  },
+
+  _hideStatus(delay) {
+    setTimeout(() => {
+      const el = document.getElementById('dataloader-status');
+      if (el) el.remove();
+    }, delay);
   },
 };
