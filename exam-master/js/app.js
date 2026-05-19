@@ -210,36 +210,69 @@ const App = {
       return;
     }
 
+    const log = Storage.get(Storage.KEYS.PRACTICE_LOG) || [];
+    const practicedSet = new Set(log.map(l => l.questionId));
+
     container.innerHTML = result.items.map((q, idx) => {
-      const missing = (!q.answer || !q.analysis);
+      const globalIdx = (this.bankPage - 1) * this.bankPageSize + idx + 1;
+      const missing = (!q.answer || q.answer.trim().length < 1);
+      const noAnalysis = (!q.analysis || q.analysis.trim().length < 5);
+      const isPracticed = practicedSet.has(q.id);
+      const typeIcon = { single: '①', multiple: '②', judge: '③', fill: '④', essay: '⑤' }[q.type] || '●';
+      const bankLabel = q.bank === 'gongji' ? '公基' : q.bank === 'tumu' ? '土木' : '';
+
       return `
       <div class="question-item" onclick="App.showQuestionDetail('${q.id}')">
-        <div class="question-num">${(this.bankPage - 1) * this.bankPageSize + idx + 1}</div>
+        <div class="question-num">${globalIdx}</div>
         <div class="question-content">
-          <div class="question-title">${this.escapeHtml(q.title)}${missing ? '<span class="tag-no-answer">缺答案</span>' : ''}</div>
+          <div class="question-title">
+            ${this.escapeHtml(q.title)}
+            ${missing ? '<span class="tag tag-danger">缺答案</span>' : ''}
+            ${noAnalysis && !missing ? '<span class="tag tag-warning">缺解析</span>' : ''}
+            ${isPracticed ? '<span class="tag tag-done">已练</span>' : ''}
+          </div>
           <div class="question-meta">
-            <span class="question-tag tag-type">${this.getTypeName(q.type)}</span>
+            <span class="question-tag tag-type">${typeIcon} ${this.getTypeName(q.type)}</span>
             <span class="question-tag tag-category">${q.category || '未分类'}</span>
+            ${bankLabel ? `<span class="question-tag tag-bank">${bankLabel}</span>` : ''}
             ${q.difficulty ? `<span class="question-tag tag-difficulty">${q.difficulty}</span>` : ''}
-            ${q.answer ? `<span>答案: ${q.answer}</span>` : '<span style="color:var(--danger);">无答案</span>'}
+            ${q.answer ? `<span class="answer-hint">答案: ${q.answer.length > 10 ? q.answer.slice(0,10)+'...' : q.answer}</span>` : ''}
           </div>
         </div>
         <div class="question-actions" onclick="event.stopPropagation();">
-          ${missing ? `<button class="btn btn-outline btn-sm" onclick="App.aiAnalyzeSingle('${q.id}')" style="color:var(--accent);border-color:var(--accent);" title="AI智能解析">AI解析</button>` : ''}
-          <button class="btn btn-outline btn-sm" onclick="App.editQuestion('${q.id}')">编辑</button>
-          <button class="btn btn-outline btn-sm" style="color:var(--danger);border-color:var(--danger);" onclick="App.deleteQuestion('${q.id}')">删除</button>
+          ${missing || noAnalysis ? `<button class="btn btn-sm btn-ai-mini" onclick="App.aiAnalyzeSingle('${q.id}')" title="AI解析">🤖</button>` : ''}
+          <button class="btn btn-sm btn-edit-mini" onclick="App.editQuestion('${q.id}')" title="编辑">✏️</button>
+          <button class="btn btn-sm btn-del-mini" onclick="App.deleteQuestion('${q.id}')" title="删除">🗑</button>
         </div>
       </div>
     `}).join('');
 
     // 分页
-    let pageHtml = '';
+    let pageHtml = '<div class="pagination">';
     if (result.totalPages > 1) {
-      for (let i = 1; i <= result.totalPages; i++) {
-        pageHtml += `<button class="${i === this.bankPage ? 'active' : ''}" onclick="App.goToPage(${i})">${i}</button>`;
+      const tp = result.totalPages;
+      const cp = this.bankPage;
+
+      pageHtml += `<button class="page-btn" onclick="App.goToPage(1)" ${cp===1?'disabled':''}>«</button>`;
+      pageHtml += `<button class="page-btn" onclick="App.goToPage(${Math.max(1,cp-1)})" ${cp===1?'disabled':''}>‹</button>`;
+
+      const start = Math.max(1, cp - 2);
+      const end = Math.min(tp, cp + 2);
+      if (start > 1) pageHtml += `<span class="page-dots">...</span>`;
+      for (let i = start; i <= end; i++) {
+        pageHtml += `<button class="page-btn ${i === cp ? 'active' : ''}" onclick="App.goToPage(${i})">${i}</button>`;
       }
+      if (end < tp) pageHtml += `<span class="page-dots">...</span>`;
+
+      pageHtml += `<button class="page-btn" onclick="App.goToPage(${Math.min(tp,cp+1)})" ${cp===tp?'disabled':''}>›</button>`;
+      pageHtml += `<button class="page-btn" onclick="App.goToPage(${tp})" ${cp===tp?'disabled':''}>»</button>`;
+      pageHtml += `<span class="page-info">${cp}/${tp} 页 · ${result.total} 题</span>`;
     }
+    pageHtml += '</div>';
     pagination.innerHTML = pageHtml;
+
+    // 更新统计栏
+    this._updateBankStats(result, bank);
   },
 
   /**
@@ -256,6 +289,26 @@ const App = {
   goToPage(page) {
     this.bankPage = page;
     this.renderQuestionBank();
+  },
+
+  /** 更新题库统计栏 */
+  _updateBankStats(result, bankFilter) {
+    const el = document.getElementById('bank-stats-summary');
+    if (!el) return;
+    const all = QuestionBank.getAll();
+    const gj = all.filter(q => q.bank === 'gongji').length;
+    const tm = all.filter(q => q.bank === 'tumu').length;
+    const log = Storage.get(Storage.KEYS.PRACTICE_LOG) || [];
+    const practiced = new Set(log.map(l => l.questionId)).size;
+    const missing = all.filter(q => !q.answer || !q.answer.trim()).length;
+    const parts = [
+      `共 <strong>${all.length}</strong> 题 (公基${gj}+土木${tm})`,
+      `已练 <strong>${practiced}</strong> 题`,
+    ];
+    if (missing > 0) parts.push(`<span style="color:var(--danger);">缺答案 ${missing} 题</span>`);
+    if (bankFilter) parts.push(`当前: ${bankFilter === 'gongji' ? '公基' : '土木'}`);
+    if (result.total !== all.length) parts.push(`匹配 ${result.total} 题`);
+    el.innerHTML = parts.join(' &nbsp;|&nbsp; ');
   },
 
   /**

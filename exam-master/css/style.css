@@ -315,14 +315,93 @@ body {
 /* ===== Empty State ===== */
 .empty-state { text-align: center; padding: 48px 20px; color: var(--text-secondary); font-size: 14px; }
 
-/* ===== Pagination ===== */
-.pagination { display: flex; justify-content: center; gap: 8px; margin-top: 20px; }
-.pagination button {
-  padding: 6px 14px; border: 1.5px solid var(--border); border-radius: 6px;
-  background: #fff; cursor: pointer; font-size: 13px; transition: var(--transition);
+/* ===== Toolbar Card ===== */
+.toolbar-card {
+  background: var(--card-bg); border-radius: var(--radius);
+  box-shadow: var(--shadow); margin-bottom: 16px; overflow: hidden;
 }
-.pagination button:hover { border-color: var(--primary); color: var(--primary); }
-.pagination button.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+.toolbar-row {
+  display: flex; align-items: center; gap: 8px;
+  padding: 12px 16px;
+}
+.toolbar-row + .toolbar-row { border-top: 1px solid #f0f0f0; }
+.filter-row { flex-wrap: wrap; gap: 8px 16px; }
+.filter-group {
+  display: flex; align-items: center; gap: 6px;
+}
+.filter-label {
+  font-size: 12px; color: var(--text-secondary); font-weight: 500;
+  white-space: nowrap;
+}
+.filter-group select {
+  padding: 6px 10px; border: 1.5px solid var(--border);
+  border-radius: 6px; font-size: 13px; background: #fff;
+  font-family: inherit; cursor: pointer;
+}
+.filter-search { position: relative; flex: 1; min-width: 160px; }
+.filter-search .search-input {
+  padding: 6px 10px 6px 30px; border: 1.5px solid var(--border);
+  border-radius: 6px; font-size: 13px; width: 100%;
+}
+.filter-search .search-input:focus { border-color: var(--primary); outline: none; }
+
+/* ===== Tags ===== */
+.tag {
+  display: inline-block; padding: 1px 6px; border-radius: 3px;
+  font-size: 10px; font-weight: 600; line-height: 1.5;
+  margin-left: 4px; vertical-align: middle;
+}
+.tag-danger { background: #fff2f0; color: var(--danger); }
+.tag-warning { background: #fff7e6; color: #fa8c16; }
+.tag-done { background: #f6ffed; color: var(--success); }
+.answer-hint { font-size: 12px; color: var(--text-secondary); }
+
+/* ===== Question List (enhanced) ===== */
+.question-tag.tag-bank {
+  background: #f0f5ff; color: var(--primary);
+}
+
+/* ===== Action Mini Buttons ===== */
+.btn-ai-mini {
+  padding: 3px 6px; font-size: 14px; border: 1px solid #d9b3ff;
+  border-radius: 4px; background: #f9f0ff; cursor: pointer; line-height: 1;
+}
+.btn-ai-mini:hover { background: #efdbff; }
+.btn-edit-mini {
+  padding: 3px 6px; font-size: 12px; border: 1px solid var(--border);
+  border-radius: 4px; background: #fff; cursor: pointer; line-height: 1;
+}
+.btn-edit-mini:hover { border-color: var(--primary); color: var(--primary); }
+.btn-del-mini {
+  padding: 3px 6px; font-size: 12px; border: 1px solid var(--border);
+  border-radius: 4px; background: #fff; cursor: pointer; line-height: 1;
+}
+.btn-del-mini:hover { border-color: var(--danger); color: var(--danger); }
+
+.btn-ai {
+  color: #722ed1; border-color: #d9b3ff; background: #fff;
+  padding: 8px 16px; border-radius: 8px; cursor: pointer;
+  font-size: 13px; font-weight: 500; transition: var(--transition);
+}
+.btn-ai:hover { background: #f9f0ff; border-color: #b37feb; }
+
+/* ===== Pagination (enhanced) ===== */
+.pagination {
+  display: flex; justify-content: center; align-items: center;
+  gap: 4px; margin-top: 20px; flex-wrap: wrap;
+}
+.page-btn {
+  min-width: 32px; height: 32px; padding: 0 8px;
+  border: 1.5px solid var(--border); border-radius: 6px;
+  background: #fff; cursor: pointer; font-size: 13px;
+  transition: var(--transition); display: flex;
+  align-items: center; justify-content: center;
+}
+.page-btn:hover:not(:disabled) { border-color: var(--primary); color: var(--primary); }
+.page-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); font-weight: 600; }
+.page-btn:disabled { opacity: 0.35; cursor: default; }
+.page-dots { padding: 0 4px; color: var(--text-secondary); font-size: 13px; }
+.page-info { margin-left: 12px; font-size: 12px; color: var(--text-secondary); }
 
 /* ===== Analysis Charts (Simple CSS) ===== */
 .chart-bar-row {
