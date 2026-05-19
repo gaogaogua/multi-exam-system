@@ -385,55 +385,50 @@ const App = {
   async handlePdfUpload(input) {
     const files = Array.from(input.files);
     if (files.length === 0) return;
-
-    const engineBadge = document.getElementById('engine-badge');
     this.showToast(`正在解析 ${files.length} 个PDF文件...`, 'info');
 
-    let totalAdded = 0;
-    let totalSkipped = 0;
-    let totalDup = 0;
-    let engineUsed = '';
-    const importedQuestionIds = [];
+    const { totalAdded, totalDup, totalSkipped, engineUsed, importedIds } = await this._processPdfFiles(files);
+    this._finishPdfImport(files, importedIds, engineUsed, totalAdded, totalDup, totalSkipped);
+    input.value = '';
+    this.renderQuestionBank();
+    this.renderImportHistory();
+    this.updateStats();
+    this.updateStorageInfo();
+  },
 
-    // 优先使用后端批量接口
-    const backendAvailable = await ApiConfig.checkAvailability();
-    if (backendAvailable && files.length > 1) {
+  /** PDF解析核心逻辑：先批量后逐个 */
+  async _processPdfFiles(files) {
+    let totalAdded = 0, totalSkipped = 0, totalDup = 0, engineUsed = '';
+    const importedIds = [];
+
+    // 批量后端接口
+    const backendOk = await ApiConfig.checkAvailability();
+    if (backendOk && files.length > 1) {
       try {
-        const batchResult = await PdfParser.parsePdfBatch(files);
-        if (batchResult.length > 0) {
+        const batch = await PdfParser.parsePdfBatch(files);
+        if (batch.length > 0) {
           engineUsed = 'backend';
-          // 自动分类
-          AutoCategorizer.classify(batchResult);
-          const result = QuestionBank.batchImport(batchResult);
-          totalAdded += result.added;
-          totalSkipped += result.skipped;
-          totalDup += result.skippedDup;
-          // 记录导入的题目ID
-          const allQuestions = QuestionBank.getAll();
-          importedQuestionIds.push(...allQuestions.slice(-result.added).map(q => q.id));
+          AutoCategorizer.classify(batch);
+          const r = QuestionBank.batchImport(batch);
+          totalAdded += r.added; totalSkipped += r.skipped; totalDup += r.skippedDup;
+          const all = QuestionBank.getAll();
+          importedIds.push(...all.slice(-r.added).map(q => q.id));
         }
-      } catch (e) {
-        console.warn('批量解析失败，逐个处理:', e.message);
-        engineUsed = '';
-      }
+      } catch (e) { console.warn('批量解析失败，逐个处理:', e.message); }
     }
 
-    // 如果批量失败或单文件，逐个解析
+    // 逐个处理
     if (engineUsed !== 'backend') {
       for (const file of files) {
         try {
-          const questions = await PdfParser.parsePdf(file);
-          if (questions.length > 0) {
-            if (questions[0]._engine) engineUsed = questions[0]._engine;
-            // 自动分类
-            AutoCategorizer.classify(questions);
-            const result = QuestionBank.batchImport(questions);
-            totalAdded += result.added;
-            totalSkipped += result.skipped;
-            totalDup += result.skippedDup;
-            // 记录题目ID
-            const allQuestions = QuestionBank.getAll();
-            importedQuestionIds.push(...allQuestions.slice(-result.added).map(q => q.id));
+          const qs = await PdfParser.parsePdf(file);
+          if (qs.length > 0) {
+            if (qs[0]._engine) engineUsed = qs[0]._engine;
+            AutoCategorizer.classify(qs);
+            const r = QuestionBank.batchImport(qs);
+            totalAdded += r.added; totalSkipped += r.skipped; totalDup += r.skippedDup;
+            const all = QuestionBank.getAll();
+            importedIds.push(...all.slice(-r.added).map(q => q.id));
           }
         } catch (err) {
           console.error('PDF解析失败:', file.name, err);
@@ -442,52 +437,44 @@ const App = {
       }
     }
 
-    // 记录导入批次
-    if (importedQuestionIds.length > 0) {
+    return { totalAdded, totalDup, totalSkipped, engineUsed, importedIds };
+  },
+
+  /** 导入后处理：记录批次、更新UI、AI补全提示 */
+  _finishPdfImport(files, importedIds, engineUsed, totalAdded, totalDup) {
+    if (importedIds.length > 0) {
       const totalSize = files.reduce((s, f) => s + f.size, 0);
-      const displayName = files.length === 1 ? files[0].name : `${files.length} 个文件`;
-      ImportManager.recordImport(displayName, totalSize, importedQuestionIds, engineUsed);
+      const name = files.length === 1 ? files[0].name : `${files.length} 个文件`;
+      ImportManager.recordImport(name, totalSize, importedIds, engineUsed);
     }
 
-    // 更新引擎标识
-    if (engineUsed && engineBadge) {
-      engineBadge.textContent = `引擎: ${engineUsed}`;
-      engineBadge.style.display = 'inline';
-      engineBadge.style.color = 'var(--success)';
+    const badge = document.getElementById('engine-badge');
+    if (engineUsed && badge) {
+      badge.textContent = `引擎: ${engineUsed}`;
+      badge.style.display = 'inline';
+      badge.style.color = 'var(--success)';
     }
 
     if (totalAdded > 0) {
-      const cats = AutoCategorizer.KNOWLEDGE_BASE;
-      const catCount = Object.keys(cats).length;
+      const catCount = Object.keys(AutoCategorizer.KNOWLEDGE_BASE).length;
       this.showToast(`成功导入 ${totalAdded} 道题目（已自动分类到${catCount}个领域）${totalDup > 0 ? `，跳过 ${totalDup} 道重复` : ''}`, 'success');
-
-      // 检查新导入的题目是否缺少答案/解析
-      const missingAnswer = importedQuestionIds.filter(id => {
-        const q = QuestionBank.getById(id);
-        return q && (!q.answer || !q.analysis);
-      });
-      if (missingAnswer.length > 0 && ApiConfig.hasDeepSeekApiKey()) {
-        setTimeout(() => {
-          if (confirm(`新导入的题目中有 ${missingAnswer.length} 道缺少答案或解析。\n是否使用AI智能分析自动补全？`)) {
-            this.aiAnalyzeMissing();
-          }
-        }, 500);
-      } else if (missingAnswer.length > 0) {
-        setTimeout(() => {
-          if (confirm(`新导入的题目中有 ${missingAnswer.length} 道缺少答案或解析。\n配置DeepSeek API Key后可使用AI自动补全。\n是否现在配置？`)) {
-            this.showApiKeyModal();
-          }
-        }, 500);
-      }
+      this._promptAiForMissing(importedIds);
     } else {
-      this.showToast(`未能导入新题目（${totalDup} 道重复，${totalSkipped} 道格式有误）`, 'info');
+      this.showToast(`未能导入新题目（${totalDup} 道重复）`, 'info');
     }
+  },
 
-    input.value = '';
-    this.renderQuestionBank();
-    this.renderImportHistory();
-    this.updateStats();
-    this.updateStorageInfo();
+  /** 提示AI补全缺失答案 */
+  _promptAiForMissing(importedIds) {
+    const missing = importedIds.filter(id => { const q = QuestionBank.getById(id); return q && (!q.answer || !q.analysis); });
+    if (missing.length === 0) return;
+    setTimeout(() => {
+      if (ApiConfig.hasDeepSeekApiKey()) {
+        if (confirm(`新导入的题目中有 ${missing.length} 道缺少答案或解析。\n是否使用AI智能分析自动补全？`)) this.aiAnalyzeMissing();
+      } else {
+        if (confirm(`新导入的题目中有 ${missing.length} 道缺少答案或解析。\n配置DeepSeek API Key后可使用AI自动补全。\n是否现在配置？`)) this.showApiKeyModal();
+      }
+    }, 500);
   },
 
   /**

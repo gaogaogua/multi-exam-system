@@ -123,104 +123,81 @@ const HunanExamAnalyzer = {
   analyze(parsedData) {
     const { modules, errorDetails, totalQuestions, totalTime, examName } = parsedData;
 
-    // 汇总所有答题
-    let totalCorrect = 0;
-    let totalWrong = 0;
-    for (const [, m] of Object.entries(modules)) {
-      totalCorrect += m.correct;
-      totalWrong += m.wrong;
-    }
-    const overallAccuracy = totalCorrect + totalWrong > 0
-      ? (totalCorrect / (totalCorrect + totalWrong) * 100) : 0;
-
-    // 各模块正确率
-    const moduleStats = [];
-    for (const [name, m] of Object.entries(modules)) {
-      const accuracy = m.total > 0 ? (m.correct / m.total * 100) : 0;
-      let level;
-      if (accuracy >= 85) level = 'excellent';
-      else if (accuracy >= 60) level = 'average';
-      else level = 'weak';
-      moduleStats.push({ name, ...m, accuracy, level });
-    }
-    moduleStats.sort((a, b) => b.accuracy - a.accuracy);
-
-    // 错误类型统计
-    const errorTypeCount = {};
-    for (const t of this.ERROR_TYPES) errorTypeCount[t] = 0;
-    for (const err of errorDetails) {
-      for (const r of err.reasons) {
-        if (errorTypeCount.hasOwnProperty(r)) errorTypeCount[r]++;
-      }
-    }
-
-    // 各模块错误类型分布
-    const moduleErrorTypes = {};
-    for (const [name] of Object.entries(modules)) {
-      moduleErrorTypes[name] = {};
-      for (const t of this.ERROR_TYPES) moduleErrorTypes[name][t] = 0;
-    }
-    for (const err of errorDetails) {
-      if (!moduleErrorTypes[err.module]) continue;
-      for (const r of err.reasons) {
-        if (moduleErrorTypes[err.module].hasOwnProperty(r)) {
-          moduleErrorTypes[err.module][r]++;
-        }
-      }
-    }
-
-    // 薄弱模块TOP3
-    const weakModules = moduleStats
-      .filter(m => m.accuracy < 85)
-      .sort((a, b) => a.accuracy - b.accuracy)
-      .slice(0, 3);
-
-    // 诊断薄弱模块的核心问题
-    const weakModuleDiagnosis = weakModules.map(m => {
-      const errTypes = moduleErrorTypes[m.name] || {};
-      const primary = Object.entries(errTypes)
-        .filter(([, v]) => v > 0)
-        .sort((a, b) => b[1] - a[1])[0];
-      return {
-        module: m.name,
-        accuracy: m.accuracy,
-        primaryErrorType: primary ? primary[0] : null,
-        primaryCount: primary ? primary[1] : 0,
-        diagnosis: this._diagnoseModule(m.name, m, errTypes),
-      };
-    });
-
-    // 用时评估
-    let timeAssessment;
-    if (totalQuestions > 0 && totalTime > 0) {
-      const perQuestion = totalTime / totalQuestions;
-      if (perQuestion < 0.7) timeAssessment = { label: '偏快', cssClass: 'warning', detail: `平均每题${perQuestion.toFixed(1)}分钟，答题速度偏快，可能存在审题不仔细的问题。建议适当放慢速度，确保理解题意后再作答。` };
-      else if (perQuestion > 1.8) timeAssessment = { label: '偏慢', cssClass: 'warning', detail: `平均每题${perQuestion.toFixed(1)}分钟，答题速度偏慢，可能影响考试时间分配。建议通过刷题提升熟练度，目标控制在每题1-1.5分钟。` };
-      else timeAssessment = { label: '正常', cssClass: 'success', detail: `平均每题${perQuestion.toFixed(1)}分钟，答题节奏合理。` };
-    } else {
-      timeAssessment = { label: '无数据', cssClass: '', detail: '缺少用时数据，无法评估。' };
-    }
-
-    // 生成可操作性建议
+    const { totalCorrect, totalWrong } = this._computeTotals(modules);
+    const overallAccuracy = this._calcAccuracy(totalCorrect, totalCorrect + totalWrong);
+    const moduleStats = this._computeModuleStats(modules);
+    const errorTypeCount = this._computeErrorTypeCount(errorDetails);
+    const moduleErrorTypes = this._computeModuleErrorTypes(modules, errorDetails);
+    const weakModuleDiagnosis = this._computeWeakDiagnosis(moduleStats, moduleErrorTypes);
+    const timeAssessment = this._assessTimeUsage(totalQuestions, totalTime);
     const recommendations = this._generateRecommendations(moduleStats, errorTypeCount, weakModuleDiagnosis, moduleErrorTypes, parsedData);
-
-    // 湖南省特色分析
     const hunanAnalysis = this._analyzeHunanFeatures(modules, errorDetails);
 
     return {
-      examName,
-      totalCorrect,
-      totalWrong,
-      totalQuestions: totalCorrect + totalWrong,
-      overallAccuracy,
-      moduleStats,
-      errorTypeCount,
-      moduleErrorTypes,
-      weakModules: weakModuleDiagnosis,
-      timeAssessment,
-      recommendations,
-      hunanAnalysis,
+      examName, totalCorrect, totalWrong, totalQuestions: totalCorrect + totalWrong,
+      overallAccuracy, moduleStats, errorTypeCount, moduleErrorTypes,
+      weakModules: weakModuleDiagnosis, timeAssessment, recommendations, hunanAnalysis,
     };
+  },
+
+  _computeTotals(modules) {
+    let totalCorrect = 0, totalWrong = 0;
+    for (const [, m] of Object.entries(modules)) { totalCorrect += m.correct; totalWrong += m.wrong; }
+    return { totalCorrect, totalWrong };
+  },
+
+  _calcAccuracy(correct, total) { return total > 0 ? (correct / total * 100) : 0; },
+
+  _computeModuleStats(modules) {
+    const stats = [];
+    for (const [name, m] of Object.entries(modules)) {
+      const accuracy = this._calcAccuracy(m.correct, m.total);
+      let level = accuracy >= 85 ? 'excellent' : accuracy >= 60 ? 'average' : 'weak';
+      stats.push({ name, ...m, accuracy, level });
+    }
+    return stats.sort((a, b) => b.accuracy - a.accuracy);
+  },
+
+  _computeErrorTypeCount(errorDetails) {
+    const counts = {};
+    for (const t of this.ERROR_TYPES) counts[t] = 0;
+    for (const err of errorDetails) {
+      for (const r of err.reasons) { if (Object.hasOwn(counts, r)) counts[r]++; }
+    }
+    return counts;
+  },
+
+  _computeModuleErrorTypes(modules, errorDetails) {
+    const map = {};
+    for (const [name] of Object.entries(modules)) {
+      map[name] = {};
+      for (const t of this.ERROR_TYPES) map[name][t] = 0;
+    }
+    for (const err of errorDetails) {
+      if (!map[err.module]) continue;
+      for (const r of err.reasons) { if (Object.hasOwn(map[err.module], r)) map[err.module][r]++; }
+    }
+    return map;
+  },
+
+  _computeWeakDiagnosis(moduleStats, moduleErrorTypes) {
+    return moduleStats
+      .filter(m => m.accuracy < 85)
+      .sort((a, b) => a.accuracy - b.accuracy)
+      .slice(0, 3)
+      .map(m => {
+        const errTypes = moduleErrorTypes[m.name] || {};
+        const primary = Object.entries(errTypes).filter(([, v]) => v > 0).sort((a, b) => b[1] - a[1])[0];
+        return { module: m.name, accuracy: m.accuracy, primaryErrorType: primary?.[0] || null, primaryCount: primary?.[1] || 0, diagnosis: this._diagnoseModule(m.name, m, errTypes) };
+      });
+  },
+
+  _assessTimeUsage(totalQuestions, totalTime) {
+    if (!(totalQuestions > 0 && totalTime > 0)) return { label: '无数据', cssClass: '', detail: '缺少用时数据，无法评估。' };
+    const per = totalTime / totalQuestions;
+    if (per < 0.7) return { label: '偏快', cssClass: 'warning', detail: `平均每题${per.toFixed(1)}分钟，答题速度偏快，可能存在审题不仔细的问题。建议适当放慢速度，确保理解题意后再作答。` };
+    if (per > 1.8) return { label: '偏慢', cssClass: 'warning', detail: `平均每题${per.toFixed(1)}分钟，答题速度偏慢，可能影响考试时间分配。建议通过刷题提升熟练度，目标控制在每题1-1.5分钟。` };
+    return { label: '正常', cssClass: 'success', detail: `平均每题${per.toFixed(1)}分钟，答题节奏合理。` };
   },
 
   /**
@@ -279,135 +256,76 @@ const HunanExamAnalyzer = {
    * 生成可操作性建议
    */
   _generateRecommendations(moduleStats, errorTypeCount, weakModuleDiagnosis, moduleErrorTypes, parsedData) {
+    const recs = [
+      ...this._recommendByErrorType(errorTypeCount, weakModuleDiagnosis),
+      ...this._recommendByWeakModule(weakModuleDiagnosis),
+      ...this._recommendByProvincial(parsedData),
+      ...this._recommendByOverall(parsedData),
+    ];
+    return this._dedupAndSortRecs(recs);
+  },
+
+  _recommendByErrorType(errorTypeCount, weakModuleDiagnosis) {
     const recs = [];
     const totalErrors = Object.values(errorTypeCount).reduce((a, b) => a + b, 0);
+    const sorted = Object.entries(errorTypeCount).filter(([, v]) => v > 0).sort((a, b) => b[1] - a[1]);
+    if (sorted.length === 0) return recs;
+    const top = sorted[0];
+    const topPct = totalErrors > 0 ? (top[1] / totalErrors * 100) : 0;
 
-    // 1. 基于主要错误类型的建议
-    const sortedErrors = Object.entries(errorTypeCount)
-      .filter(([, v]) => v > 0)
-      .sort((a, b) => b[1] - a[1]);
+    const rules = {
+      '知识点盲区': { threshold: 40, priority: 'P0', action: `每天安排1小时系统学习${weakModuleDiagnosis[0]?.module || '薄弱模块'}的基础知识，按照考试大纲章节顺序通读教材，每学完一章做配套练习题巩固。` },
+      '概念混淆': { threshold: 30, priority: 'P1', action: '制作易混淆概念对比表（至少5组），例如"行政处罚vs行政处分""行政复议vs行政诉讼""通告vs公告vs通知"，每天复习1-2组，做到能准确区分。' },
+      '记忆模糊': { threshold: 30, priority: 'P1', action: '采用"间隔复习法"：当天错题当晚复习→第3天再复习→第7天再复习→第15天再复习。将易忘的知识点制作成记忆卡片，利用碎片时间反复记忆。' },
+      '审题失误': { threshold: 20, priority: 'P0', action: `每次做题前强制执行"三读法"：一读题干完整内容→二读圈画关键词（"错误的""属于""不属于""除外"等）→三读确认理解无误后再看选项。做完后回头检查是否有审题偏差。` },
+      '计算错误': { threshold: 15, priority: 'P2', action: '每天做5道计算专项练习，重点训练经济模块和土木专业模块中的计算题型。养成"算完验算"的习惯，草稿保持工整便于检查。' },
+    };
 
-    if (sortedErrors.length > 0) {
-      const top = sortedErrors[0];
-      const topPct = totalErrors > 0 ? (top[1] / totalErrors * 100) : 0;
-
-      if (top[0] === '知识点盲区' && topPct > 40) {
-        recs.push({
-          priority: 'P0',
-          action: `每天安排1小时系统学习${weakModuleDiagnosis[0]?.module || '薄弱模块'}的基础知识，按照考试大纲章节顺序通读教材，每学完一章做配套练习题巩固。`,
-          reason: `"知识点盲区"占总失分的${topPct.toFixed(0)}%，是最主要的失分原因，必须从基础上补齐。`,
-        });
-      }
-      if (top[0] === '概念混淆' && topPct > 30) {
-        recs.push({
-          priority: 'P1',
-          action: `制作易混淆概念对比表（至少5组），例如"行政处罚vs行政处分""行政复议vs行政诉讼""通告vs公告vs通知"，每天复习1-2组，做到能准确区分。`,
-          reason: `"概念混淆"占比${topPct.toFixed(0)}%，说明相似知识点的辨析能力不足，需要专项训练。`,
-        });
-      }
-      if (top[0] === '记忆模糊' && topPct > 30) {
-        recs.push({
-          priority: 'P1',
-          action: `采用"间隔复习法"：当天错题当晚复习→第3天再复习→第7天再复习→第15天再复习。将易忘的知识点制作成Anki/纸质记忆卡片，利用碎片时间反复记忆。`,
-          reason: `"记忆模糊"占比${topPct.toFixed(0)}%，需要通过科学的间隔复习巩固记忆。`,
-        });
-      }
-      if (top[0] === '审题失误' && topPct > 20) {
-        recs.push({
-          priority: 'P0',
-          action: `每次做题前强制执行"三读法"：一读题干完整内容→二读圈画关键词（"错误的""属于""不属于""除外"等）→三读确认理解无误后再看选项。做完后回头检查是否有审题偏差。`,
-          reason: `"审题失误"占比${topPct.toFixed(0)}%，这是可以快速改善的问题——只要改变答题习惯，就能立即提升${(topPct/2).toFixed(0)}%左右的正确率。`,
-        });
-      }
-      if (top[0] === '计算错误' && topPct > 15) {
-        recs.push({
-          priority: 'P2',
-          action: `每天做5道计算专项练习，重点训练经济模块和土木专业模块中的计算题型。养成"算完验算"的习惯，草稿保持工整便于检查。`,
-          reason: `"计算错误"占比${topPct.toFixed(0)}%，通过专项训练和验算习惯可以快速减少。`,
-        });
+    for (const [type, rule] of Object.entries(rules)) {
+      if (top[0] === type && topPct > rule.threshold) {
+        recs.push({ priority: rule.priority, action: rule.action, reason: `"${type}"占总失分的${topPct.toFixed(0)}%。` });
       }
     }
+    return recs;
+  },
 
-    // 2. 基于最弱模块的建议
-    if (weakModuleDiagnosis.length > 0) {
-      const weakest = weakModuleDiagnosis[0];
-      const accuracy = weakest.accuracy;
-
-      if (accuracy < 40) {
-        recs.push({
-          priority: 'P0',
-          action: `【${weakest.module}冲刺计划】本周每天至少投入1.5小时专攻${weakest.module}：第1-2天通读该模块教材/讲义，第3-4天做专项练习题至少50道，第5天整理错题并分析规律，第6天针对错题对应知识点回炉重学，第7天再做一套该模块的模拟题检验效果。`,
-          reason: `${weakest.module}正确率仅${accuracy.toFixed(1)}%，是所有模块中最薄弱的，需要集中突破。`,
-        });
-      } else if (accuracy < 60) {
-        recs.push({
-          priority: 'P1',
-          action: `【${weakest.module}提升计划】每天安排40分钟专攻${weakest.module}：重点做该模块的真题和错题，每道错题写清楚错误原因和正确思路，周末集中回顾本周错题。`,
-          reason: `${weakest.module}正确率${accuracy.toFixed(1)}%，有较大提升空间。`,
-        });
-      }
+  _recommendByWeakModule(weakModuleDiagnosis) {
+    if (weakModuleDiagnosis.length === 0) return [];
+    const weakest = weakModuleDiagnosis[0];
+    if (weakest.accuracy >= 60) return [];
+    if (weakest.accuracy < 40) {
+      return [{ priority: 'P0', action: `【${weakest.module}冲刺计划】本周每天至少投入1.5小时专攻${weakest.module}：第1-2天通读教材/讲义，第3-4天做专项练习题至少50道，第5天整理错题分析规律，第6天回炉重学错题知识点，第7天模拟题检验效果。`, reason: `${weakest.module}正确率仅${weakest.accuracy.toFixed(1)}%，需要集中突破。` }];
     }
+    return [{ priority: 'P1', action: `【${weakest.module}提升计划】每天安排40分钟专攻${weakest.module}：重点做该模块的真题和错题，每道错题写清楚错误原因和正确思路，周末集中回顾本周错题。`, reason: `${weakest.module}正确率${weakest.accuracy.toFixed(1)}%，有较大提升空间。` }];
+  },
 
-    // 3. 基于湖南省考特色的建议
-    if (parsedData.modules['湖南省情'] && parsedData.modules['湖南省情'].total > 0) {
-      const hnAcc = parsedData.modules['湖南省情'].correct / parsedData.modules['湖南省情'].total * 100;
-      if (hnAcc < 60) {
-        recs.push({
-          priority: 'P1',
-          action: `关注"湖南省人民政府网"公众号，每天浏览15分钟湖南新闻；重点了解：湖南"三高四新"战略、长株潭一体化进展、湖南历史文化名人（如屈原、贾谊、周敦颐、王夫之、曾国藩、毛泽东、刘少奇等）、湖南地理特点（洞庭湖、湘资沅澧四水、张家界地貌等）。`,
-          reason: `湖南省情模块正确率${hnAcc.toFixed(1)}%，作为湖南省考试的必考特色内容，必须重点掌握。`,
-        });
-      }
+  _recommendByProvincial(parsedData) {
+    const recs = [];
+    const hn = parsedData.modules?.['湖南省情'];
+    if (hn?.total > 0) {
+      const hnAcc = hn.correct / hn.total * 100;
+      if (hnAcc < 60) recs.push({ priority: 'P1', action: '关注"湖南省人民政府网"公众号，每天浏览15分钟湖南新闻；重点了解：湖南"三高四新"战略、长株潭一体化进展、湖南历史文化名人、湖南地理特点等。', reason: `湖南省情正确率${hnAcc.toFixed(1)}%，是必考特色内容。` });
     }
-    if (parsedData.modules['时政'] && parsedData.modules['时政'].total > 0) {
-      const szAcc = parsedData.modules['时政'].correct / parsedData.modules['时政'].total * 100;
-      if (szAcc < 60) {
-        recs.push({
-          priority: 'P1',
-          action: `每天用"学习强国"APP学习20分钟，重点关注：党的二十大及历次全会精神、2025-2026年重大科技成就、湖南省政府工作报告要点、重大国际事件中的中国立场。每周整理一次本周时政要点清单。`,
-          reason: `时政模块正确率${szAcc.toFixed(1)}%，时政是公基考试的重要板块且有固定分值，需要持续积累。`,
-        });
-      }
+    const sz = parsedData.modules?.['时政'];
+    if (sz?.total > 0) {
+      const szAcc = sz.correct / sz.total * 100;
+      if (szAcc < 60) recs.push({ priority: 'P1', action: '每天用"学习强国"APP学习20分钟，重点关注：党的二十大及历次全会精神、2025-2026年重大科技成就、湖南省政府工作报告要点。每周整理时政要点清单。', reason: `时政正确率${szAcc.toFixed(1)}%，需要持续积累。` });
     }
+    return recs;
+  },
 
-    // 4. 基于整体正确率的总体建议
-    const overallAcc = parsedData.totalCorrect + parsedData.totalWrong > 0
-      ? parsedData.totalCorrect / (parsedData.totalCorrect + parsedData.totalWrong) * 100 : 0;
+  _recommendByOverall(parsedData) {
+    const acc = parsedData.totalCorrect + parsedData.totalWrong > 0 ? parsedData.totalCorrect / (parsedData.totalCorrect + parsedData.totalWrong) * 100 : 0;
+    if (acc >= 85) return [{ priority: 'P3', action: '整体水平优秀，建议进入冲刺提分阶段：重点攻克难题和偏题，保持每周1-2套模拟卷节奏。重点关注湖南省情和时政最新动态。', reason: `整体正确率${acc.toFixed(1)}%。` }];
+    if (acc >= 70) return [{ priority: 'P2', action: '当前处于提分关键期：每周至少完成2套真题/模拟卷，每套做完后花至少1小时复盘分析。将错题按"粗心失误"和"确实不会"分类处理。', reason: `整体正确率${acc.toFixed(1)}%。` }];
+    return [{ priority: 'P0', action: '建议采用"三轮复习法"：第一轮（2周）通读各模块教材建立知识框架→第二轮（2周）分模块刷题+整理错题→第三轮（1周）模拟考试+查漏补缺。每轮结束后自测检验效果。', reason: `整体正确率${acc.toFixed(1)}%，需要系统性复习。` }];
+  },
 
-    if (overallAcc >= 85) {
-      recs.push({
-        priority: 'P3',
-        action: `整体水平优秀，建议进入冲刺提分阶段：重点攻克难题和偏题，同时保持每周1-2套模拟卷的节奏以维持手感。重点关注湖南省情和时政的最新动态。`,
-        reason: `整体正确率${overallAcc.toFixed(1)}%，已进入高分段，当前目标是巩固优势、查漏补缺。`,
-      });
-    } else if (overallAcc >= 70) {
-      recs.push({
-        priority: 'P2',
-        action: `当前处于提分关键期：每周至少完成2套真题/模拟卷，每套做完后花至少1小时复盘分析。将错题按照"粗心失误"和"确实不会"分类处理——粗心的立即纠正答题习惯，不会的回归教材学习。`,
-        reason: `整体正确率${overallAcc.toFixed(1)}%，通过系统训练有较大提升空间。`,
-      });
-    } else {
-      recs.push({
-        priority: 'P0',
-        action: `建议采用"三轮复习法"：第一轮（2周）通读各模块教材建立知识框架→第二轮（2周）分模块刷题+整理错题→第三轮（1周）模拟考试+查漏补缺。每轮结束后自测检验效果，正确率提升到70%后再进入下一轮。`,
-        reason: `整体正确率${overallAcc.toFixed(1)}%，基础较为薄弱，需要系统性的复习计划。`,
-      });
-    }
-
-    // 去重并按优先级排序
+  _dedupAndSortRecs(recs) {
     const seen = new Set();
-    const unique = recs.filter(r => {
-      const key = r.action.substring(0, 30);
-      if (seen.has(key)) return false;
-      seen.add(key);
-      return true;
-    });
-    unique.sort((a, b) => {
-      const order = { 'P0': 0, 'P1': 1, 'P2': 2, 'P3': 3 };
-      return order[a.priority] - order[b.priority];
-    });
-
-    return unique;
+    const unique = recs.filter(r => { const k = r.action.substring(0, 30); if (seen.has(k)) return false; seen.add(k); return true; });
+    const order = { 'P0': 0, 'P1': 1, 'P2': 2, 'P3': 3 };
+    return unique.sort((a, b) => order[a.priority] - order[b.priority]);
   },
 
   /**
