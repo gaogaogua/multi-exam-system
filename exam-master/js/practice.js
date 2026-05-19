@@ -238,12 +238,51 @@ const Practice = {
         break;
     }
 
-    // 限制题量
+    // 限制题量（按题型比例分配）
     if (this.practiceCount > 0 && questions.length > this.practiceCount) {
-      questions = questions.slice(0, this.practiceCount);
+      questions = this._sampleByType(questions, this.practiceCount);
     }
 
     this.startWithQuestions(questions, mode);
+  },
+
+  /**
+   * 按题型比例采样 — 确保单选/多选/判断/简答占比合理
+   */
+  _sampleByType(pool, count) {
+    const byType = {};
+    pool.forEach(q => {
+      const t = q.type || 'single';
+      if (!byType[t]) byType[t] = [];
+      byType[t].push(q);
+    });
+
+    const types = Object.keys(byType);
+    const total = pool.length;
+
+    // 每种题型至少 1 题，剩余按比例分配
+    let allocated = types.length; // 每种至少1题
+    const remaining = count - allocated;
+
+    const result = [];
+    types.forEach(t => {
+      const typePool = byType[t];
+      const proportion = typePool.length / total;
+      const extra = Math.round(remaining * proportion);
+      const take = Math.min(1 + extra, typePool.length);
+      const shuffled = this.shuffle([...typePool]);
+      result.push(...shuffled.slice(0, take));
+    });
+
+    // 如果不够，从剩余题目中补足
+    if (result.length < count) {
+      const usedIds = new Set(result.map(q => q.id));
+      const unused = pool.filter(q => !usedIds.has(q.id));
+      const extra = this.shuffle(unused).slice(0, count - result.length);
+      result.push(...extra);
+    }
+
+    return this.shuffle(result).slice(0, count);
   },
 
   /**
