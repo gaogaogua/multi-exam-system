@@ -12,6 +12,11 @@ const ExamDates = {
   exams: [
     { id: 'zhuhui',    name: '珠晖区考试',  subject: '公基',          date: '2026-05-16', status: 2, tags: ['#公基'] },
     { id: 'wangcheng', name: '望城区考试',  subject: '公基+一建专业',  date: '2026-05-17', status: 2, tags: ['#公基', '#土木专业'] },
+
+    // 即将到来
+    { id: 'huaihua_reg', name: '怀化报名',   subject: '公基',          date: '2026-05-19', status: 0, tags: ['#公基'], milestone: '报名' },
+    { id: 'suining_confirm', name: '绥宁现场确认', subject: '公基',    date: '2026-05-20', status: 0, tags: ['#公基'], milestone: '现场确认' },
+    { id: 'yuanling_ticket', name: '沅陵领准考证', subject: '公基',    date: '2026-05-22', status: 0, tags: ['#公基'], milestone: '准考证' },
     { id: 'yuanling',  name: '沅陵考试',    subject: '公基',          date: '2026-05-23', status: 0, tags: ['#公基'], priority: 5 },
     { id: 'suining2',  name: '绥宁考试',    subject: '一建专业知识',   date: '2026-05-29', status: 0, tags: ['#土木专业'] },
     { id: 'yijian',    name: '一建实务考试', subject: '一建',          date: '2026-09-05', status: 0, tags: ['#一建'] },

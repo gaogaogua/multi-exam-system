@@ -640,8 +640,11 @@ const Plan = {
     const errors = ErrorNotebook.getAll();
     const today = new Date().toISOString().split('T')[0];
 
-    // 分离即将到来和已完成的考试
-    const upcoming = allExams.filter(e => e.status === 0 && e.date >= today).sort((a, b) => a.date.localeCompare(b.date));
+    // 分离：考试 vs 里程碑、即将 vs 已完成
+    const isUpcoming = e => e.status === 0 && e.date >= today;
+    const upcoming = allExams.filter(isUpcoming).sort((a, b) => a.date.localeCompare(b.date));
+    const exams = upcoming.filter(e => !e.milestone);
+    const milestones = upcoming.filter(e => e.milestone);
     const completed = allExams.filter(e => e.status === 2).sort((a, b) => b.date.localeCompare(a.date));
     if (upcoming.length === 0 && completed.length === 0) return '';
 
@@ -649,37 +652,56 @@ const Plan = {
       <div class="plan-summary-header">
         <strong>📑 考试日历</strong>
         <span style="font-size:11px;color:var(--text-secondary);">同步自滴答清单</span>
-      </div>
-      <div class="exam-target-list" style="display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;">`;
+      </div>`;
 
-    // 即将到来（橙色/红色强调）
-    upcoming.forEach(exam => {
-      const days = ExamDates.countdown ? ExamDates.countdown(exam.date) : this._getDays(today, exam.date);
-      let urgency, bg;
-      if (days <= 3) { urgency = `${days}天!`; bg = '#fff2f0'; }
-      else if (days <= 7) { urgency = `${days}天`; bg = '#fff7e6'; }
-      else { urgency = `${days}天`; bg = '#f0f5ff'; }
+    // 里程碑（报名、确认、准考证）
+    if (milestones.length > 0) {
+      html += `<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;">`;
+      milestones.forEach(m => {
+        const days = ExamDates.countdown ? ExamDates.countdown(m.date) : this._getDays(today, m.date);
+        const urgency = days === 0 ? '今天!' : `${days}天后`;
+        html += `
+          <div style="padding:6px 12px;border-radius:6px;background:${days===0?'#fff2f0':'#fff7e6'};border:1px solid ${days===0?'#ff4d4f':'#fa8c16'};font-size:12px;">
+            <strong>📌 ${m.name}</strong>
+            <span style="color:${days===0?'#ff4d4f':'#fa8c16'};margin-left:4px;">${m.date} ${urgency}</span>
+            <span style="font-size:10px;color:var(--text-secondary);margin-left:4px;">${m.milestone}</span>
+          </div>`;
+      });
+      html += `</div>`;
+    }
 
-      const bank = exam.subject.includes('一建') || exam.subject.includes('土木') ? 'tumu' : 'gongji';
-      const bankQ = allQ.filter(q => q.bank === bank);
-      const errCount = errors.filter(e => !e.mastered).length;
+    // 考试
+    if (exams.length > 0) {
+      html += `<div class="exam-target-list" style="display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;">`;
+      exams.forEach(exam => {
+        const days = ExamDates.countdown ? ExamDates.countdown(exam.date) : this._getDays(today, exam.date);
+        let urgency, bg;
+        if (days <= 3) { urgency = `${days}天!`; bg = '#fff2f0'; }
+        else if (days <= 7) { urgency = `${days}天`; bg = '#fff7e6'; }
+        else { urgency = `${days}天`; bg = '#f0f5ff'; }
 
-      html += `
-        <div class="exam-target-card" style="flex:1;min-width:170px;max-width:260px;padding:12px;border-radius:8px;border:1px solid ${days<=3?'#ff4d4f':days<=7?'#fa8c16':'var(--border)'};background:${bg};">
-          <div style="display:flex;justify-content:space-between;align-items:center;">
-            <strong style="font-size:13px;">${exam.name}</strong>
-            <span style="font-size:11px;color:var(--text-secondary);">${exam.subject}</span>
-          </div>
-          <div style="margin-top:4px;font-size:12px;font-weight:600;color:${days<=3?'#ff4d4f':days<=7?'#fa8c16':'var(--primary)'};">
-            📅 ${exam.date} · ${urgency}
-          </div>
-          <div style="margin-top:6px;font-size:11px;color:var(--text-secondary);line-height:1.6;">
-            题库: ${bankQ.length}题 | 待复习: ${errCount}题
-          </div>
-        </div>`;
-    });
+        const bank = exam.subject.includes('一建') || exam.subject.includes('土木') ? 'tumu' : 'gongji';
+        const bankQ = allQ.filter(q => q.bank === bank);
+        const errCount = errors.filter(e => !e.mastered).length;
 
-    html += `</div></div>`;
+        html += `
+          <div class="exam-target-card" style="flex:1;min-width:170px;max-width:260px;padding:12px;border-radius:8px;border:1px solid ${days<=3?'#ff4d4f':days<=7?'#fa8c16':'var(--border)'};background:${bg};">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <strong style="font-size:13px;">${exam.name}</strong>
+              <span style="font-size:11px;color:var(--text-secondary);">${exam.subject}</span>
+            </div>
+            <div style="margin-top:4px;font-size:12px;font-weight:600;color:${days<=3?'#ff4d4f':days<=7?'#fa8c16':'var(--primary)'};">
+              📅 ${exam.date} · ${urgency}
+            </div>
+            <div style="margin-top:6px;font-size:11px;color:var(--text-secondary);line-height:1.6;">
+              题库: ${bankQ.length}题 | 待复习: ${errCount}题
+            </div>
+          </div>`;
+      });
+      html += `</div>`;
+    }
+
+    html += `</div>`;
 
     // 已完成
     if (completed.length > 0) {
