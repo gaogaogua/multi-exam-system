@@ -437,6 +437,7 @@ const Practice = {
 
     if (!this.showResult) {
       html += `<button class="btn btn-primary" onclick="Practice.submitAnswer()">提交答案</button>`;
+      html += `<button class="btn btn-outline" style="color:#fa8c16;border-color:#fa8c16;" onclick="Practice.dontKnow()">不会</button>`;
       html += `<button class="btn btn-outline" style="color:var(--text-secondary);" onclick="Practice.skipQuestion()">跳过</button>`;
     }
 
@@ -731,6 +732,33 @@ const Practice = {
       if (resultDiv) resultDiv.innerHTML = `<span style="color:var(--danger);font-size:12px;">生成失败: ${this.escapeHtml(e.message)}</span>`;
       App.showToast('变体题生成失败: ' + e.message, 'error');
     }
+  },
+
+  /** 不会 — 直接显示答案和解析，记录为错误 */
+  dontKnow() {
+    const q = this.questions[this.currentIndex];
+    if (!q) return;
+
+    // 记录空作答
+    this.userAnswers[q.id] = '';
+
+    // 记录到练习日志
+    const log = Storage.get(Storage.KEYS.PRACTICE_LOG) || [];
+    log.push({
+      questionId: q.id,
+      userAnswer: '',
+      correct: false,
+      timestamp: new Date().toISOString(),
+      mode: this.mode,
+    });
+    Storage.set(Storage.KEYS.PRACTICE_LOG, log);
+
+    // 加入错题本
+    ErrorNotebook.addError(q.id, '');
+
+    // 直接显示结果
+    this.showResult = true;
+    this.renderQuestion();
   },
 
   /**
