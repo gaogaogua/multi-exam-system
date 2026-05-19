@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-05-19T15:51:23.650Z",
+  "updatedAt": "2026-05-19T16:00:58.824Z",
   "errors": [
     {
       "id": "err_mpc0yaa7",
@@ -2563,6 +2563,27 @@
         "efactor": 2.5,
         "nextReviewAt": "2026-05-20"
       }
+    },
+    {
+      "id": "err_mpctl0yn",
+      "questionId": "q_mpc0xk5b_qhdrl2_1244",
+      "questionTitle": "建筑物变形缝装置按照使用部位分为哪几类？",
+      "questionType": "essay",
+      "questionCategory": "第1章 建筑设计技术",
+      "correctAnswer": "(1)楼地面变形缝； (2) 内墙、顶棚吊顶变形缝 (3)外墙变形缝; (4) 屋面变形缝。",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T16:00:52.511Z",
+      "lastWrongAt": "2026-05-19T16:00:52.511Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
     }
   ],
   "practiceLog": [
@@ -3600,6 +3621,13 @@
       "userAnswer": "C",
       "correct": false,
       "timestamp": "2026-05-19T09:12:31.671Z",
+      "mode": "sequential"
+    },
+    {
+      "questionId": "q_mpc0xk5b_qhdrl2_1244",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T16:00:52.504Z",
       "mode": "sequential"
     }
   ],
