@@ -598,26 +598,32 @@ const Practice = {
    * AI解析当前题目 — 静默保存，原地刷新
    */
   async _aiAnalyze(id) {
+    // 立即反馈：更新按钮状态
+    const btn = document.querySelector(`button[onclick*="_aiAnalyze('${id}')"]`);
+    if (btn) { btn.textContent = '⏳ AI解析中...'; btn.disabled = true; }
+
     if (!ApiConfig.hasDeepSeekApiKey()) {
-      // 没有 API Key 时，在按钮旁边显示提示
       const el = document.getElementById('ai-key-hint-' + id);
       if (el) el.innerHTML = '<span style="color:var(--danger);font-size:11px;">⚠ 请先配置DeepSeek API Key（点左下角 AI/Sync）</span>';
-      App.showToast('请先配置DeepSeek API Key', 'error');
+      if (btn) { btn.textContent = '🤖 AI解析此题'; btn.disabled = false; }
       return;
     }
     const q = QuestionBank.getById(id);
-    if (!q) return;
+    if (!q) {
+      if (btn) { btn.textContent = '🤖 AI解析此题'; btn.disabled = false; }
+      return;
+    }
 
-    // 清除之前的提示
     const el = document.getElementById('ai-key-hint-' + id);
     if (el) el.innerHTML = '';
 
     const hasAnalysis = q.analysis && q.analysis.trim().length > 5;
-    if (hasAnalysis && !confirm('此题已有解析，确定重新AI分析吗？')) return;
+    if (hasAnalysis && !confirm('此题已有解析，确定重新AI分析吗？')) {
+      if (btn) { btn.textContent = '🔄 AI重新解析'; btn.disabled = false; }
+      return;
+    }
 
-    // 重置追问历史
     this._chatHistory = null;
-
     App.showToast('AI解析中...', 'info');
     try {
       const results = await ApiConfig.aiAnalyze([{
@@ -640,9 +646,11 @@ const Practice = {
         App.updateStats();
         Sync.push().catch(() => {});
       } else {
+        if (btn) { btn.textContent = '🤖 AI解析此题'; btn.disabled = false; }
         App.showToast('AI解析失败: ' + (results[0]?.error || '未知错误'), 'error');
       }
     } catch(e) {
+      if (btn) { btn.textContent = '🤖 AI解析此题'; btn.disabled = false; }
       App.showToast('AI解析失败: ' + e.message, 'error');
     }
   },
