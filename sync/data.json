@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-05-19T16:09:44.135Z",
+  "updatedAt": "2026-05-19T16:12:25.128Z",
   "errors": [
     {
       "id": "err_mpc0yaa7",
@@ -2647,6 +2647,27 @@
         "efactor": 2.5,
         "nextReviewAt": "2026-05-20"
       }
+    },
+    {
+      "id": "err_mpctzoru",
+      "questionId": "q_mpc0xk6q_jxp8mu_1300",
+      "questionTitle": "防水材料选用应符合哪些规定？（P184）",
+      "questionType": "essay",
+      "questionCategory": "第1章 建筑设计技术",
+      "correctAnswer": "①材料性能应与工程使用环境条件相适应; ②每道防水层厚度应满足防水设防的最小厚度要求； ③防水材料影响环境的物质和有害物质限量应满足要求。",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T16:12:16.554Z",
+      "lastWrongAt": "2026-05-19T16:12:16.554Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
     }
   ],
   "practiceLog": [
@@ -3698,6 +3719,13 @@
       "userAnswer": "",
       "correct": false,
       "timestamp": "2026-05-19T16:09:29.535Z",
+      "mode": "sequential"
+    },
+    {
+      "questionId": "q_mpc0xk6q_jxp8mu_1300",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T16:12:16.544Z",
       "mode": "sequential"
     }
   ],
