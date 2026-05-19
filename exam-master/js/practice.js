@@ -225,14 +225,14 @@ const Practice = {
       case 'random':
         questions = this.shuffle([...this._getFilteredPool()]);
         if (questions.length === 0) {
-          App.showToast('该题库为空，请先导入题目', 'info');
+          App.showToast(this._poolDiagnose(), 'error');
           return;
         }
         break;
       default:
         questions = [...this._getFilteredPool()];
         if (questions.length === 0) {
-          App.showToast('该题库为空，请先导入题目', 'info');
+          App.showToast(this._poolDiagnose(), 'error');
           return;
         }
         break;
@@ -244,6 +244,23 @@ const Practice = {
     }
 
     this.startWithQuestions(questions, mode);
+  },
+
+  /** 诊断题库为空的原因 */
+  _poolDiagnose() {
+    const all = QuestionBank.getAll();
+    if (all.length === 0) return '题库完全为空，请导入题目';
+    const parts = ['题库共' + all.length + '题'];
+    // 检查 bank 分布
+    const banks = {};
+    all.forEach(q => { const b = q.bank || '未标记'; banks[b] = (banks[b] || 0) + 1; });
+    parts.push('题库分布: ' + Object.entries(banks).map(([k, v]) => k + ' ' + v + '题').join(', '));
+    // 检查当前筛选
+    if (this.bankFilter !== 'all') parts.push('当前筛选题库=' + this.bankFilter);
+    if (this.categoryFilter !== 'all') parts.push('分类=' + this.categoryFilter);
+    if (this.typeFilter !== 'all') parts.push('题型=' + this.typeFilter);
+    if (this.skipPracticed) parts.push('跳过已练题目');
+    return parts.join('; ');
   },
 
   /**
