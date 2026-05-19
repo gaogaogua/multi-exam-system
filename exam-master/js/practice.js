@@ -353,30 +353,39 @@ const Practice = {
    */
   _startUI(questions, mode) {
     document.querySelectorAll('#page-practice .card-row').forEach(el => el.style.display = 'none');
-    const area = document.getElementById('practice-area');
-    area.style.display = 'block';
-    // 事件委托：统一处理所有按钮点击
-    area.onclick = (e) => {
-      const btn = e.target.closest('button');
-      if (!btn) return;
+    document.getElementById('practice-area').style.display = 'block';
+    // Remove old listener if exists
+    if (this._delegatedHandler) {
+      document.removeEventListener('click', this._delegatedHandler, true);
+      document.removeEventListener('keydown', this._keyHandler, true);
+    }
+    // Event delegation on document (capture phase for reliability)
+    this._delegatedHandler = (e) => {
+      const btn = e.target.tagName === 'BUTTON' ? e.target : e.target.parentElement;
+      if (!btn || btn.tagName !== 'BUTTON') return;
+      const area = document.getElementById('practice-area');
+      if (!area || area.style.display === 'none') return;
+      if (!area.contains(btn)) return;
+      e.preventDefault();
       e.stopPropagation();
-      const qid = btn.dataset.qid;
+      const qid = btn.getAttribute('data-qid');
       if (!qid) return;
-      if (btn.classList.contains('ai-analyze-btn')) { this._aiAnalyze(qid); return; }
-      if (btn.classList.contains('ai-followup-btn')) { this._aiFollowUp(qid); return; }
-      if (btn.classList.contains('ai-grade-btn')) { this._aiGradeEssay(qid); return; }
-      if (btn.classList.contains('edit-btn')) { this._showEdit(qid); return; }
-      if (btn.classList.contains('unpractice-btn')) { this._markUnpracticed(qid); return; }
-      if (btn.classList.contains('variant-btn')) { this._aiGenVariant(qid); return; }
+      if (btn.className.includes('ai-analyze-btn')) { this._aiAnalyze(qid); return; }
+      if (btn.className.includes('ai-followup-btn')) { this._aiFollowUp(qid); return; }
+      if (btn.className.includes('ai-grade-btn')) { this._aiGradeEssay(qid); return; }
+      if (btn.className.includes('edit-btn')) { this._showEdit(qid); return; }
+      if (btn.className.includes('unpractice-btn')) { this._markUnpracticed(qid); return; }
+      if (btn.className.includes('variant-btn')) { this._aiGenVariant(qid); return; }
     };
-    // 键盘委托：追问输入框回车
-    area.onkeydown = (e) => {
-      if (e.key === 'Enter' && e.target.classList.contains('ai-followup-input')) {
+    this._keyHandler = (e) => {
+      if (e.key === 'Enter' && e.target.className.includes('ai-followup-input')) {
         e.preventDefault();
-        const qid = e.target.dataset.qid;
+        const qid = e.target.getAttribute('data-qid');
         if (qid) this._aiFollowUp(qid);
       }
     };
+    document.addEventListener('click', this._delegatedHandler, true);
+    document.addEventListener('keydown', this._keyHandler, true);
     this.renderQuestion();
   },
 
