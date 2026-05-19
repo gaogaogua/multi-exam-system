@@ -9,12 +9,22 @@ const App = {
   /**
    * 初始化
    */
-  async init() {
-    // 设置PDF.js worker
-    if (typeof pdfjsLib !== 'undefined') {
-      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-    }
+  /** 按需加载 pdf.js（仅在用户点击上传PDF时） */
+  async _ensurePdfJs() {
+    if (typeof pdfjsLib !== 'undefined') return pdfjsLib;
+    return new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+      script.onload = () => {
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        resolve(pdfjsLib);
+      };
+      script.onerror = () => reject(new Error('PDF.js 加载失败'));
+      document.head.appendChild(script);
+    });
+  },
 
+  async init() {
     // 手机端首次访问时自动从服务器加载题库
     await DataLoader.autoLoad();
 
@@ -65,7 +75,7 @@ const App = {
         }
       }
     } catch (e) { /* ignore */ }
-    badge.textContent = '引擎: PDF.js (浏览器)';
+    badge.textContent = '引擎: 点击上传加载';
     badge.style.display = 'inline';
     badge.style.color = 'var(--text-secondary)';
   },
@@ -385,6 +395,18 @@ const App = {
   async handlePdfUpload(input) {
     const files = Array.from(input.files);
     if (files.length === 0) return;
+
+    // 按需加载 pdf.js
+    try {
+      await this._ensurePdfJs();
+      const badge = document.getElementById('engine-badge');
+      if (badge) { badge.textContent = '引擎: PDF.js (已加载)'; badge.style.color = 'var(--success)'; }
+    } catch (e) {
+      this.showToast('PDF解析引擎加载失败，请检查网络', 'error');
+      input.value = '';
+      return;
+    }
+
     this.showToast(`正在解析 ${files.length} 个PDF文件...`, 'info');
 
     const { totalAdded, totalDup, totalSkipped, engineUsed, importedIds } = await this._processPdfFiles(files);
