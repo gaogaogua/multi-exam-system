@@ -880,11 +880,11 @@ const App = {
       </div>
       <hr style="margin:16px 0;border:none;border-top:1px solid #f0f0f0;">
       <div class="form-group">
-        <label>🔄 GitHub Token <small>(跨设备同步)</small></label>
-        <input type="password" id="github-token-input" value="${ghToken}" placeholder="ghp_xxxxxxxxxxxxxxxx" autocomplete="off">
+        <label>🔄 Gitee Token <small>(跨设备同步)</small></label>
+        <input type="password" id="github-token-input" value="${ghToken}" placeholder="gitee_token_xxxxxxxx" autocomplete="off">
         ${ghToken ? `<p style="font-size:12px;color:var(--text-secondary);margin-top:4px;">当前: ${ghMasked}</p>` : ''}
         <div class="api-key-help" style="font-size:12px;margin-top:4px;">
-          获取: <a href="https://github.com/settings/tokens/new?scopes=repo&description=multi-exam-sync" target="_blank">创建 Token</a> (勾选 repo) → 复制粘贴到这里
+          获取: <a href="https://gitee.com/profile/personal_access_tokens" target="_blank">创建 Gitee Token</a> (勾选 projects) → 复制粘贴到这里
         </div>
         ${ghToken ? '<button class="btn btn-sm btn-outline" onclick="Sync.push().then(r=>App.showToast(r.pushed?\'同步成功\':\'同步失败:\'+r.error,r.pushed?\'success\':\'error\'))" style="margin-top:8px;">🔄 手动同步</button>' : ''}
       </div>

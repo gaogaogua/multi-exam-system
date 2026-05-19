@@ -11,10 +11,12 @@
  */
 
 const Sync = {
-  REPO: 'gaogaogua/multi-exam-system',
+  // 同步后端使用 Gitee（国内访问稳定）
+  // 部署使用 GitHub Pages（全球 CDN，国内可访问）
+  REPO: 'how-are-you-gao-gao-hang/multi-exam-system',
   SYNC_PATH: 'sync/data.json',
-  RAW_URL: 'https://raw.githubusercontent.com/gaogaogua/multi-exam-system/master/sync/data.json',
-  API_URL: 'https://api.github.com/repos/gaogaogua/multi-exam-system/contents/sync/data.json',
+  RAW_URL: 'https://gitee.com/how-are-you-gao-gao-hang/multi-exam-system/raw/master/sync/data.json',
+  API_URL: 'https://gitee.com/api/v5/repos/how-are-you-gao-gao-hang/multi-exam-system/contents/sync/data.json',
 
   _token: null,
   _tokenLoaded: false,
@@ -55,19 +57,17 @@ const Sync = {
   async push() {
     const token = this.getToken();
     if (!token) {
-      console.warn('[Sync] 未配置 GitHub Token，跳过推送');
+      console.warn('[Sync] 未配置 Gitee Token，跳过推送');
       return { pushed: false, error: '未配置Token' };
     }
 
     const data = this._collect();
     const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
 
-    // 获取远程文件 SHA（更新需要）
+    // 获取远程文件 SHA（Gitee API 用 ?access_token= 参数）
     let sha = null;
     try {
-      const head = await fetch(this.API_URL, {
-        headers: { Authorization: 'Bearer ' + token },
-      });
+      const head = await fetch(this.API_URL + '?access_token=' + token);
       if (head.ok) {
         const info = await head.json();
         sha = info.sha;
@@ -75,15 +75,13 @@ const Sync = {
     } catch (e) { /* 文件不存在，新建 */ }
 
     try {
-      const body = { message: 'sync: auto sync', content };
+      const method = sha ? 'PUT' : 'POST';
+      const body = { access_token: token, message: 'sync: auto sync', content };
       if (sha) body.sha = sha;
 
       const resp = await fetch(this.API_URL, {
-        method: 'PUT',
-        headers: {
-          Authorization: 'Bearer ' + token,
-          'Content-Type': 'application/json',
-        },
+        method: method,
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
       });
 
