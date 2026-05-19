@@ -1,15 +1,8 @@
 {
   "version": 2,
-  "updatedAt": "2026-05-19T11:29:26.866Z",
+  "updatedAt": "2026-05-19T11:36:28.006Z",
   "errors": [],
-  "practiceLog": [
-    {
-      "userAnswer": "B",
-      "correct": true,
-      "timestamp": "2026-05-19T06:53:44.600Z",
-      "mode": "random"
-    }
-  ],
+  "practiceLog": [],
   "examLog": [],
   "aiQuestions": [
     {
