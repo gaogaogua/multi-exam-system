@@ -1127,29 +1127,7 @@ const Plan = {
   },
 
   updateProgress(bank, correct, total) {
-    // Delegate to auto-adjust
     this._adjustAfterPractice(correct, total, bank);
-  },
-
-    const subjMap = { gongji: '公基', tumu: '土木' };
-    const subject = subjMap[bank] || '公基';
-    const idx = plan.tasks.findIndex(t => !t.completed && t.subject === subject);
-    if (idx === -1) return;
-
-    plan.tasks[idx].completed = true;
-    plan.tasks[idx].correct = correct;
-    plan.tasks[idx].total = total;
-    this._savePlans(plans);
-
-    const progress = this._getProgress() || { date: today, tasksCompleted: 0, totalTasks: plan.tasks.length, bankProgress: { gongji: { done: 0, total: 0 }, tumu: { done: 0, total: 0 } } };
-    progress.tasksCompleted = plan.tasks.filter(t => t.completed).length;
-    const gj = plan.tasks.filter(t => t.subject === '公基');
-    const tm = plan.tasks.filter(t => t.subject === '土木');
-    progress.bankProgress.gongji = { done: gj.filter(t => t.completed).length, total: gj.length };
-    progress.bankProgress.tumu = { done: tm.filter(t => t.completed).length, total: tm.length };
-    this._saveProgress(progress);
-
-    if (App.updateStats) App.updateStats();
   },
 
   _getWeakCategories(bank, errors) {
