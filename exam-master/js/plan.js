@@ -97,6 +97,25 @@ const Plan = {
   },
   _saveGoals(g) { localStorage.setItem(this.MONTHLY_GOALS_KEY, JSON.stringify(g)); },
 
+  _getExamTargets() {
+    try { return JSON.parse(localStorage.getItem('exam_targets')) || null; }
+    catch (e) { return null; }
+  },
+  _saveExamTargets(t) { localStorage.setItem('exam_targets', JSON.stringify(t)); },
+
+  /** 已知考试来源列表 */
+  KNOWN_EXAMS: [
+    { id: 'zhuhui',    name: '衡阳珠晖区事业单位',  subject: '公基', region: '衡阳', date: '2026-05-24', files: ['珠晖区', '珠晖区_新', '珠晖区_zips'] },
+    { id: 'wangcheng', name: '长沙望城区事业单位',  subject: '公基', region: '长沙', date: '2026-05-17', files: ['望城区'] },
+    { id: 'suining',   name: '张家界绥宁事业单位',  subject: '公基', region: '张家界', date: null },
+    { id: 'liuyang',   name: '长沙浏阳事业单位',    subject: '公基', region: '长沙', date: null },
+    { id: 'huaihua',   name: '怀化沅陵事业单位',    subject: '公基', region: '怀化', date: null },
+    { id: 'yijian',    name: '一级建造师实务',       subject: '一建', date: '2026-09-05' },
+    { id: 'guokao',    name: '国家公务员考试',       subject: '国考', date: '2026-11-30' },
+    { id: 'tumu',      name: '土木专业知识',         subject: '土木', date: null },
+    { id: 'gongji_err',name: '公基错题合集',        subject: '公基' },
+  ],
+
   /** 判断时间段是否已过 */
   _isSlotPast(slotTime, dateStr) {
     const now = new Date();
@@ -475,7 +494,7 @@ const Plan = {
         </div>`;
     });
 
-    html += `</div>` + this._renderControls(plan);
+    html += `</div>` + this._renderControls(plan) + this._renderExamSection(isToday);
     return html;
   },
 
@@ -612,6 +631,95 @@ const Plan = {
 
     html += this._renderGoalsSection();
     return html;
+  },
+
+  /** 考试来源管理卡片 */
+  _renderExamSection(isToday) {
+    const targets = this._getExamTargets() || { active: ['zhuhui', 'wangcheng', 'yijian', 'tumu', 'gongji_err'], customDate: {} };
+    const activeExams = this.KNOWN_EXAMS.filter(e => targets.active.includes(e.id));
+    if (activeExams.length === 0) return '';
+
+    const allQ = QuestionBank.getAll();
+    const errors = ErrorNotebook.getAll();
+    const sm2Stats = ErrorNotebook.getSM2Stats();
+
+    let html = `<div class="card" style="margin-top:16px;">
+      <div class="plan-summary-header">
+        <strong>📑 考试目标</strong>
+        <button class="btn btn-sm btn-outline" onclick="Plan._editExamTargets()" style="font-size:11px;">管理</button>
+      </div>
+      <div class="exam-target-list" style="display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;">`;
+
+    const today = new Date().toISOString().split('T')[0];
+
+    activeExams.forEach(exam => {
+      let date = targets.customDate[exam.id] || exam.date;
+      let countdown = '';
+      if (date) {
+        const days = Math.ceil((new Date(date) - new Date(today)) / 86400000);
+        if (days < 0) countdown = `<span style="color:var(--danger);">已过${Math.abs(days)}天</span>`;
+        else if (days === 0) countdown = '<span style="color:var(--danger);">今天!</span>';
+        else if (days <= 7) countdown = `<span style="color:#fa8c16;">${days}天后</span>`;
+        else if (days <= 30) countdown = `<span style="color:var(--primary);">${days}天后</span>`;
+        else countdown = `<span style="color:var(--text-secondary);">${days}天后</span>`;
+      }
+
+      const bankMap = { '公基': 'gongji', '一建': 'tumu', '土木': 'tumu', '国考': 'gongji' };
+      const bank = bankMap[exam.subject] || 'gongji';
+      const bankQ = allQ.filter(q => q.bank === bank);
+      const subjectErrors = errors.filter(e => !e.mastered && e.questionCategory);
+      const practiced = new Set((Storage.get(Storage.KEYS.PRACTICE_LOG) || []).map(l => l.questionId));
+      const bankPracticed = bankQ.filter(q => practiced.has(q.id)).length;
+
+      html += `
+        <div class="exam-target-card" style="flex:1;min-width:180px;max-width:280px;padding:12px;border-radius:8px;border:1px solid var(--border);background:#fafafa;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <strong style="font-size:13px;">${exam.name}</strong>
+            <span style="font-size:11px;color:var(--text-secondary);">${exam.subject}</span>
+          </div>
+          <div style="margin-top:4px;font-size:12px;color:var(--text-secondary);">
+            ${countdown ? `<span>📅 ${date} ${countdown}</span>` : '<span>日期待定</span>'}
+          </div>
+          <div style="margin-top:6px;font-size:11px;color:var(--text-secondary);line-height:1.6;">
+            题库: ${bankQ.length}题 | 已练: ${bankPracticed} | 错题: ${subjectErrors.length}
+          </div>
+        </div>`;
+    });
+
+    html += `</div></div>`;
+    return html;
+  },
+
+  /** 编辑考试目标 */
+  _editExamTargets() {
+    const targets = this._getExamTargets() || { active: ['zhuhui', 'wangcheng', 'yijian', 'tumu'], customDate: {} };
+
+    let msg = '选择本月备考目标（输入序号用逗号分隔）：\n\n';
+    this.KNOWN_EXAMS.forEach((e, i) => {
+      const active = targets.active.includes(e.id) ? ' ✓' : '';
+      const d = targets.customDate[e.id] || e.date || '待定';
+      msg += `${i + 1}. ${e.name} (${e.subject}) ${d}${active}\n`;
+    });
+
+    const input = prompt(msg, targets.active.map(id => this.KNOWN_EXAMS.findIndex(e => e.id === id) + 1).join(','));
+    if (input === null) return;
+
+    const indices = input.split(',').map(s => parseInt(s.trim()) - 1).filter(i => i >= 0 && i < this.KNOWN_EXAMS.length);
+    const newActive = indices.map(i => this.KNOWN_EXAMS[i].id);
+
+    // Ask for custom dates
+    if (!targets.customDate) targets.customDate = {};
+    for (const i of indices) {
+      const exam = this.KNOWN_EXAMS[i];
+      const currentDate = targets.customDate[exam.id] || exam.date || '';
+      const newDate = prompt(`${exam.name} 考试日期（留空=待定）：`, currentDate);
+      if (newDate !== null) targets.customDate[exam.id] = newDate || null;
+    }
+
+    targets.active = newActive;
+    this._saveExamTargets(targets);
+    this.render();
+    App.showToast('考试目标已更新', 'success');
   },
 
   _renderGoalsSection() {
