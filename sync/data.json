@@ -1,8 +1,36 @@
 {
   "version": 2,
-  "updatedAt": "2026-05-19T09:33:28.305Z",
-  "errors": [],
-  "practiceLog": [],
+  "updatedAt": "2026-05-19T11:03:33.802Z",
+  "errors": [
+    {
+      "id": "err_mpc9s2q9",
+      "questionTitle": "量变是质变的前提和必要准备，质变是量变的必然结果。下列诗句中没有体现量变和质变关系的是（ ）。",
+      "questionType": "single",
+      "questionCategory": "马克思主义哲学",
+      "correctAnswer": "C",
+      "userAnswer": "A",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T06:46:29.073Z",
+      "lastWrongAt": "2026-05-19T06:46:29.073Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    }
+  ],
+  "practiceLog": [
+    {
+      "userAnswer": "A",
+      "correct": false,
+      "timestamp": "2026-05-19T06:46:29.064Z",
+      "mode": "random"
+    }
+  ],
   "examLog": [],
   "aiQuestions": [
     {
