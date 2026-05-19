@@ -366,40 +366,15 @@ const Practice = {
    * 用指定题目列表开始练习
    */
   _startUI(questions, mode) {
-    document.querySelectorAll('#page-practice .card-row').forEach(el => el.style.display = 'none');
-    document.getElementById('practice-area').style.display = 'block';
-    // Remove old listener if exists
+    // Clean up any old delegation handlers
     if (this._delegatedHandler) {
       document.removeEventListener('click', this._delegatedHandler, true);
       document.removeEventListener('keydown', this._keyHandler, true);
+      this._delegatedHandler = null;
+      this._keyHandler = null;
     }
-    // Event delegation on document (capture phase for reliability)
-    this._delegatedHandler = (e) => {
-      const btn = e.target.tagName === 'BUTTON' ? e.target : e.target.parentElement;
-      if (!btn || btn.tagName !== 'BUTTON') return;
-      const area = document.getElementById('practice-area');
-      if (!area || area.style.display === 'none') return;
-      if (!area.contains(btn)) return;
-      e.preventDefault();
-      e.stopPropagation();
-      const qid = btn.getAttribute('data-qid');
-      if (!qid) return;
-      if (btn.className.includes('ai-analyze-btn')) { this._aiAnalyze(qid); return; }
-      if (btn.className.includes('ai-followup-btn')) { this._aiFollowUp(qid); return; }
-      if (btn.className.includes('ai-grade-btn')) { this._aiGradeEssay(qid); return; }
-      if (btn.className.includes('edit-btn')) { this._showEdit(qid); return; }
-      if (btn.className.includes('unpractice-btn')) { this._markUnpracticed(qid); return; }
-      if (btn.className.includes('variant-btn')) { this._aiGenVariant(qid); return; }
-    };
-    this._keyHandler = (e) => {
-      if (e.key === 'Enter' && e.target.className.includes('ai-followup-input')) {
-        e.preventDefault();
-        const qid = e.target.getAttribute('data-qid');
-        if (qid) this._aiFollowUp(qid);
-      }
-    };
-    document.addEventListener('click', this._delegatedHandler, true);
-    document.addEventListener('keydown', this._keyHandler, true);
+    document.querySelectorAll('#page-practice .card-row').forEach(el => el.style.display = 'none');
+    document.getElementById('practice-area').style.display = 'block';
     this.renderQuestion();
   },
 
@@ -495,30 +470,30 @@ const Practice = {
           <div style="margin-bottom:6px;"><strong>题型：</strong>${typeName}</div>`;
       if (q.analysis && q.analysis.trim().length > 5) {
         html += `<div style="margin-top:8px;padding:12px;background:#fff;border-radius:4px;line-height:1.8;"><strong>📖 解析：</strong><br>${this.escapeHtml(q.analysis)}</div>`;
-        html += `<button class="btn btn-sm btn-outline ai-analyze-btn" data-qid="${q.id}" style="margin-top:4px;color:var(--accent);border-color:var(--accent);font-size:11px;">🔄 AI重新解析</button><span id="ai-key-hint-${q.id}"></span>`;
+        html += `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._aiAnalyze('${q.id}')" style="margin-top:4px;color:var(--accent);border-color:var(--accent);font-size:11px;">🔄 AI重新解析</button><span id="ai-key-hint-${q.id}"></span>`;
         if (this._chatHistory) {
-          html += `<div style="margin-top:6px;display:flex;gap:4px;"><input id="ai-followup-input-${q.id}" class="ai-followup-input" data-qid="${q.id}" placeholder="追问AI..." style="flex:1;padding:3px 8px;border:1px solid #d9d9d9;border-radius:4px;font-size:12px;"><button class="btn btn-sm btn-outline ai-followup-btn" data-qid="${q.id}" style="font-size:11px;color:var(--primary);">发送</button></div><div id="ai-followup-result-${q.id}"></div>`;
+          html += `<div style="margin-top:6px;display:flex;gap:4px;"><input id="ai-followup-input-${q.id}" placeholder="追问AI..." onkeydown="if(event.key==='Enter'){event.preventDefault();Practice._aiFollowUp('${q.id}')}" style="flex:1;padding:3px 8px;border:1px solid #d9d9d9;border-radius:4px;font-size:12px;"><button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._aiFollowUp('${q.id}')" style="font-size:11px;color:var(--primary);">发送</button></div><div id="ai-followup-result-${q.id}"></div>`;
         }
       } else {
         html += `<div style="margin-top:8px;font-size:13px;color:var(--text-secondary);">（暂无详细解析）</div>`;
-        html += `<button class="btn btn-sm btn-outline ai-analyze-btn" data-qid="${q.id}" style="margin-top:4px;color:var(--accent);border-color:var(--accent);">🤖 AI解析此题</button><span id="ai-key-hint-${q.id}"></span>`;
+        html += `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._aiAnalyze('${q.id}')" style="margin-top:4px;color:var(--accent);border-color:var(--accent);">🤖 AI解析此题</button><span id="ai-key-hint-${q.id}"></span>`;
       }
       // AI 批改按钮（主观题）
       if (isEssayType && userAns && userAns.trim()) {
-        html += `<button class="btn btn-sm btn-outline ai-grade-btn" data-qid="${q.id}" style="margin-top:4px;margin-left:4px;color:#722ed1;border-color:#722ed1;">📝 AI批改</button>`;
+        html += `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._aiGradeEssay('${q.id}')" style="margin-top:4px;margin-left:4px;color:#722ed1;border-color:#722ed1;">📝 AI批改</button>`;
         html += `<div id="ai-grade-result-${q.id}" style="margin-top:8px;"></div>`;
       }
       const allLog = Storage.get(Storage.KEYS.PRACTICE_LOG) || [];
       const practiced = allLog.some(e => e.questionId === q.id);
-      html += `<button class="btn btn-sm btn-outline edit-btn" data-qid="${q.id}" style="margin-top:4px;margin-left:4px;color:#666;border-color:#d9d9d9;font-size:11px;">✏️ 编辑</button>`;
+      html += `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._showEdit('${q.id}')" style="margin-top:4px;margin-left:4px;color:#666;border-color:#d9d9d9;font-size:11px;">✏️ 编辑</button>`;
       if (practiced) {
-        html += `<button class="btn btn-sm btn-outline unpractice-btn" data-qid="${q.id}" style="margin-top:4px;margin-left:4px;color:#999;border-color:#d9d9d9;font-size:11px;">↩ 取消已练</button>`;
+        html += `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._markUnpracticed('${q.id}')" style="margin-top:4px;margin-left:4px;color:#999;border-color:#d9d9d9;font-size:11px;">↩ 取消已练</button>`;
       } else {
         html += `<span style="font-size:11px;color:#d9d9d9;margin-left:4px;">未练</span>`;
       }
       html += `<div id="edit-area-${q.id}"></div>`;
       if (!isCorrect) {
-        html += `<button class="btn btn-sm btn-outline variant-btn" data-qid="${q.id}" style="margin-top:4px;margin-left:4px;color:#eb2f96;border-color:#eb2f96;">🔄 生成变体题</button>`;
+        html += `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._aiGenVariant('${q.id}')" style="margin-top:4px;margin-left:4px;color:#eb2f96;border-color:#eb2f96;">🔄 生成变体题</button>`;
         html += `<div id="ai-variant-result-${q.id}" style="margin-top:8px;"></div>`;
       }
       html += `</div>`;
