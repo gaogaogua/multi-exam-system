@@ -10,19 +10,7 @@ const App = {
    * 初始化
    */
   /** 按需加载 pdf.js（仅在用户点击上传PDF时） */
-  async _ensurePdfJs() {
-    if (typeof pdfjsLib !== 'undefined') return pdfjsLib;
-    return new Promise((resolve, reject) => {
-      const script = document.createElement('script');
-      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
-      script.onload = () => {
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-        resolve(pdfjsLib);
-      };
-      script.onerror = () => reject(new Error('PDF.js 加载失败'));
-      document.head.appendChild(script);
-    });
-  },
+  async _ensurePdfJs() { return ImportController._ensurePdfJs(); },
 
   async init() {
     // 手机端首次访问时自动从服务器加载题库
@@ -83,38 +71,7 @@ const App = {
   /**
    * 初始化演示数据（仅首次）
    */
-  initDemoData() {
-    if (Storage.get(Storage.KEYS.QUESTIONS)) return;
-
-    const demoQuestions = [
-      { title:'以下哪个是HTTP状态码中"未找到"的含义？', type:'single', options:[{label:'A',text:'200'},{label:'B',text:'301'},{label:'C',text:'404'},{label:'D',text:'500'}], answer:'C', analysis:'404 Not Found 表示服务器无法找到请求的资源。200表示成功，301表示永久重定向，500表示服务器内部错误。', category:'计算机网络', difficulty:'简单' },
-      { title:'TCP协议中，三次握手的目的是什么？', type:'single', options:[{label:'A',text:'传输数据'},{label:'B',text:'建立可靠连接'},{label:'C',text:'关闭连接'},{label:'D',text:'加密通信'}], answer:'B', analysis:'TCP三次握手的目的是在通信双方之间建立可靠的连接，同步序列号，确保双方都能发送和接收数据。', category:'计算机网络', difficulty:'中等' },
-      { title:'下列哪些属于NoSQL数据库？', type:'multiple', options:[{label:'A',text:'MongoDB'},{label:'B',text:'MySQL'},{label:'C',text:'Redis'},{label:'D',text:'Cassandra'}], answer:'ACD', analysis:'MongoDB是文档型NoSQL，Redis是键值存储NoSQL，Cassandra是列族NoSQL。MySQL是关系型数据库。', category:'数据库', difficulty:'中等' },
-      { title:'JavaScript中，===运算符会进行类型转换后再比较。', type:'judge', options:[{label:'A',text:'正确'},{label:'B',text:'错误'}], answer:'B', analysis:'===是严格相等运算符，不会进行类型转换。== 才会进行类型转换后再比较。', category:'前端开发', difficulty:'简单' },
-      { title:'CSS中，以下哪个属性用于设置元素的外边距？', type:'single', options:[{label:'A',text:'padding'},{label:'B',text:'margin'},{label:'C',text:'border'},{label:'D',text:'outline'}], answer:'B', analysis:'margin 设置元素的外边距（元素边框外的空间），padding 设置内边距（内容与边框之间的空间）。', category:'前端开发', difficulty:'简单' },
-      { title:'在Python中，列表(list)和元组(tuple)的主要区别是什么？', type:'single', options:[{label:'A',text:'列表有序，元组无序'},{label:'B',text:'列表可变，元组不可变'},{label:'C',text:'列表可以包含不同类型，元组不可以'},{label:'D',text:'没有区别'}], answer:'B', analysis:'列表是可变的（可以增删改元素），元组是不可变的（创建后不能修改）。两者都是有序的，都可以包含不同类型的元素。', category:'Python', difficulty:'简单' },
-      { title:'下列关于RESTful API设计的描述，正确的有哪些？', type:'multiple', options:[{label:'A',text:'使用HTTP动词表示操作类型'},{label:'B',text:'所有请求都应该使用POST方法'},{label:'C',text:'URL应该使用名词而非动词'},{label:'D',text:'状态信息应保存在服务端Session中'}], answer:'AC', analysis:'RESTful的核心原则：使用HTTP动词(GET/POST/PUT/DELETE)表示操作，URL使用名词表示资源，服务端应为无状态（客户端保存会话状态）。', category:'后端开发', difficulty:'中等' },
-      { title:'算法的空间复杂度是指算法执行所需的____空间。', type:'fill', options:[], answer:'存储（内存）', analysis:'空间复杂度衡量算法运行过程中临时占用的存储空间大小，包括算法本身、输入数据和额外辅助空间。', category:'数据结构与算法', difficulty:'中等' },
-      { title:'什么是闭包（Closure）？请简要说明其原理和应用场景。', type:'essay', options:[], answer:'闭包是指函数能够访问其外部作用域中的变量，即使外部函数已经返回。原理是内部函数维持对外部函数作用域的引用。常用于数据封装、回调函数、模块模式等。', analysis:'闭包的核心是函数作用域链：内部函数保留了对外部函数变量对象的引用，阻止垃圾回收。常见应用：私有变量、工厂函数、事件处理器、异步编程中的回调。', category:'前端开发', difficulty:'困难' },
-      { title:'Git中，git merge和git rebase的主要区别是什么？', type:'single', options:[{label:'A',text:'merge会保留分支历史，rebase会创建线性历史'},{label:'B',text:'merge更快，rebase更慢'},{label:'C',text:'merge只能用于本地分支'},{label:'D',text:'rebase会丢失所有提交'}], answer:'A', analysis:'merge 创建一个新的合并提交，保留完整的分支历史。rebase 将当前分支的提交"移植"到目标分支之上，创建线性历史，但会改写提交记录。', category:'DevOps', difficulty:'中等' },
-      { title:'在SQL中，以下哪些操作会使用索引？', type:'multiple', options:[{label:'A',text:'WHERE子句中的条件列'},{label:'B',text:'ORDER BY排序列'},{label:'C',text:'SELECT后的列名'},{label:'D',text:'JOIN的连接列'}], answer:'ABD', analysis:'索引主要用于加速WHERE过滤、ORDER BY排序和JOIN连接操作。单纯SELECT后面的列名不会直接使用索引（除非是覆盖索引场景）。', category:'数据库', difficulty:'中等' },
-      { title:'Docker容器的数据在容器删除后仍然保留。', type:'judge', options:[{label:'A',text:'正确'},{label:'B',text:'错误'}], answer:'B', analysis:'默认情况下，Docker容器删除后其内部数据会丢失。如需持久化数据，应使用Volume（数据卷）或Bind Mount将数据存储在宿主机上。', category:'DevOps', difficulty:'简单' },
-      { title:'React中，以下哪个Hook用于在函数组件中管理状态？', type:'single', options:[{label:'A',text:'useEffect'},{label:'B',text:'useContext'},{label:'C',text:'useState'},{label:'D',text:'useRef'}], answer:'C', analysis:'useState 是React中最基本的状态管理Hook。useEffect处理副作用，useContext访问上下文，useRef创建可变引用。', category:'前端开发', difficulty:'简单' },
-      { title:'下列排序算法中，平均时间复杂度为O(n log n)的有哪些？', type:'multiple', options:[{label:'A',text:'快速排序'},{label:'B',text:'冒泡排序'},{label:'C',text:'归并排序'},{label:'D',text:'堆排序'}], answer:'ACD', analysis:'快速排序平均O(n log n)，归并排序始终O(n log n)，堆排序始终O(n log n)。冒泡排序平均和最坏都是O(n²)。', category:'数据结构与算法', difficulty:'中等' },
-      { title:'HTTPS相比HTTP增加了____层来保证通信安全。', type:'fill', options:[], answer:'SSL/TLS', analysis:'HTTPS = HTTP + SSL/TLS。TLS（传输层安全协议）在HTTP和TCP之间添加了加密、身份验证和数据完整性保护。', category:'计算机网络', difficulty:'简单' },
-    ];
-
-    // 补 bank 字段
-    demoQuestions.forEach(q => { q.bank = q.bank || 'gongji'; });
-    const saved = QuestionBank.batchImport(demoQuestions);
-    // Auto-categorize demo data
-    const questions = QuestionBank.getAll();
-    AutoCategorizer.classify(questions);
-    // Save classified back
-    Storage.set(Storage.KEYS.QUESTIONS, questions);
-    QuestionBank.updateCategories(questions);
-    console.log(`Demo data loaded: ${saved.added} questions (auto-categorized)`);
-  },
+    initDemoData() { Dashboard.initDemoData(); },
 
   /**
    * 页面导航
@@ -164,31 +121,12 @@ const App = {
   /**
    * 更新统计数字
    */
-  updateStats() {
-    const stats = QuestionBank.getStats();
-    document.getElementById('stat-total').textContent = stats.total;
-    document.getElementById('stat-practiced').textContent = stats.practiced;
-
-    // SM-2 待复习数量（优先展示）
-    const sm2Stats = ErrorNotebook.getSM2Stats();
-    const reviewEl = document.getElementById('stat-errors');
-    if (sm2Stats.total > 0) {
-      reviewEl.textContent = `${sm2Stats.dueToday + sm2Stats.overdue}待复习/${sm2Stats.total}`;
-      reviewEl.title = `SM-2间隔复习: ${sm2Stats.dueToday}题今日到期, ${sm2Stats.overdue}题已逾期, 平均间隔${sm2Stats.avgInterval}天`;
-    } else {
-      reviewEl.textContent = '0';
-    }
-
-    document.getElementById('stat-accuracy').textContent = stats.accuracy + '%';
-  },
+    updateStats() { Dashboard.updateStats(); },
 
   /**
    * 更新存储信息
    */
-  updateStorageInfo() {
-    const usage = Storage.getUsage();
-    document.getElementById('storage-usage').textContent = Storage.formatBytes(usage);
-  },
+    updateStorageInfo() { Dashboard.updateStorageInfo(); },
 
   /**
    * 渲染题目列表
@@ -392,114 +330,16 @@ const App = {
   /**
    * 处理PDF上传
    */
-  async handlePdfUpload(input) {
-    const files = Array.from(input.files);
-    if (files.length === 0) return;
-
-    // 按需加载 pdf.js
-    try {
-      await this._ensurePdfJs();
-      const badge = document.getElementById('engine-badge');
-      if (badge) { badge.textContent = '引擎: PDF.js (已加载)'; badge.style.color = 'var(--success)'; }
-    } catch (e) {
-      this.showToast('PDF解析引擎加载失败，请检查网络', 'error');
-      input.value = '';
-      return;
-    }
-
-    this.showToast(`正在解析 ${files.length} 个PDF文件...`, 'info');
-
-    const { totalAdded, totalDup, totalSkipped, engineUsed, importedIds } = await this._processPdfFiles(files);
-    this._finishPdfImport(files, importedIds, engineUsed, totalAdded, totalDup, totalSkipped);
-    input.value = '';
-    this.renderQuestionBank();
-    this.renderImportHistory();
-    this.updateStats();
-    this.updateStorageInfo();
-  },
+  async   handlePdfUpload(input) { ImportController.handlePdfUpload(input); },
 
   /** PDF解析核心逻辑：先批量后逐个 */
-  async _processPdfFiles(files) {
-    let totalAdded = 0, totalSkipped = 0, totalDup = 0, engineUsed = '';
-    const importedIds = [];
-
-    // 批量后端接口
-    const backendOk = await ApiConfig.checkAvailability();
-    if (backendOk && files.length > 1) {
-      try {
-        const batch = await PdfParser.parsePdfBatch(files);
-        if (batch.length > 0) {
-          engineUsed = 'backend';
-          const classified = AutoCategorizer.classify([...batch]);
-          const r = QuestionBank.batchImport(classified);
-          totalAdded += r.added; totalSkipped += r.skipped; totalDup += r.skippedDup;
-          if (r.added > 0) {
-            const all = QuestionBank.getAll();
-            importedIds.push(...all.slice(-r.added).map(q => q.id));
-          }
-        }
-      } catch (e) { console.warn('批量解析失败，逐个处理:', e.message); }
-    }
-
-    // 逐个处理
-    if (engineUsed !== 'backend') {
-      for (const file of files) {
-        try {
-          const qs = await PdfParser.parsePdf(file);
-          if (qs.length > 0) {
-            if (qs[0]._engine) engineUsed = qs[0]._engine;
-            const classified = AutoCategorizer.classify([...qs]);
-            const r = QuestionBank.batchImport(classified);
-            totalAdded += r.added; totalSkipped += r.skipped; totalDup += r.skippedDup;
-            const all = QuestionBank.getAll();
-            importedIds.push(...all.slice(-r.added).map(q => q.id));
-          }
-        } catch (err) {
-          console.error('PDF解析失败:', file.name, err);
-          this.showToast(`解析失败: ${file.name} - ${err.message}`, 'error');
-        }
-      }
-    }
-
-    return { totalAdded, totalDup, totalSkipped, engineUsed, importedIds };
-  },
+  async _processPdfFiles(files) { return ImportController._processPdfFiles(files); },
 
   /** 导入后处理：记录批次、更新UI、AI补全提示 */
-  _finishPdfImport(files, importedIds, engineUsed, totalAdded, totalDup) {
-    if (importedIds.length > 0) {
-      const totalSize = files.reduce((s, f) => s + f.size, 0);
-      const name = files.length === 1 ? files[0].name : `${files.length} 个文件`;
-      ImportManager.recordImport(name, totalSize, importedIds, engineUsed);
-    }
-
-    const badge = document.getElementById('engine-badge');
-    if (engineUsed && badge) {
-      badge.textContent = `引擎: ${engineUsed}`;
-      badge.style.display = 'inline';
-      badge.style.color = 'var(--success)';
-    }
-
-    if (totalAdded > 0) {
-      const catCount = Object.keys(AutoCategorizer.KNOWLEDGE_BASE).length;
-      this.showToast(`成功导入 ${totalAdded} 道题目（已自动分类到${catCount}个领域）${totalDup > 0 ? `，跳过 ${totalDup} 道重复` : ''}`, 'success');
-      this._promptAiForMissing(importedIds);
-    } else {
-      this.showToast(`未能导入新题目（${totalDup} 道重复）`, 'info');
-    }
-  },
+    _finishPdfImport(files, importedIds, engineUsed, totalAdded, totalDup) { ImportController._finishPdfImport(files, importedIds, engineUsed, totalAdded, totalDup); },
 
   /** 提示AI补全缺失答案 */
-  _promptAiForMissing(importedIds) {
-    const missing = importedIds.filter(id => { const q = QuestionBank.getById(id); return q && (!q.answer || !q.analysis); });
-    if (missing.length === 0) return;
-    setTimeout(() => {
-      if (ApiConfig.hasDeepSeekApiKey()) {
-        if (confirm(`新导入的题目中有 ${missing.length} 道缺少答案或解析。\n是否使用AI智能分析自动补全？`)) this.aiAnalyzeMissing();
-      } else {
-        if (confirm(`新导入的题目中有 ${missing.length} 道缺少答案或解析。\n配置DeepSeek API Key后可使用AI自动补全。\n是否现在配置？`)) this.showApiKeyModal();
-      }
-    }, 500);
-  },
+    _promptAiForMissing(importedIds) { ImportController._promptAiForMissing(importedIds); },
 
   /**
    * 显示题目详情
@@ -507,118 +347,19 @@ const App = {
   /**
    * 渲染导入历史
    */
-  renderImportHistory() {
-    const container = document.getElementById('import-history-list');
-    if (!container) return;
-
-    const batches = ImportManager.getAll();
-    if (batches.length === 0) {
-      container.innerHTML = '<p class="empty-state" style="padding:16px;">暂无导入记录</p>';
-      this.updateImportSummary(batches);
-      return;
-    }
-
-    // 最新在前
-    const sorted = [...batches].reverse();
-
-    container.innerHTML = sorted.map(b => {
-      const date = new Date(b.importedAt).toLocaleString('zh-CN');
-      const sizeStr = b.fileSize > 1048576
-        ? (b.fileSize / 1048576).toFixed(1) + ' MB'
-        : (b.fileSize / 1024).toFixed(0) + ' KB';
-      return `
-        <div class="import-batch-item" id="batch-${b.id}">
-          <div class="import-batch-info">
-            <span class="import-batch-name" title="${Utils.escapeHtml(b.filename)}">${Utils.escapeHtml(b.filename.length > 28 ? b.filename.slice(0,28) + '...' : b.filename)}</span>
-            <span class="import-batch-meta">${b.questionCount} 题 | ${sizeStr} | ${date}</span>
-            ${b.engine ? `<span class="question-tag tag-type" style="font-size:10px;">${b.engine}</span>` : ''}
-          </div>
-          <button class="btn btn-outline btn-sm" style="color:var(--danger);border-color:var(--danger);" onclick="App.deleteImportBatch('${b.id}')" title="删除该批次全部题目">删除</button>
-        </div>`;
-    }).join('');
-
-    this.updateImportSummary(batches);
-  },
+    renderImportHistory() { ImportController.renderImportHistory(); },
 
   /**
    * 更新导入汇总
    */
-  updateImportSummary(batches) {
-    const summary = document.getElementById('import-summary');
-    if (!summary) return;
-    if (batches.length === 0) {
-      summary.textContent = '';
-      return;
-    }
-    const totalQ = batches.reduce((s, b) => s + b.questionCount, 0);
-    summary.textContent = `共 ${batches.length} 次导入，合计 ${totalQ} 道题目`;
-  },
+    updateImportSummary(batches) { ImportController._updateImportSummary(batches); },
 
   /**
    * 删除导入批次
    */
-  async deleteImportBatch(batchId) {
-    const batch = ImportManager.getAll().find(b => b.id === batchId);
-    if (!batch) return;
+  async   deleteImportBatch(batchId) { ImportController.deleteImportBatch(batchId); },
 
-    if (!confirm(`确定删除导入批次"${batch.filename}"吗？\n该批次下的 ${batch.questionCount} 道题目将被全部移除，错题和练习记录也会同步清理。\n此操作不可恢复！`)) return;
-
-    const result = ImportManager.deleteBatch(batchId);
-    this.showToast(`已删除批次"${result.filename}"，移除 ${result.removed} 道题目`, 'info');
-    this.renderQuestionBank();
-    this.renderImportHistory();
-    this.updateStats();
-    this.updateStorageInfo();
-  },
-
-  showQuestionDetail(id) {
-    const q = QuestionBank.getById(id);
-    if (!q) return;
-
-    let html = `
-      <div style="margin-bottom:16px;">
-        <span class="question-tag tag-type">${this.getTypeName(q.type)}</span>
-        <span class="question-tag tag-category">${q.category || '未分类'}</span>
-        ${q.difficulty ? `<span class="question-tag tag-difficulty">${q.difficulty}</span>` : ''}
-      </div>
-      <p style="font-size:16px;font-weight:600;margin-bottom:16px;line-height:1.7;">${Utils.escapeHtml(q.title)}</p>`;
-
-    if (q.options && q.options.length > 0) {
-      html += `<div style="margin-bottom:16px;">`;
-      q.options.forEach(opt => {
-        html += `<p style="padding:6px 0;${q.answer.includes(opt.label) ? 'color:var(--success);font-weight:600;' : ''}">${opt.label}. ${Utils.escapeHtml(opt.text)}</p>`;
-      });
-      html += `</div>`;
-    }
-
-    if (!q.answer && !q.analysis) {
-      html += `<p style="color:var(--warning);margin-bottom:8px;">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-3px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-        此题缺少答案和解析
-      </p>`;
-    }
-
-    html += `<p style="margin-bottom:8px;"><strong>正确答案：</strong><span style="color:var(--success);font-weight:600;">${q.answer || '（无）'}</span></p>`;
-
-    if (q.analysis) {
-      html += `<div style="background:#f8f9ff;padding:14px;border-radius:8px;margin-top:12px;">
-        <strong>解析：</strong><br>${Utils.escapeHtml(q.analysis)}
-      </div>`;
-    }
-
-    if (!q.answer || !q.analysis) {
-      html += `<div style="margin-top:12px;text-align:right;">
-        <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();App.aiAnalyzeSingle('${q.id}')">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-          AI智能解析
-        </button>
-      </div>`;
-    }
-
-    document.getElementById('modal-title').textContent = '题目详情';
-    document.getElementById('modal-body').innerHTML = html;
-    document.getElementById('modal-overlay').style.display = 'flex';
-  },
+    showQuestionDetail(id) { UIController.showQuestionDetail(id); },
 
   /**
    * 显示添加题目模态框
@@ -710,46 +451,12 @@ const App = {
   /**
    * 添加选项行
    */
-  addOptionRow() {
-    const editor = document.getElementById('options-editor');
-    const rows = editor.querySelectorAll('.option-editor-row');
-    const nextLabel = String.fromCharCode(65 + rows.length); // A, B, C, ...
-    const row = document.createElement('div');
-    row.className = 'option-editor-row';
-    row.innerHTML = `
-      <input type="checkbox" class="option-correct-toggle" title="标记正确答案">
-      <strong style="width:20px;text-align:center;">${nextLabel}</strong>
-      <input type="text" class="option-text" placeholder="选项${nextLabel}内容...">`;
-    editor.appendChild(row);
-  },
+    addOptionRow() { UIController.addOptionRow(); },
 
   /**
    * 题型切换
    */
-  onTypeChange() {
-    const type = document.getElementById('q-type').value;
-    const optionsContainer = document.getElementById('options-container');
-    const addBtn = document.getElementById('add-option-btn');
-    if (type === 'essay' || type === 'fill') {
-      optionsContainer.style.display = 'none';
-    } else {
-      optionsContainer.style.display = 'block';
-      if (type === 'judge') {
-        const editor = document.getElementById('options-editor');
-        editor.innerHTML = `
-          <div class="option-editor-row">
-            <input type="checkbox" class="option-correct-toggle" title="标记正确答案" checked>
-            <strong style="width:20px;text-align:center;">A</strong>
-            <input type="text" class="option-text" value="正确">
-          </div>
-          <div class="option-editor-row">
-            <input type="checkbox" class="option-correct-toggle" title="标记正确答案">
-            <strong style="width:20px;text-align:center;">B</strong>
-            <input type="text" class="option-text" value="错误">
-          </div>`;
-      }
-    }
-  },
+    onTypeChange() { UIController.onTypeChange(); },
 
   /**
    * 保存题目
@@ -836,70 +543,17 @@ const App = {
   /**
    * 渲染最近练习记录
    */
-  renderRecentPractice() {
-    const container = document.getElementById('recent-practice');
-    const log = Storage.get(Storage.KEYS.PRACTICE_LOG) || [];
-
-    if (log.length === 0) {
-      container.innerHTML = '<p class="empty-state">暂无练习记录</p>';
-      return;
-    }
-
-    const recent = log.slice(-10).reverse();
-    const questions = QuestionBank.getAll();
-    const questionMap = {};
-    questions.forEach(q => { questionMap[q.id] = q; });
-
-    container.innerHTML = recent.map(entry => {
-      const q = questionMap[entry.questionId];
-      const title = q ? q.title : '(题目已删除)';
-      return `
-        <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);">
-          <span style="font-size:13px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-right:12px;">${Utils.escapeHtml(title.substring(0, 50))}</span>
-          <span style="font-size:12px;color:${entry.correct ? 'var(--success)' : 'var(--danger)'};font-weight:600;white-space:nowrap;">${entry.correct ? '✓ 正确' : '✗ 错误'}</span>
-        </div>`;
-    }).join('');
-  },
+    renderRecentPractice() { Dashboard.renderRecentPractice(); },
 
   /**
    * 渲染分类统计
    */
-  renderCategoryChart() {
-    const container = document.getElementById('category-chart');
-    const questions = QuestionBank.getAll();
-    const stats = QuestionBank.getStats();
-
-    if (questions.length === 0) {
-      container.innerHTML = '<p class="empty-state">暂无数据</p>';
-      return;
-    }
-
-    const byCategory = {};
-    questions.forEach(q => {
-      const cat = q.category || '未分类';
-      byCategory[cat] = (byCategory[cat] || 0) + 1;
-    });
-
-    const sorted = Object.entries(byCategory).sort((a, b) => b[1] - a[1]).slice(0, 6);
-
-    container.innerHTML = sorted.map(([cat, count]) => {
-      const pct = Math.round((count / questions.length) * 100);
-      return `
-        <div class="chart-bar-row">
-          <span class="chart-bar-label">${cat}</span>
-          <div class="chart-bar-track">
-            <div class="chart-bar-fill" style="width:${pct}%;">${count} 题</div>
-          </div>
-        </div>`;
-    }).join('') || '<p class="empty-state">暂无数据</p>';
-  },
+    renderCategoryChart() { Dashboard.renderCategoryChart(); },
 
   /**
    * 关闭详情模态框
    */
-  closeModal() {
-    document.getElementById('modal-overlay').style.display = 'none';
-  },
+    closeModal() { UIController.closeModal(); },
 
   /**
    * 关闭添加模态框
@@ -942,38 +596,7 @@ const App = {
 
   // ─── DeepSeek API Key 管理 ─────────────────────────
 
-  showApiKeyModal() {
-    const currentKey = ApiConfig.getDeepSeekApiKey();
-    const masked = currentKey ? currentKey.slice(0, 6) + '****' + currentKey.slice(-4) : '';
-    const ghToken = Sync.getToken();
-    const ghMasked = ghToken ? ghToken.slice(0, 4) + '****' + ghToken.slice(-4) : '';
-    document.getElementById('apikey-modal-title').textContent = 'API 设置';
-    document.getElementById('apikey-modal-body').innerHTML = `
-      <div class="form-group">
-        <label>🤖 DeepSeek API Key <small>(AI智能解析)</small></label>
-        <input type="password" id="apikey-input" value="${currentKey}" placeholder="sk-xxxxxxxxxxxxxxxx" autocomplete="off">
-        ${currentKey ? `<p style="font-size:12px;color:var(--text-secondary);margin-top:4px;">当前: ${masked}</p>` : ''}
-        <div class="api-key-help" style="font-size:12px;margin-top:4px;">
-          获取: <a href="https://platform.deepseek.com/api_keys" target="_blank">platform.deepseek.com</a> | 费用 ¥1/百万token
-        </div>
-      </div>
-      <hr style="margin:16px 0;border:none;border-top:1px solid #f0f0f0;">
-      <div class="form-group">
-        <label>🔄 Gitee Token <small>(跨设备同步)</small></label>
-        <input type="password" id="github-token-input" value="${ghToken}" placeholder="gitee_token_xxxxxxxx" autocomplete="off">
-        ${ghToken ? `<p style="font-size:12px;color:var(--text-secondary);margin-top:4px;">当前: ${ghMasked}</p>` : ''}
-        <div class="api-key-help" style="font-size:12px;margin-top:4px;">
-          获取: <a href="https://gitee.com/profile/personal_access_tokens" target="_blank">创建 Gitee Token</a> (勾选 projects) → 复制粘贴到这里
-        </div>
-        ${ghToken ? '<button class="btn btn-sm btn-outline" onclick="Sync.push().then(r=>App.showToast(r.pushed?\'同步成功\':\'同步失败:\'+r.error,r.pushed?\'success\':\'error\'))" style="margin-top:8px;">🔄 手动同步</button>' : ''}
-      </div>
-      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:16px;">
-        ${currentKey || ghToken ? '<button class="btn btn-outline btn-danger" onclick="App.clearAllKeys()">清除全部</button>' : ''}
-        <button class="btn btn-outline" onclick="App.closeApiKeyModal()">取消</button>
-        <button class="btn btn-primary" onclick="App.saveApiKey()">保存</button>
-      </div>`;
-    document.getElementById('apikey-modal-overlay').style.display = 'flex';
-  },
+    showApiKeyModal() { UIController.showApiKeyModal(); },
 
   closeApiKeyModal() {
     document.getElementById('apikey-modal-overlay').style.display = 'none';
@@ -1118,22 +741,7 @@ const App = {
   /**
    * 显示AI分析进度
    */
-  showAiProgress(total) {
-    document.getElementById('ai-progress-body').innerHTML = `
-      <div class="ai-progress-list" id="ai-progress-list">
-        ${Array.from({ length: total }, (_, i) => `
-          <div class="ai-progress-item" id="ai-item-${i}">
-            <div class="ai-progress-status pending">${i + 1}</div>
-            <span class="ai-progress-title">等待分析...</span>
-          </div>
-        `).join('')}
-      </div>
-      <div class="ai-progress-summary" id="ai-progress-summary">
-        正在分析... 0 / ${total}
-      </div>`;
-    document.getElementById('ai-progress-close').style.display = 'none';
-    document.getElementById('ai-progress-overlay').style.display = 'flex';
-  },
+  showAiProgress(total) { UIController.showAiProgress(total); },
 
   /**
    * 更新AI分析进度
@@ -1162,9 +770,7 @@ const App = {
   /**
    * 关闭AI分析进度
    */
-  closeAiProgress() {
-    document.getElementById('ai-progress-overlay').style.display = 'none';
-  },
+    closeAiProgress() { UIController.closeAiProgress(); },
 
   /**
    * 将AI分析结果应用到题库
