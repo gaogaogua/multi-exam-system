@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-05-19T16:06:47.344Z",
+  "updatedAt": "2026-05-19T16:09:44.135Z",
   "errors": [
     {
       "id": "err_mpc0yaa7",
@@ -2626,6 +2626,27 @@
         "efactor": 2.5,
         "nextReviewAt": "2026-05-20"
       }
+    },
+    {
+      "id": "err_mpctw3wm",
+      "questionId": "q_mpc0xk6a_ng5ix2_1281",
+      "questionTitle": "泡沫混凝土保温层施工时应符合哪些规定？(P124)",
+      "questionType": "essay",
+      "questionCategory": "第1章 建筑设计技术",
+      "correctAnswer": "现浇泡沫混凝土保温层施工时，浇注出口离基层的高度不宜超过1m，泵送时应采取低压泵送；泡沫混凝土应分层浇筑，一次浇筑厚度不宜超过200mm，保湿养护时间不得少于7天。",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T16:09:29.542Z",
+      "lastWrongAt": "2026-05-19T16:09:29.542Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
     }
   ],
   "practiceLog": [
@@ -3670,6 +3691,13 @@
       "userAnswer": "",
       "correct": false,
       "timestamp": "2026-05-19T16:06:41.031Z",
+      "mode": "sequential"
+    },
+    {
+      "questionId": "q_mpc0xk6a_ng5ix2_1281",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T16:09:29.535Z",
       "mode": "sequential"
     }
   ],
