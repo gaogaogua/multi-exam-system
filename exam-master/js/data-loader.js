@@ -9,6 +9,7 @@ const DataLoader = {
     const banks = [
       { key: '公基', bank: 'gongji', file: 'data/gongji.json' },
       { key: '土木', bank: 'tumu',   file: 'data/tumu.json' },
+      { key: '一建', bank: 'tumu',   file: 'data/yijian.json' },
     ];
 
     const questions = Storage.get(Storage.KEYS.QUESTIONS) || [];
