@@ -410,6 +410,9 @@ const Practice = {
         html += `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._aiGradeEssay('${q.id}')" style="margin-top:4px;margin-left:4px;color:#722ed1;border-color:#722ed1;">📝 AI批改</button>`;
         html += `<div id="ai-grade-result-${q.id}" style="margin-top:8px;"></div>`;
       }
+      // 编辑按钮（始终显示）
+      html += `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._showEdit('${q.id}')" style="margin-top:4px;margin-left:4px;color:#666;border-color:#d9d9d9;font-size:11px;">✏️ 编辑</button>`;
+      html += `<div id="edit-area-${q.id}"></div>`;
       // 变体题按钮（答错时）
       if (!isCorrect) {
         html += `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._aiGenVariant('${q.id}')" style="margin-top:4px;margin-left:4px;color:#eb2f96;border-color:#eb2f96;">🔄 生成变体题</button>`;
@@ -585,6 +588,64 @@ const Practice = {
     } catch(e) {
       App.showToast('AI解析失败: ' + e.message, 'error');
     }
+  },
+
+  /** 展开快速编辑面板 */
+  _showEdit(id) {
+    const q = QuestionBank.getById(id);
+    if (!q) return;
+    const div = document.getElementById('edit-area-' + id);
+    if (!div) return;
+    if (div.innerHTML) { div.innerHTML = ''; return; } // toggle
+
+    const typeOpts = ['single','multiple','judge','fill','essay']
+      .map(t => `<option value="${t}" ${q.type === t ? 'selected' : ''}>${App.getTypeName(t)}</option>`).join('');
+
+    div.innerHTML = `
+      <div style="padding:10px;background:#fafafa;border-radius:4px;margin-top:4px;font-size:13px;">
+        <div style="font-weight:600;margin-bottom:6px;">编辑题目</div>
+        <div class="form-group" style="margin-bottom:6px;">
+          <label style="font-size:11px;">题型</label>
+          <select id="edit-type-${id}" style="width:100%;padding:4px;border-radius:4px;border:1px solid #d9d9d9;">${typeOpts}</select>
+        </div>
+        <div class="form-group" style="margin-bottom:6px;">
+          <label style="font-size:11px;">正确答案</label>
+          <input id="edit-answer-${id}" value="${this.escapeHtml(q.answer || '')}" style="width:100%;padding:4px;border-radius:4px;border:1px solid #d9d9d9;">
+        </div>
+        <div class="form-group" style="margin-bottom:6px;">
+          <label style="font-size:11px;">解析</label>
+          <textarea id="edit-analysis-${id}" rows="3" style="width:100%;padding:4px;border-radius:4px;border:1px solid #d9d9d9;">${this.escapeHtml(q.analysis || '')}</textarea>
+        </div>
+        <div style="display:flex;gap:6px;justify-content:flex-end;">
+          <button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._showEdit('${id}')">取消</button>
+          <button class="btn btn-sm btn-primary" onclick="event.stopPropagation();Practice._saveEdit('${id}')">保存</button>
+        </div>
+      </div>`;
+  },
+
+  /** 保存编辑 */
+  _saveEdit(id) {
+    const type = document.getElementById('edit-type-' + id)?.value;
+    const answer = document.getElementById('edit-answer-' + id)?.value || '';
+    const analysis = document.getElementById('edit-analysis-' + id)?.value || '';
+
+    if (!answer.trim()) {
+      App.showToast('答案不能为空', 'error');
+      return;
+    }
+
+    QuestionBank.update(id, { type, answer: answer.trim(), analysis: analysis.trim() });
+    // 同步更新当前练习缓存
+    const idx = this.questions.findIndex(x => x.id === id);
+    if (idx >= 0) {
+      if (type) this.questions[idx].type = type;
+      this.questions[idx].answer = answer.trim();
+      this.questions[idx].analysis = analysis.trim();
+    }
+    this.renderQuestion();
+    App.updateStats();
+    Sync.push().catch(() => {});
+    App.showToast('已保存并同步', 'success');
   },
 
   /**
