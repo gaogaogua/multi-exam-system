@@ -2,6 +2,36 @@
  * 题库管理模块 - 题目的增删改查、分类管理
  */
 const QuestionBank = {
+  // 土木（一建）章节顺序
+  CHAPTER_ORDER: [
+    '建筑设计技术',
+    '主要建筑工程材料的性能与应用',
+    '建筑工程施工技术',
+    '相关法规',
+    '相关标准',
+    '建筑工程企业资质与施工组织',
+    '工程招标投标与合同管理',
+    '施工进度管理',
+    '施工质量管理',
+    '施工成本管理',
+    '施工安全管理',
+    '绿色建造及施工现场环境管理',
+    '施工资源管理',
+  ],
+
+  /** 按章节排序土木题目 */
+  _sortByChapter(questions) {
+    const order = this.CHAPTER_ORDER;
+    return [...questions].sort((a, b) => {
+      const ai = order.indexOf(a.category);
+      const bi = order.indexOf(b.category);
+      if (ai === -1 && bi === -1) return (a.category || '').localeCompare(b.category || '');
+      if (ai === -1) return 1;
+      if (bi === -1) return -1;
+      return ai - bi;
+    });
+  },
+
   /**
    * 获取所有题目
    */
@@ -135,6 +165,11 @@ const QuestionBank = {
       } else {
         questions = questions.filter(q => q.type === type);
       }
+    }
+
+    // 土木题库按章节排序
+    if (bank === 'tumu' || (!bank && questions.length > 0 && questions[0].bank === 'tumu')) {
+      questions = this._sortByChapter(questions);
     }
 
     const total = questions.length;

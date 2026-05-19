@@ -223,7 +223,11 @@ const Practice = {
         }
         break;
       case 'memorize':
-        questions = this.shuffle([...this._getFilteredPool()]);
+        questions = [...this._getFilteredPool()];
+        // 土木题库按章节排序
+        if (this.bankFilter === 'tumu' || this.bankFilter === 'all') {
+          questions = QuestionBank._sortByChapter(questions);
+        }
         if (questions.length === 0) {
           App.showToast(this._poolDiagnose(), 'error');
           return;
@@ -239,8 +243,11 @@ const Practice = {
           return;
         }
         break;
-      default:
+      default: // sequential
         questions = [...this._getFilteredPool()];
+        if (this.bankFilter === 'tumu' || this.bankFilter === 'all') {
+          questions = QuestionBank._sortByChapter(questions);
+        }
         if (questions.length === 0) {
           App.showToast(this._poolDiagnose(), 'error');
           return;
