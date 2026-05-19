@@ -524,7 +524,7 @@ const Plan = {
         </div>`;
     });
 
-    html += `</div>` + this._renderControls(plan) + this._renderExamSection(isToday);
+    html += `</div>` + this._renderControls(plan) + this._renderAIChat() + this._renderExamSection(isToday);
     return html;
   },
 
@@ -792,6 +792,99 @@ const Plan = {
     this.viewMode = 'week';
     this.render();
     App.showToast(`已生成 ${generated} 天计划`, 'success');
+  },
+
+  /** AI 对话修改计划 */
+  async _aiModifyPlan() {
+    if (!ApiConfig.hasDeepSeekApiKey()) {
+      App.showToast('请先配置DeepSeek API Key', 'error');
+      return;
+    }
+    const input = document.getElementById('plan-ai-input');
+    if (!input || !input.value.trim()) return;
+    const msg = input.value.trim();
+    input.value = '';
+    input.disabled = true;
+
+    const chatDiv = document.getElementById('plan-ai-chat');
+    if (chatDiv) chatDiv.innerHTML += `<div style="margin-top:4px;font-size:12px;color:var(--primary);">🙋 ${this._esc(msg)}</div><div style="font-size:11px;color:var(--text-secondary);">AI 思考中...</div>`;
+
+    const date = this._getDate(this.viewMode);
+    const plans = this._getPlans();
+    const plan = plans.find(p => p.date === date);
+    const planSummary = plan
+      ? plan.tasks.map(t => `${t.time} ${t.priority} ${t.subject} ${t.desc}`).join('\n')
+      : '尚未生成计划';
+
+    const examInfo = (typeof ExamDates !== 'undefined')
+      ? ExamDates.getUpcoming().map(e => `${e.name} ${e.date} ${ExamDates.countdown(e.date)}天后`).join('\n')
+      : '';
+
+    try {
+      const reply = await ApiConfig.aiModifyPlan(msg, planSummary, examInfo, date);
+      if (chatDiv) {
+        chatDiv.innerHTML = chatDiv.innerHTML.replace('AI 思考中...', '');
+        chatDiv.innerHTML += `<div style="margin-top:4px;padding:8px;background:#f0f5ff;border-radius:6px;font-size:12px;line-height:1.6;">🤖 ${this._esc(reply)}</div>`;
+      }
+
+      // 如果 AI 回复包含具体修改建议，尝试解析并提示
+      if (reply.includes('修改为') || reply.includes('调整为') || reply.includes('建议')) {
+        if (confirm('AI 给出了修改建议。要我根据建议自动调整计划吗？')) {
+          this._applyAISuggestions(reply, plan);
+        }
+      }
+    } catch(e) {
+      if (chatDiv) chatDiv.innerHTML += `<div style="color:var(--danger);font-size:11px;">AI 请求失败: ${this._esc(e.message)}</div>`;
+    }
+    input.disabled = false;
+    input.focus();
+  },
+
+  /** 应用 AI 建议修改计划 */
+  _applyAISuggestions(reply, plan) {
+    if (!plan) { App.showToast('请先生成计划', 'error'); return; }
+    // AI 建议格式: 时段 -> 新描述 映射
+    const suggestions = {};
+    const lines = reply.split('\n');
+    lines.forEach(line => {
+      const match = line.match(/(\d{1,2}:\d{2}-\d{1,2}:\d{2})[：:]\s*(.+)/);
+      if (match) suggestions[match[1]] = match[2];
+    });
+
+    if (Object.keys(suggestions).length === 0) {
+      App.showToast('未检测到具体修改建议', 'info');
+      return;
+    }
+
+    plan.tasks.forEach(t => {
+      if (suggestions[t.time]) {
+        t.desc = suggestions[t.time];
+        t.source = 'AI建议修改';
+      }
+    });
+    this._savePlans(this._getPlans().map(p => p.date === plan.date ? plan : p));
+    this.render();
+    App.showToast('计划已按AI建议调整', 'success');
+    Sync.push().catch(() => {});
+  },
+
+  /** 渲染 AI 对话区 */
+  _renderAIChat() {
+    return `
+      <div class="card" style="margin-top:16px;">
+        <div class="plan-summary-header">
+          <strong>🤖 AI 计划助手</strong>
+          <span style="font-size:11px;color:var(--text-secondary);">自然语言修改计划</span>
+        </div>
+        <div id="plan-ai-chat" style="max-height:300px;overflow-y:auto;margin-bottom:8px;"></div>
+        <div style="display:flex;gap:6px;">
+          <input id="plan-ai-input" placeholder="例：把上午的写作调到晚上、增加公基法律训练、明天考前冲刺..." style="flex:1;padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:12px;" onkeydown="if(event.key==='Enter'){event.preventDefault();Plan._aiModifyPlan();}">
+          <button class="btn btn-sm btn-primary" onclick="Plan._aiModifyPlan()">发送</button>
+        </div>
+        <div style="margin-top:4px;font-size:10px;color:var(--text-secondary);">
+          你可以说：调整时间段内容、增加某科目、考前冲刺、改优先级、换写作题
+        </div>
+      </div>`;
   },
 
   /** 编辑考试目标 */

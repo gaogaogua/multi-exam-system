@@ -460,4 +460,51 @@ const ApiConfig = {
     const data = await resp.json();
     return data.choices[0].message.content.trim();
   },
+
+  /**
+   * AI 修改学习计划 — 根据用户自然语言指令调整计划
+   */
+  async aiModifyPlan(userMsg, planSummary, examInfo, date) {
+    const apiKey = this.getDeepSeekApiKey();
+    if (!apiKey) throw new Error('请先配置DeepSeek API Key');
+
+    const prompt = `你是备考计划助手。用户想修改${date}的学习计划。
+
+当前计划：
+${planSummary || '尚未生成'}
+
+${examInfo ? '近期考试：\n' + examInfo : ''}
+
+用户要求：${userMsg}
+
+请给出修改建议，150字以内。如果涉及具体时段调整，用格式：
+08:00-09:00: 新的任务描述
+
+建议要具体可执行，符合备考规律。`;
+
+    const resp = await fetch('https://api.deepseek.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'deepseek-chat',
+        messages: [
+          { role: 'system', content: '你是备考计划助手。根据用户要求修改学习计划，给出具体建议。回复简洁，含具体时间段调整。' },
+          { role: 'user', content: prompt },
+        ],
+        temperature: 0.5,
+        max_tokens: 512,
+      }),
+    });
+
+    if (!resp.ok) {
+      const err = await resp.json().catch(() => ({}));
+      throw new Error(err.error?.message || `API请求失败 (${resp.status})`);
+    }
+
+    const data = await resp.json();
+    return data.choices[0].message.content.trim();
+  },
 };
