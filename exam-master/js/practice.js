@@ -394,8 +394,9 @@ const Practice = {
           <div style="margin-bottom:6px;"><strong>你的答案：</strong>${this.escapeHtml(userAns || '未作答')}</div>
           <div style="margin-bottom:6px;color:var(--success);"><strong>正确答案：</strong>${this.escapeHtml(q.answer)}</div>
           <div style="margin-bottom:6px;"><strong>题型：</strong>${typeName}</div>`;
-      if (q.analysis && q.analysis.trim()) {
+      if (q.analysis && q.analysis.trim().length > 5) {
         html += `<div style="margin-top:8px;padding:12px;background:#fff;border-radius:4px;line-height:1.8;"><strong>📖 解析：</strong><br>${this.escapeHtml(q.analysis)}</div>`;
+        html += `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._aiAnalyze('${q.id}')" style="margin-top:4px;color:var(--accent);border-color:var(--accent);font-size:11px;">🔄 AI重新解析</button>`;
       } else {
         html += `<div style="margin-top:8px;font-size:13px;color:var(--text-secondary);">（暂无详细解析）</div>`;
         html += `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._aiAnalyze('${q.id}')" style="margin-top:4px;color:var(--accent);border-color:var(--accent);">🤖 AI解析此题</button>`;
@@ -554,11 +555,9 @@ const Practice = {
     const q = QuestionBank.getById(id);
     if (!q) return;
 
-    // 已有完整解析 → 跳过，避免重复调用 AI
-    if (q.answer && q.answer.trim().length > 0 && q.analysis && q.analysis.trim().length > 10) {
-      App.showToast('此题已有解析，无需重复AI分析', 'info');
-      return;
-    }
+    // 已有完整解析时再次确认
+    const hasAnalysis = q.analysis && q.analysis.trim().length > 5;
+    if (hasAnalysis && !confirm('此题已有解析，确定重新AI分析吗？')) return;
 
     App.showToast('AI解析中...', 'info');
     try {
@@ -575,7 +574,6 @@ const Practice = {
         }
         this.renderQuestion();
         App.updateStats();
-        // AI 解析更新后同步推送到远程
         Sync.push().catch(() => {});
       } else {
         App.showToast('AI解析失败: ' + (results[0]?.error || '未知错误'), 'error');
