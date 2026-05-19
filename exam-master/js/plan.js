@@ -795,6 +795,8 @@ const Plan = {
   },
 
   /** AI 对话修改计划 */
+  _chatHistory: [], // AI 对话历史
+
   async _aiModifyPlan() {
     if (!ApiConfig.hasDeepSeekApiKey()) {
       App.showToast('请先配置DeepSeek API Key', 'error');
@@ -807,13 +809,13 @@ const Plan = {
     input.disabled = true;
 
     const chatDiv = document.getElementById('plan-ai-chat');
-    if (chatDiv) chatDiv.innerHTML += `<div style="margin-top:4px;font-size:12px;color:var(--primary);">🙋 ${this._esc(msg)}</div><div style="font-size:11px;color:var(--text-secondary);">AI 思考中...</div>`;
+    if (chatDiv) chatDiv.innerHTML += `<div style="margin-top:4px;font-size:12px;color:var(--primary);">🙋 ${this._esc(msg)}</div><div class="ai-thinking" style="font-size:11px;color:var(--text-secondary);">AI 思考中...</div>`;
 
     const date = this._getDate(this.viewMode);
     const plans = this._getPlans();
     const plan = plans.find(p => p.date === date);
     const planSummary = plan
-      ? plan.tasks.map(t => `${t.time} ${t.priority} ${t.subject} ${t.desc}`).join('\n')
+      ? plan.tasks.map(t => `${t.time} ${t.priority} ${t.subject} ${t.desc} (来源:${t.source})`).join('\n')
       : '尚未生成计划';
 
     const examInfo = (typeof ExamDates !== 'undefined')
@@ -821,16 +823,28 @@ const Plan = {
       : '';
 
     try {
-      const reply = await ApiConfig.aiModifyPlan(msg, planSummary, examInfo, date);
+      const result = await ApiConfig.aiModifyPlan(msg, planSummary, examInfo, date, this._chatHistory);
+      const reply = result.reply || result;
+
       if (chatDiv) {
-        chatDiv.innerHTML = chatDiv.innerHTML.replace('AI 思考中...', '');
+        chatDiv.innerHTML = chatDiv.innerHTML.replace(/<div class="ai-thinking".*?<\/div>/, '');
         chatDiv.innerHTML += `<div style="margin-top:4px;padding:8px;background:#f0f5ff;border-radius:6px;font-size:12px;line-height:1.6;">🤖 ${this._esc(reply)}</div>`;
       }
 
-      // 如果 AI 回复包含具体修改建议，尝试解析并提示
-      if (reply.includes('修改为') || reply.includes('调整为') || reply.includes('建议')) {
-        if (confirm('AI 给出了修改建议。要我根据建议自动调整计划吗？')) {
-          this._applyAISuggestions(reply, plan);
+      // 保存对话历史
+      this._chatHistory.push({ role: 'user', content: msg });
+      this._chatHistory.push({ role: 'assistant', content: reply });
+      // 限制历史长度
+      if (this._chatHistory.length > 10) this._chatHistory = this._chatHistory.slice(-10);
+
+      // 自动应用修改
+      if (plan && result.changes && result.changes.length > 0) {
+        this._applyAISuggestions(result.changes, plan);
+      } else {
+        // 尝试从文本中解析
+        const parsed = this._parseChanges(reply, plan);
+        if (parsed.length > 0) {
+          this._applyAISuggestions(parsed, plan);
         }
       }
     } catch(e) {
@@ -840,31 +854,62 @@ const Plan = {
     input.focus();
   },
 
-  /** 应用 AI 建议修改计划 */
-  _applyAISuggestions(reply, plan) {
-    if (!plan) { App.showToast('请先生成计划', 'error'); return; }
-    // AI 建议格式: 时段 -> 新描述 映射
-    const suggestions = {};
+  /** 解析 AI 回复中的修改建议 */
+  _parseChanges(reply, plan) {
+    const changes = [];
     const lines = reply.split('\n');
+    const timeRegex = /(\d{1,2}:\d{2}-\d{1,2}:\d{2})/;
+    const timeSlots = new Set(plan.tasks.map(t => t.time));
+
     lines.forEach(line => {
-      const match = line.match(/(\d{1,2}:\d{2}-\d{1,2}:\d{2})[：:]\s*(.+)/);
-      if (match) suggestions[match[1]] = match[2];
-    });
-
-    if (Object.keys(suggestions).length === 0) {
-      App.showToast('未检测到具体修改建议', 'info');
-      return;
-    }
-
-    plan.tasks.forEach(t => {
-      if (suggestions[t.time]) {
-        t.desc = suggestions[t.time];
-        t.source = 'AI建议修改';
+      const match = line.match(timeRegex);
+      if (match) {
+        const time = match[1];
+        if (timeSlots.has(time)) {
+          const desc = line.replace(timeRegex, '').replace(/^[：:\s]+/, '').replace(/^[-—–]\s*/, '').trim();
+          if (desc) changes.push({ time, desc });
+        }
       }
     });
+
+    // 如果没有时段匹配，尝试关键词修改
+    if (changes.length === 0) {
+      const lower = reply.toLowerCase();
+      plan.tasks.forEach(t => {
+        // 检测到对特定时段的描述
+        if (lower.includes(t.time) || lower.includes(t.label)) {
+          // 从上下文中提取描述
+          const sentences = reply.split(/[。；\n]/);
+          for (const s of sentences) {
+            if (s.includes(t.time) || s.includes(t.label)) {
+              const desc = s.replace(/^[•\-\*\d\.\s]+/, '').replace(t.time, '').replace(t.label, '').replace(/[：:，,]\s*/g, '').trim();
+              if (desc.length > 2) changes.push({ time: t.time, desc });
+              break;
+            }
+          }
+        }
+      });
+    }
+
+    return changes;
+  },
+
+  /** 应用修改 */
+  _applyAISuggestions(changes, plan) {
+    if (!plan) return;
+    let applied = 0;
+    changes.forEach(c => {
+      const task = plan.tasks.find(t => t.time === c.time);
+      if (task) {
+        task.desc = c.desc;
+        task.source = 'AI 建议修改';
+        applied++;
+      }
+    });
+    if (applied === 0) return;
     this._savePlans(this._getPlans().map(p => p.date === plan.date ? plan : p));
     this.render();
-    App.showToast('计划已按AI建议调整', 'success');
+    App.showToast(`计划已调整 ${applied} 个时段`, 'success');
     Sync.push().catch(() => {});
   },
 

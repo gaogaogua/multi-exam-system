@@ -464,23 +464,41 @@ const ApiConfig = {
   /**
    * AI 修改学习计划 — 根据用户自然语言指令调整计划
    */
-  async aiModifyPlan(userMsg, planSummary, examInfo, date) {
+  async aiModifyPlan(userMsg, planSummary, examInfo, date, chatHistory) {
     const apiKey = this.getDeepSeekApiKey();
     if (!apiKey) throw new Error('请先配置DeepSeek API Key');
 
     const prompt = `你是备考计划助手。用户想修改${date}的学习计划。
 
-当前计划：
+当前计划（共10个时段）：
 ${planSummary || '尚未生成'}
 
 ${examInfo ? '近期考试：\n' + examInfo : ''}
 
 用户要求：${userMsg}
 
-请给出修改建议，150字以内。如果涉及具体时段调整，用格式：
-08:00-09:00: 新的任务描述
+请以JSON格式返回（只返回JSON，不要其他文字）：
+{
+  "reply": "你的建议文字（100字以内）",
+  "changes": [
+    {"time": "08:00-09:00", "desc": "新的任务描述"},
+    {"time": "14:00-15:00", "desc": "另一个修改"}
+  ]
+}
 
-建议要具体可执行，符合备考规律。`;
+要求：
+1. changes数组只包含需要修改的时段，不需要改的时段不出现
+2. time必须与当前计划中的时段完全一致
+3. desc是具体任务描述，10-30字
+4. reply是对用户要求的回应文本`;
+
+    const messages = [
+      { role: 'system', content: '你是备考计划助手，只返回JSON格式结果，不要其他文字。' },
+    ];
+    if (chatHistory && chatHistory.length > 0) {
+      messages.push(...chatHistory);
+    }
+    messages.push({ role: 'user', content: prompt });
 
     const resp = await fetch('https://api.deepseek.com/v1/chat/completions', {
       method: 'POST',
@@ -490,12 +508,9 @@ ${examInfo ? '近期考试：\n' + examInfo : ''}
       },
       body: JSON.stringify({
         model: 'deepseek-chat',
-        messages: [
-          { role: 'system', content: '你是备考计划助手。根据用户要求修改学习计划，给出具体建议。回复简洁，含具体时间段调整。' },
-          { role: 'user', content: prompt },
-        ],
-        temperature: 0.5,
-        max_tokens: 512,
+        messages,
+        temperature: 0.3,
+        max_tokens: 1024,
       }),
     });
 
@@ -505,6 +520,15 @@ ${examInfo ? '近期考试：\n' + examInfo : ''}
     }
 
     const data = await resp.json();
-    return data.choices[0].message.content.trim();
+    let content = data.choices[0].message.content.trim();
+    if (content.startsWith('```')) content = content.replace(/```\w*\n?/g, '').replace(/```/g, '');
+    if (content.includes('{')) content = content.substring(content.indexOf('{'), content.lastIndexOf('}') + 1);
+
+    try {
+      return JSON.parse(content);
+    } catch (e) {
+      // JSON 解析失败时，返回纯文本作为 reply
+      return { reply: content, changes: [] };
+    }
   },
 };
