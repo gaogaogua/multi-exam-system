@@ -10,6 +10,8 @@ const Practice = {
   bankFilter: 'all',
   categoryFilter: 'all',
   typeFilter: 'all',
+  practiceCount: 20,        // 0 = all
+  skipPracticed: false,
 
   /**
    * 获取当前所有过滤后的题目池
@@ -19,7 +21,88 @@ const Practice = {
     if (this.bankFilter !== 'all') pool = pool.filter(q => q.bank === this.bankFilter);
     if (this.categoryFilter !== 'all') pool = pool.filter(q => q.category === this.categoryFilter);
     if (this.typeFilter !== 'all') pool = pool.filter(q => q.type === this.typeFilter);
+    // 跳过已练习题目
+    if (this.skipPracticed) {
+      const log = Storage.get(Storage.KEYS.PRACTICE_LOG) || [];
+      const practicedIds = new Set(log.map(l => l.questionId));
+      pool = pool.filter(q => !practicedIds.has(q.id));
+    }
     return pool;
+  },
+
+  /** 保存题量设置 */
+  _savePracticeCount() {
+    const el = document.getElementById('practice-count');
+    if (el) {
+      this.practiceCount = parseInt(el.value) || 0;
+      localStorage.setItem('practice_count', this.practiceCount);
+    }
+  },
+
+  /** 保存跳过已练设置 */
+  _saveSkipPracticed() {
+    const el = document.getElementById('skip-practiced');
+    if (el) {
+      this.skipPracticed = el.checked;
+      localStorage.setItem('skip_practiced', this.skipPracticed ? '1' : '0');
+    }
+  },
+
+  /** 恢复上次练习位置 */
+  _saveProgress() {
+    if (this.questions.length === 0) return;
+    const ids = this.questions.map(q => q.id);
+    localStorage.setItem('practice_last_ids', JSON.stringify(ids));
+    localStorage.setItem('practice_last_index', this.currentIndex);
+    localStorage.setItem('practice_last_mode', this.mode);
+    localStorage.setItem('practice_last_userAnswers', JSON.stringify(this.userAnswers));
+  },
+
+  /** 显示上次练习提示 */
+  _showResumeHint() {
+    const ids = localStorage.getItem('practice_last_ids');
+    if (!ids) return;
+    try {
+      const parsed = JSON.parse(ids);
+      const idx = parseInt(localStorage.getItem('practice_last_index') || '0');
+      const mode = localStorage.getItem('practice_last_mode') || 'sequential';
+      if (parsed.length === 0) return;
+      const el = document.getElementById('resume-hint');
+      if (el) {
+        el.style.display = 'inline';
+        el.textContent = `上次练习到 ${idx + 1}/${parsed.length} 题（${mode === 'random' ? '随机' : '顺序'}），点此继续`;
+      }
+    } catch (e) { /* ignore */ }
+  },
+
+  /** 继续上次练习 */
+  _resumeLast() {
+    try {
+      const ids = JSON.parse(localStorage.getItem('practice_last_ids') || '[]');
+      const idx = parseInt(localStorage.getItem('practice_last_index') || '0');
+      const mode = localStorage.getItem('practice_last_mode') || 'sequential';
+      const answers = JSON.parse(localStorage.getItem('practice_last_userAnswers') || '{}');
+      if (ids.length === 0) return;
+
+      // 从题库中找到对应题目
+      const all = QuestionBank.getAll();
+      const questionMap = new Map(all.map(q => [q.id, q]));
+      const questions = ids.map(id => questionMap.get(id)).filter(Boolean);
+
+      if (questions.length === 0) {
+        App.showToast('上次练习的题目已不存在', 'error');
+        return;
+      }
+
+      this.questions = questions;
+      this.currentIndex = Math.min(idx, questions.length - 1);
+      this.mode = mode;
+      this.userAnswers = answers;
+      this.showResult = false;
+      this._startUI(questions, mode);
+    } catch (e) {
+      App.showToast('恢复失败', 'error');
+    }
   },
 
   /**
@@ -98,23 +181,27 @@ const Practice = {
     if (savedCat) this.categoryFilter = savedCat;
     const savedType = localStorage.getItem('practice_type_filter');
     if (savedType) this.typeFilter = savedType;
+    const savedCount = localStorage.getItem('practice_count');
+    if (savedCount !== null) this.practiceCount = parseInt(savedCount) || 0;
+    this.skipPracticed = localStorage.getItem('skip_practiced') === '1';
 
-    // Refresh category dropdown
+    // Restore UI elements
     this._refreshCategoryOptions();
-
-    // Restore dropdown selections
     const catSel = document.getElementById('practice-category');
     if (catSel && this.categoryFilter !== 'all') catSel.value = this.categoryFilter;
     const typeSel = document.getElementById('practice-type');
     if (typeSel && this.typeFilter !== 'all') typeSel.value = this.typeFilter;
-
+    const countEl = document.getElementById('practice-count');
+    if (countEl) countEl.value = this.practiceCount;
+    const skipEl = document.getElementById('skip-practiced');
+    if (skipEl) skipEl.checked = this.skipPracticed;
     this._updateBankCounts();
+    this._showResumeHint();
 
     let questions;
     switch (mode) {
       case 'errors': {
         let errQuestions = ErrorNotebook.getReviewList().map(r => r.question).filter(Boolean);
-        // Filter errors by bank too
         if (this.bankFilter !== 'all') {
           errQuestions = errQuestions.filter(q => q.bank === this.bankFilter);
         }
@@ -127,7 +214,6 @@ const Practice = {
       }
       case 'weak':
         questions = this.getWeakQuestions();
-        // Filter weak by bank too
         if (this.bankFilter !== 'all') {
           questions = questions.filter(q => q.bank === this.bankFilter);
         }
@@ -137,20 +223,24 @@ const Practice = {
         }
         break;
       case 'random':
-        questions = this._getFilteredPool();
+        questions = this.shuffle([...this._getFilteredPool()]);
         if (questions.length === 0) {
           App.showToast('该题库为空，请先导入题目', 'info');
           return;
         }
-        questions = this.shuffle([...questions]);
         break;
       default:
-        questions = this._getFilteredPool();
+        questions = [...this._getFilteredPool()];
         if (questions.length === 0) {
           App.showToast('该题库为空，请先导入题目', 'info');
           return;
         }
         break;
+    }
+
+    // 限制题量
+    if (this.practiceCount > 0 && questions.length > this.practiceCount) {
+      questions = questions.slice(0, this.practiceCount);
     }
 
     this.startWithQuestions(questions, mode);
@@ -159,6 +249,12 @@ const Practice = {
   /**
    * 用指定题目列表开始练习
    */
+  _startUI(questions, mode) {
+    document.querySelectorAll('#page-practice .card-row').forEach(el => el.style.display = 'none');
+    document.getElementById('practice-area').style.display = 'block';
+    this.renderQuestion();
+  },
+
   startWithQuestions(questions, mode = 'custom') {
     if (!questions || questions.length === 0) {
       App.showToast('没有可练习的题目', 'info');
@@ -170,10 +266,9 @@ const Practice = {
     this.mode = mode;
     this.userAnswers = {};
     this.showResult = false;
-
-    document.querySelectorAll('#page-practice .card-row').forEach(el => el.style.display = 'none');
-    document.getElementById('practice-area').style.display = 'block';
-    this.renderQuestion();
+    // 清除上次练习记录（新练习开始）
+    localStorage.removeItem('practice_last_ids');
+    this._startUI(questions, mode);
   },
 
   /**
@@ -382,6 +477,7 @@ const Practice = {
    * 下一题
    */
   nextQuestion() {
+    this._saveProgress();
     if (this.currentIndex >= this.questions.length - 1) {
       this.finish();
       return;
@@ -539,6 +635,8 @@ const Practice = {
    * 完成练习
    */
   finish() {
+    // 清除进度（练习已完成）
+    localStorage.removeItem('practice_last_ids');
     const total = this.questions.length;
     let correct = 0;
     for (const q of this.questions) {
@@ -577,12 +675,18 @@ const Practice = {
    * 退出练习
    */
   exit() {
+    // 保存进度再退出
+    if (this.questions.length > 0 && this.currentIndex > 0) {
+      this._saveProgress();
+    }
     this.questions = [];
     this.currentIndex = 0;
     this.userAnswers = {};
     this.showResult = false;
     document.getElementById('practice-area').style.display = 'none';
     document.querySelectorAll('#page-practice .card-row').forEach(el => el.style.display = 'grid');
+    // 显示继续提示
+    this._showResumeHint();
     App.updateStats();
   },
 
