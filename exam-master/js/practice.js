@@ -299,7 +299,11 @@ const Practice = {
       result.push(...extra);
     }
 
-    return this.shuffle(result).slice(0, count);
+    // 按题型排序: 单选 → 多选 → 判断 → 填空 → 简答
+    const typeOrder = { single: 0, multiple: 1, judge: 2, fill: 3, essay: 4 };
+    result.sort((a, b) => (typeOrder[a.type] || 5) - (typeOrder[b.type] || 5));
+
+    return result.slice(0, count);
   },
 
   /**
