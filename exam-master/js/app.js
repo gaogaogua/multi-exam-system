@@ -9,13 +9,16 @@ const App = {
   /**
    * 初始化
    */
-  init() {
+  async init() {
     // 设置PDF.js worker
     if (typeof pdfjsLib !== 'undefined') {
       pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
     }
 
-    // 首次加载时插入演示数据
+    // 手机端首次访问时自动从服务器加载题库
+    await DataLoader.autoLoad();
+
+    // 首次加载时插入演示数据（仅当题库仍为空）
     this.initDemoData();
 
     // 探测后端引擎
