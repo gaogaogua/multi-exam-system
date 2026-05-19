@@ -222,6 +222,16 @@ const Practice = {
           return;
         }
         break;
+      case 'memorize':
+        questions = this.shuffle([...this._getFilteredPool()]);
+        if (questions.length === 0) {
+          App.showToast(this._poolDiagnose(), 'error');
+          return;
+        }
+        if (this.practiceCount > 0 && questions.length > this.practiceCount) {
+          questions = this._sampleByType(questions, this.practiceCount);
+        }
+        break;
       case 'random':
         questions = this.shuffle([...this._getFilteredPool()]);
         if (questions.length === 0) {
@@ -386,18 +396,26 @@ const Practice = {
         </div>`;
     }
 
-    // 显示结果和解析
-    if (this.showResult) {
-      const isCorrect = this.checkAnswer(q, this.userAnswers[q.id] || '');
-      const userAns = this.userAnswers[q.id] || '';
+    // 显示结果和解析（或背题模式直接显示）
+    if (this.showResult || this.mode === 'memorize') {
+      const isCorrect = this.mode === 'memorize' ? true : this.checkAnswer(q, this.userAnswers[q.id] || '');
+      const userAns = this.mode === 'memorize' ? '' : (this.userAnswers[q.id] || '');
       const typeName = App.getTypeName(q.type);
       const isEssayType = q.type === 'essay' || q.type === 'fill';
-      html += `
-        <div class="practice-result ${isCorrect ? 'result-correct' : 'result-wrong'}" style="margin-top:16px;padding:16px;border-radius:8px;border-left:4px solid ${isCorrect ? 'var(--success)' : 'var(--danger)'};background:${isCorrect ? '#f6ffed' : '#fff2f0'};">
-          <div style="font-size:18px;font-weight:700;margin-bottom:8px;">${isCorrect ? '✓ 回答正确！' : '✗ 回答错误'}</div>
-          <div style="margin-bottom:6px;"><strong>你的答案：</strong>${this.escapeHtml(userAns || '未作答')}</div>
-          <div style="margin-bottom:6px;color:var(--success);"><strong>正确答案：</strong>${this.escapeHtml(q.answer)}</div>
+      const boxStyle = this.mode === 'memorize'
+        ? 'margin-top:16px;padding:16px;border-radius:8px;border-left:4px solid #667eea;background:#f0f5ff;'
+        : `margin-top:16px;padding:16px;border-radius:8px;border-left:4px solid ${isCorrect ? 'var(--success)' : 'var(--danger)'};background:${isCorrect ? '#f6ffed' : '#fff2f0'};`;
+
+      html += `<div class="practice-result" style="${boxStyle}">`;
+      if (this.mode === 'memorize') {
+        html += `<div style="font-size:16px;font-weight:700;margin-bottom:8px;color:#667eea;">📖 背题模式</div>`;
+      } else {
+        html += `<div style="font-size:18px;font-weight:700;margin-bottom:8px;">${isCorrect ? '✓ 回答正确！' : '✗ 回答错误'}</div>
+          <div style="margin-bottom:6px;"><strong>你的答案：</strong>${this.escapeHtml(userAns || '未作答')}</div>`;
+      }
+      html += `<div style="margin-bottom:6px;color:var(--success);"><strong>正确答案：</strong>${this.escapeHtml(q.answer)}</div>
           <div style="margin-bottom:6px;"><strong>题型：</strong>${typeName}</div>`;
+      }
       if (q.analysis && q.analysis.trim().length > 5) {
         html += `<div style="margin-top:8px;padding:12px;background:#fff;border-radius:4px;line-height:1.8;"><strong>📖 解析：</strong><br>${this.escapeHtml(q.analysis)}</div>`;
         html += `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._aiAnalyze('${q.id}')" style="margin-top:4px;color:var(--accent);border-color:var(--accent);font-size:11px;">🔄 AI重新解析</button>`;
@@ -435,15 +453,15 @@ const Practice = {
         <div class="practice-actions">
           <button class="btn btn-outline" ${this.currentIndex === 0 ? 'disabled' : ''} onclick="Practice.prevQuestion()">上一题</button>`;
 
-    if (!this.showResult) {
+    if (this.mode === 'memorize') {
+      html += `<span style="font-size:12px;color:#eb2f96;margin:0 8px;">📖 背题中</span>`;
+      html += `<button class="btn btn-primary" onclick="Practice.nextQuestion()">${current >= total ? '完成' : '下一题'}</button>`;
+    } else if (!this.showResult) {
       html += `<button class="btn btn-primary" onclick="Practice.submitAnswer()">提交答案</button>`;
       html += `<button class="btn btn-outline" style="color:#fa8c16;border-color:#fa8c16;" onclick="Practice.dontKnow()">不会</button>`;
       html += `<button class="btn btn-outline" style="color:var(--text-secondary);" onclick="Practice.skipQuestion()">跳过</button>`;
-    }
-
-    if (this.showResult) {
+    } else {
       html += `<button class="btn btn-primary" onclick="Practice.nextQuestion()">${current >= total ? '完成练习' : '下一题'}</button>`;
-      // 数据质量标记
       if (!dataOK) {
         html += `<span style="font-size:11px;color:#faad14;margin-left:8px;">⚠ ${dataIssues.join('/')}</span>`;
       } else {
@@ -791,6 +809,23 @@ const Practice = {
     // 清除进度（练习已完成）
     localStorage.removeItem('practice_last_ids');
     const total = this.questions.length;
+
+    if (this.mode === 'memorize') {
+      const area = document.getElementById('practice-area');
+      area.innerHTML = `
+        <div class="practice-container">
+          <div class="practice-question-card" style="text-align:center;">
+            <h2 style="margin-bottom:8px;">📖 背题完成</h2>
+            <p style="color:var(--text-secondary);margin-bottom:16px;">已浏览 ${total} 道题目</p>
+            <div style="display:flex;gap:12px;justify-content:center;">
+              <button class="btn btn-primary" onclick="Practice.start('memorize')">再来一轮</button>
+              <button class="btn btn-outline" onclick="Practice.exit()">返回</button>
+            </div>
+          </div>
+        </div>`;
+      return;
+    }
+
     let correct = 0;
     for (const q of this.questions) {
       const userAnswer = this.userAnswers[q.id] || '';
