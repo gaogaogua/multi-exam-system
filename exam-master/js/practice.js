@@ -903,20 +903,37 @@ const Practice = {
    */
   getWeakQuestions() {
     const errors = ErrorNotebook.getAll().filter(e => !e.mastered);
+    if (errors.length === 0) return [];
+
+    const allQ = QuestionBank.getAll();
+    const qMap = new Map(allQ.map(q => [q.id, q]));
+
+    // 找到对应题目，按错误次数降序排列（原题再现）
+    const errQuestions = errors
+      .map(e => ({ ...e, question: qMap.get(e.questionId) }))
+      .filter(e => e.question) // 只保留题库中存在的题目
+      .sort((a, b) => (b.wrongCount || 1) - (a.wrongCount || 1));
+
+    // 取前50道 + 错误最多的3个分类中补充至多30道
+    const primary = errQuestions.slice(0, 50).map(e => e.question);
+
+    // 补充同类题目：从错题最多的分类中抽取额外题目
+    const usedIds = new Set(primary.map(q => q.id));
     const categoryCount = {};
     errors.forEach(e => {
       const cat = e.questionCategory || '未分类';
       categoryCount[cat] = (categoryCount[cat] || 0) + 1;
     });
-
-    // 找出错题最多的分类
-    const weakCategories = Object.entries(categoryCount)
+    const topCats = Object.entries(categoryCount)
       .sort((a, b) => b[1] - a[1])
       .slice(0, 3)
       .map(e => e[0]);
 
-    const questions = QuestionBank.getAll();
-    return questions.filter(q => weakCategories.includes(q.category));
+    const extra = this.shuffle(
+      allQ.filter(q => topCats.includes(q.category) && !usedIds.has(q.id))
+    ).slice(0, 30);
+
+    return [...primary, ...extra];
   },
 
   /**
