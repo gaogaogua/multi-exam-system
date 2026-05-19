@@ -438,19 +438,24 @@ const ApiConfig = {
       { role: 'user', content: question },
     ];
 
-    const resp = await fetch(this.DEEPSEEK_URL, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: this.DEEPSEEK_MODEL,
-        messages,
-        temperature: 0.5,
-        max_tokens: 512,
-      }),
-    });
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 15000);
+    try {
+      const resp = await fetch(this.DEEPSEEK_URL, {
+        method: 'POST',
+        signal: controller.signal,
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: this.DEEPSEEK_MODEL,
+          messages,
+          temperature: 0.5,
+          max_tokens: 512,
+        }),
+      });
+      clearTimeout(timeout);
 
     if (!resp.ok) {
       const err = await resp.json().catch(() => ({}));
@@ -459,6 +464,12 @@ const ApiConfig = {
 
     const data = await resp.json();
     return data.choices[0].message.content.trim();
+    } catch (e) {
+      if (e.name === 'AbortError') throw new Error('AI追问超时，请重试');
+      throw e;
+    } finally {
+      clearTimeout(timeout);
+    }
   },
 
   /**

@@ -323,7 +323,7 @@ const HunanExamAnalyzer = {
 
   _dedupAndSortRecs(recs) {
     const seen = new Set();
-    const unique = recs.filter(r => { const k = r.action.substring(0, 30); if (seen.has(k)) return false; seen.add(k); return true; });
+    const unique = recs.filter(r => { const k = (r.action || '').substring(0, 30); if (!k || seen.has(k)) return false; seen.add(k); return true; });
     const order = { 'P0': 0, 'P1': 1, 'P2': 2, 'P3': 3 };
     return unique.sort((a, b) => order[a.priority] - order[b.priority]);
   },

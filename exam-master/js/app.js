@@ -408,11 +408,13 @@ const App = {
         const batch = await PdfParser.parsePdfBatch(files);
         if (batch.length > 0) {
           engineUsed = 'backend';
-          AutoCategorizer.classify(batch);
-          const r = QuestionBank.batchImport(batch);
+          const classified = AutoCategorizer.classify([...batch]);
+          const r = QuestionBank.batchImport(classified);
           totalAdded += r.added; totalSkipped += r.skipped; totalDup += r.skippedDup;
-          const all = QuestionBank.getAll();
-          importedIds.push(...all.slice(-r.added).map(q => q.id));
+          if (r.added > 0) {
+            const all = QuestionBank.getAll();
+            importedIds.push(...all.slice(-r.added).map(q => q.id));
+          }
         }
       } catch (e) { console.warn('批量解析失败，逐个处理:', e.message); }
     }
@@ -424,8 +426,8 @@ const App = {
           const qs = await PdfParser.parsePdf(file);
           if (qs.length > 0) {
             if (qs[0]._engine) engineUsed = qs[0]._engine;
-            AutoCategorizer.classify(qs);
-            const r = QuestionBank.batchImport(qs);
+            const classified = AutoCategorizer.classify([...qs]);
+            const r = QuestionBank.batchImport(classified);
             totalAdded += r.added; totalSkipped += r.skipped; totalDup += r.skippedDup;
             const all = QuestionBank.getAll();
             importedIds.push(...all.slice(-r.added).map(q => q.id));

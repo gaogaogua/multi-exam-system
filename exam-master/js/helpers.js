@@ -3,16 +3,16 @@
  * 在 index.html 中于 storage.js 之后、其他模块之前加载
  */
 const Utils = {
-  /** HTML 转义 */
+  /** HTML 转义 — 纯字符串实现，不依赖 DOM */
   escapeHtml(str) {
-    const d = document.createElement('div');
-    d.textContent = str || '';
-    return d.innerHTML;
+    const s = String(str || '');
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
   },
 
-  /** Fisher-Yates 洗牌 */
+  /** Fisher-Yates 洗牌 — 防御 null/undefined 输入 */
   shuffle(arr) {
-    const a = [...arr];
+    const a = [...(arr || [])];
+    if (a.length === 0) return [];
     for (let i = a.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [a[i], a[j]] = [a[j], a[i]];
