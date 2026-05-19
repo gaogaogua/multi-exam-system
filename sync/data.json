@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-05-19T16:15:32.890Z",
+  "updatedAt": "2026-05-19T17:22:02.897Z",
   "errors": [
     {
       "id": "err_mpc0yaa7",
@@ -2710,6 +2710,27 @@
         "efactor": 2.5,
         "nextReviewAt": "2026-05-20"
       }
+    },
+    {
+      "id": "err_mpcu7hag",
+      "questionId": "q_mpc0xkbc_wxbm4r_1469",
+      "questionTitle": "施工电梯遇到哪些情况时应停止运行? ★★(P339)",
+      "questionType": "essay",
+      "questionCategory": "第1章 建筑设计技术",
+      "correctAnswer": "①天气恶劣，如雷雨、6级及以上大风、大雾、导轨结冰等情况； ③钢丝绳断丝磨损超过规定。 ②灯光不明，信号不清； ④机械发生故障，未彻底排除；",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T16:18:20.104Z",
+      "lastWrongAt": "2026-05-19T16:18:20.104Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
     }
   ],
   "practiceLog": [
@@ -3782,6 +3803,13 @@
       "userAnswer": "",
       "correct": false,
       "timestamp": "2026-05-19T16:15:27.663Z",
+      "mode": "sequential"
+    },
+    {
+      "questionId": "q_mpc0xkbc_wxbm4r_1469",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T16:18:20.094Z",
       "mode": "sequential"
     }
   ],
