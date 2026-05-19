@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-05-19T15:03:25.341Z",
+  "updatedAt": "2026-05-19T15:20:20.153Z",
   "errors": [
     {
       "id": "err_mpc0yaa7",
@@ -2521,6 +2521,27 @@
         "efactor": 2.5,
         "nextReviewAt": "2026-05-20"
       }
+    },
+    {
+      "id": "err_mpcrqjs8",
+      "questionId": "q_mpc0xk4z_33j2ji_1229",
+      "questionTitle": "装配式钢结构建筑的结构体系应符合哪些规定？（P35）",
+      "questionType": "essay",
+      "questionCategory": "第1章 建筑设计技术",
+      "correctAnswer": "①应具有明确的计算简图和合理的传力路径。",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T15:09:10.952Z",
+      "lastWrongAt": "2026-05-19T15:09:10.952Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
     }
   ],
   "practiceLog": [
@@ -3558,6 +3579,13 @@
       "userAnswer": "C",
       "correct": false,
       "timestamp": "2026-05-19T09:12:31.671Z",
+      "mode": "sequential"
+    },
+    {
+      "questionId": "q_mpc0xk4z_33j2ji_1229",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T15:09:10.943Z",
       "mode": "sequential"
     }
   ],
