@@ -424,4 +424,40 @@ const ApiConfig = {
     }
     return JSON.parse(content);
   },
+
+  /**
+   * AI 追问 — 在已有解析基础上进行深入讨论
+   */
+  async aiFollowUp(chatHistory, question) {
+    const apiKey = this.getDeepSeekApiKey();
+    if (!apiKey) throw new Error('请先配置DeepSeek API Key');
+
+    const messages = [
+      { role: 'system', content: '你是一个专业的考试辅导老师。结合前面的题目解析，简洁回答学生的追问。回答要准确、有深度，100字以内。' },
+      ...chatHistory,
+      { role: 'user', content: question },
+    ];
+
+    const resp = await fetch('https://api.deepseek.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'deepseek-chat',
+        messages,
+        temperature: 0.5,
+        max_tokens: 512,
+      }),
+    });
+
+    if (!resp.ok) {
+      const err = await resp.json().catch(() => ({}));
+      throw new Error(err.error?.message || `API请求失败 (${resp.status})`);
+    }
+
+    const data = await resp.json();
+    return data.choices[0].message.content.trim();
+  },
 };

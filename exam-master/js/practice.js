@@ -430,6 +430,10 @@ const Practice = {
       if (q.analysis && q.analysis.trim().length > 5) {
         html += `<div style="margin-top:8px;padding:12px;background:#fff;border-radius:4px;line-height:1.8;"><strong>📖 解析：</strong><br>${this.escapeHtml(q.analysis)}</div>`;
         html += `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._aiAnalyze('${q.id}')" style="margin-top:4px;color:var(--accent);border-color:var(--accent);font-size:11px;">🔄 AI重新解析</button>`;
+        // 追问区域
+        if (this._chatHistory) {
+          html += `<div style="margin-top:6px;display:flex;gap:4px;"><input id="ai-followup-input-${q.id}" placeholder="追问AI..." style="flex:1;padding:3px 8px;border:1px solid #d9d9d9;border-radius:4px;font-size:12px;" onkeydown="Practice._onFollowUpKey(event,'${q.id}')"><button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._aiFollowUp('${q.id}')" style="font-size:11px;color:var(--primary);">发送</button></div><div id="ai-followup-result-${q.id}"></div>`;
+        }
       } else {
         html += `<div style="margin-top:8px;font-size:13px;color:var(--text-secondary);">（暂无详细解析）</div>`;
         html += `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._aiAnalyze('${q.id}')" style="margin-top:4px;color:var(--accent);border-color:var(--accent);">🤖 AI解析此题</button>`;
@@ -601,9 +605,11 @@ const Practice = {
     const q = QuestionBank.getById(id);
     if (!q) return;
 
-    // 已有完整解析时再次确认
     const hasAnalysis = q.analysis && q.analysis.trim().length > 5;
     if (hasAnalysis && !confirm('此题已有解析，确定重新AI分析吗？')) return;
+
+    // 重置追问历史
+    this._chatHistory = null;
 
     App.showToast('AI解析中...', 'info');
     try {
@@ -618,6 +624,11 @@ const Practice = {
           this.questions[idx].answer = r.answer;
           this.questions[idx].analysis = r.analysis;
         }
+        // 保存对话历史
+        this._chatHistory = [
+          { role: 'user', content: '请解析这道题：' + q.title },
+          { role: 'assistant', content: '答案: ' + r.answer + '\n解析: ' + r.analysis },
+        ];
         this.renderQuestion();
         App.updateStats();
         Sync.push().catch(() => {});
@@ -627,6 +638,36 @@ const Practice = {
     } catch(e) {
       App.showToast('AI解析失败: ' + e.message, 'error');
     }
+  },
+
+  /** AI追问 */
+  async _aiFollowUp(id) {
+    const input = document.getElementById('ai-followup-input-' + id);
+    if (!input || !input.value.trim()) return;
+    const question = input.value.trim();
+    input.value = '';
+    input.disabled = true;
+
+    const resultDiv = document.getElementById('ai-followup-result-' + id);
+    if (resultDiv) resultDiv.innerHTML = '<span style="font-size:11px;color:var(--text-secondary);">AI思考中...</span>';
+
+    try {
+      const answer = await ApiConfig.aiFollowUp(this._chatHistory, question);
+      if (resultDiv) {
+        resultDiv.innerHTML = `<div style="padding:8px;background:#fafafa;border-radius:4px;margin-top:4px;font-size:12px;line-height:1.6;border-left:2px solid var(--primary);">${this.escapeHtml(answer)}</div>`;
+      }
+      this._chatHistory.push({ role: 'user', content: question });
+      this._chatHistory.push({ role: 'assistant', content: answer });
+    } catch(e) {
+      if (resultDiv) resultDiv.innerHTML = `<span style="color:var(--danger);font-size:11px;">追问失败: ${this.escapeHtml(e.message)}</span>`;
+    }
+    input.disabled = false;
+    input.focus();
+  },
+
+  /** 键盘提交追问 */
+  _onFollowUpKey(e, id) {
+    if (e.key === 'Enter') { e.preventDefault(); this._aiFollowUp(id); }
   },
 
   /** 展开快速编辑面板 */
