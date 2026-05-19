@@ -94,6 +94,8 @@ const App = {
       { title:'HTTPS相比HTTP增加了____层来保证通信安全。', type:'fill', options:[], answer:'SSL/TLS', analysis:'HTTPS = HTTP + SSL/TLS。TLS（传输层安全协议）在HTTP和TCP之间添加了加密、身份验证和数据完整性保护。', category:'计算机网络', difficulty:'简单' },
     ];
 
+    // 补 bank 字段
+    demoQuestions.forEach(q => { q.bank = q.bank || 'gongji'; });
     const saved = QuestionBank.batchImport(demoQuestions);
     // Auto-categorize demo data
     const questions = QuestionBank.getAll();
