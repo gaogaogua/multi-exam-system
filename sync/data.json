@@ -1,13 +1,4542 @@
 {
   "version": 2,
-  "updatedAt": "2026-05-19T12:34:10.793Z",
-  "errors": [],
-  "practiceLog": [],
-  "examLog": [],
+  "updatedAt": "2026-05-19T14:56:53.136Z",
+  "errors": [
+    {
+      "id": "err_mpc0yaa7",
+      "questionId": "q_mpc0xjon_8fwt7i_31",
+      "questionTitle": "下列不属于变形缝的是（）。",
+      "questionType": "single",
+      "questionCategory": "第1章 建筑设计技术",
+      "correctAnswer": "D",
+      "userAnswer": "E",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T02:39:22.255Z",
+      "lastWrongAt": "2026-05-19T02:39:22.255Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-19"
+      }
+    },
+    {
+      "id": "err_mpc11dlj",
+      "questionId": "q_mpc0xjoj_anwq9u_17",
+      "questionTitle": "下列关于常用建筑结构体系的说法错误的是()。",
+      "questionType": "single",
+      "questionCategory": "第1章 建筑设计技术",
+      "correctAnswer": "C",
+      "userAnswer": "A",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T02:41:46.519Z",
+      "lastWrongAt": "2026-05-19T02:41:46.519Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-19"
+      }
+    },
+    {
+      "id": "err_mpc20slm",
+      "questionId": "q_mpc0xk68_7q475p_1279",
+      "questionTitle": "屋面保温层的类别？（P123）",
+      "questionType": "essay",
+      "questionCategory": "第1章 建筑设计技术",
+      "correctAnswer": "(1)板状材料保温层；",
+      "userAnswer": "纤维、板状、整体\n",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T03:09:18.922Z",
+      "lastWrongAt": "2026-05-19T03:09:18.922Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-19"
+      }
+    },
+    {
+      "id": "err_mpc22s8s",
+      "questionId": "q_mpc0xkkm_jzmv1g_1805",
+      "questionTitle": "以下不是非隔热型防火玻璃的是（）。",
+      "questionType": "single",
+      "questionCategory": "第1章 建筑设计技术",
+      "correctAnswer": "D",
+      "userAnswer": "C",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T03:10:51.772Z",
+      "lastWrongAt": "2026-05-19T03:10:51.772Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-19"
+      }
+    },
+    {
+      "id": "err_mpca7v01",
+      "questionId": "q_mpc0xjra_yja18k_332",
+      "questionTitle": "下列关于散水的说法，正确的是（）。",
+      "questionType": "single",
+      "questionCategory": "综合/其他",
+      "correctAnswer": "A",
+      "userAnswer": "1",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T06:58:45.553Z",
+      "lastWrongAt": "2026-05-19T06:58:45.553Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpca8e4g",
+      "questionId": "q_mpc0xjsc_jzxvqs_436",
+      "questionTitle": "体育馆、练功房、舞台等地面装饰适宜采用（）。",
+      "questionType": "single",
+      "questionCategory": "第3章 建筑工程施工技术",
+      "correctAnswer": "A",
+      "userAnswer": "D",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T06:59:10.336Z",
+      "lastWrongAt": "2026-05-19T06:59:10.336Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpca8yvc",
+      "questionId": "q_mpc0xjv0_z7yhfz_664",
+      "questionTitle": "下列关于作业脚手架的说法，正确的是（）。",
+      "questionType": "multiple",
+      "questionCategory": "第3章 建筑工程施工技术",
+      "correctAnswer": "BCE",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 2,
+      "firstWrongAt": "2026-05-19T06:59:37.224Z",
+      "lastWrongAt": "2026-05-19T07:04:58.235Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.3,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcaahww",
+      "questionId": "q_mpc0xknb_xoiawf_1900",
+      "questionTitle": "建设单位在（）时，应当提供危险性较大的分部分项工程清单和安全管理措施。",
+      "questionType": "single",
+      "questionCategory": "第9章 施工质量管理",
+      "correctAnswer": "C",
+      "userAnswer": "B",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:00:48.560Z",
+      "lastWrongAt": "2026-05-19T07:00:48.560Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafu6v",
+      "questionId": "q_mpc0xkjd_z1w6wk_1763",
+      "questionTitle": "关于砌体结构圈梁构造要求的说法，正确的有（）。",
+      "questionType": "multiple",
+      "questionCategory": "第2章 建筑材料性能与应用",
+      "correctAnswer": "ACE",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:57.751Z",
+      "lastWrongAt": "2026-05-19T07:04:57.751Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafu75",
+      "questionId": "q_mpc0xk6m_mvgoje_1296",
+      "questionTitle": "合同管理的原则是什么？",
+      "questionType": "essay",
+      "questionCategory": "第6-7章 项目组织与合同管理",
+      "correctAnswer": "①依法履约原则",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:57.761Z",
+      "lastWrongAt": "2026-05-19T07:04:57.761Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafu7f",
+      "questionId": "q_mpc0xkak_711eqj_1441",
+      "questionTitle": "“施工升降机”检查评定的保证项目有哪些？(P319)",
+      "questionType": "essay",
+      "questionCategory": "第11章 施工安全管理",
+      "correctAnswer": "施工升降机检查评定的保证项目包括：安全装置、限位装置、防护设施、附墙架、钢丝绳与滑轮、安拆与验收。",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:57.771Z",
+      "lastWrongAt": "2026-05-19T07:04:57.771Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafu7q",
+      "questionId": "q_mpc0xjsq_s85os0_470",
+      "questionTitle": "建筑变形测量精度分为哪些等级？变形测量基准点分为哪几类？分别说明各类基准点的设置要求。",
+      "questionType": "single",
+      "questionCategory": "综合/其他",
+      "correctAnswer": "B",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:57.782Z",
+      "lastWrongAt": "2026-05-19T07:04:57.782Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafu7z",
+      "questionId": "q_mpc0xjts_6vicno_564",
+      "questionTitle": "某高层住宅楼工程，钢筋混凝土剪力墙结构，建筑面积 32116 \\, m^{2} ，主体混凝土设计强度等级为 C35，混凝土粗骨料最大粒径为 30 mm。工程施工过程发生如下事件： 事件一：混凝土浇筑前",
+      "questionType": "fill",
+      "questionCategory": "第2章 建筑材料性能与应用",
+      "correctAnswer": "事件一：正确；事件二：错误，墙柱底部应先铺设50～100mm厚与混凝土内砂浆成分相同的水泥砂浆",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:57.791Z",
+      "lastWrongAt": "2026-05-19T07:04:57.791Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafu89",
+      "questionId": "q_mpc0xkij_kkt8bm_1737",
+      "questionTitle": "墙体防水、防潮规定正确的有（）。",
+      "questionType": "multiple",
+      "questionCategory": "第1章 建筑设计技术",
+      "correctAnswer": "BCD",
+      "userAnswer": "ACDE",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:57.801Z",
+      "lastWrongAt": "2026-05-19T07:04:57.801Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafu8i",
+      "questionId": "q_mpc0xjzo_3iehyj_965",
+      "questionTitle": "施工机械设备选择的方法有（）。",
+      "questionType": "multiple",
+      "questionCategory": "第13章 施工资源管理",
+      "correctAnswer": "ABCE",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:57.810Z",
+      "lastWrongAt": "2026-05-19T07:04:57.810Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafu8t",
+      "questionId": "q_mpc0xk6y_fnwgyy_1303",
+      "questionTitle": "土钉墙的成孔方法有哪些？(P189)",
+      "questionType": "essay",
+      "questionCategory": "综合/其他",
+      "correctAnswer": "洛阳铲、螺旋钻、冲击钻、地质钻等。",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:57.821Z",
+      "lastWrongAt": "2026-05-19T07:04:57.821Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafu90",
+      "questionId": "q_mpc0xjvk_tgc380_703",
+      "questionTitle": "屋面工程施工时，防水层和附加层伸入水落口杯内不应小于（）mm，水落口周围直径（）mm范围内坡度不应小于（）。",
+      "questionType": "single",
+      "questionCategory": "第3章 建筑工程施工技术",
+      "correctAnswer": "C",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:57.828Z",
+      "lastWrongAt": "2026-05-19T07:04:57.828Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafu96",
+      "questionId": "q_mpc0xjst_1g1t34_482",
+      "questionTitle": "关于土钉墙施工要求的说法，正确的有（）。",
+      "questionType": "multiple",
+      "questionCategory": "第3章 建筑工程施工技术",
+      "correctAnswer": "ABE",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:57.834Z",
+      "lastWrongAt": "2026-05-19T07:04:57.834Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafu9c",
+      "questionId": "q_mpc0xjv8_qb5akg_685",
+      "questionTitle": "根据《民用建筑工程室内环境污染控制标准》规定，下列说法错误的是（）。",
+      "questionType": "single",
+      "questionCategory": "第1章 建筑设计技术",
+      "correctAnswer": "D",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:57.840Z",
+      "lastWrongAt": "2026-05-19T07:04:57.840Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafu9i",
+      "questionId": "q_mpc0xjr2_svpxu9_303",
+      "questionTitle": "某办公楼屋面为平屋面，其室外设计地坪标高为 -0.45m，屋面面层标高 28.00m，女儿墙高 1.20m，屋顶设备用房（占屋面面积的 1/4）最高点标高为 31.00m，则该工程的建筑高度为（）。",
+      "questionType": "single",
+      "questionCategory": "第3章 建筑工程施工技术",
+      "correctAnswer": "C",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:57.846Z",
+      "lastWrongAt": "2026-05-19T07:04:57.846Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafu9p",
+      "questionId": "q_mpc0xkea_y8sdxd_1579",
+      "questionTitle": "主体结构主要包括哪些子分部？(P295)",
+      "questionType": "essay",
+      "questionCategory": "第9章 施工质量管理",
+      "correctAnswer": "铝合金结构、钢结构、砌体结构、型钢混凝土结构、钢管混凝土结构、混凝土结构、木结构等子分部工程。",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:57.853Z",
+      "lastWrongAt": "2026-05-19T07:04:57.853Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafu9v",
+      "questionId": "q_mpc0xk5v_w9d679_1262",
+      "questionTitle": "当大体积混凝土施工设置水平施工缝时，位置及间歇时间应根据哪些因素确定？",
+      "questionType": "essay",
+      "questionCategory": "第3章 建筑工程施工技术",
+      "correctAnswer": "当大体积混凝土施工设置水平施工缝时，位置及间歇时间应根据：设计规定、温度裂缝控制规定、混凝土供应能力、钢筋工程施工、预埋管件安装等因素确定。",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:57.859Z",
+      "lastWrongAt": "2026-05-19T07:04:57.859Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafua2",
+      "questionId": "q_mpc0xjoo_v27hto_37",
+      "questionTitle": "下列建筑物，楼梯踏步最大高度为 0.175m 的有（）。",
+      "questionType": "multiple",
+      "questionCategory": "第1章 建筑设计技术",
+      "correctAnswer": "BD",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:57.866Z",
+      "lastWrongAt": "2026-05-19T07:04:57.866Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafua8",
+      "questionId": "q_mpc0xkgr_fcw6aj_1673",
+      "questionTitle": "施工现场哪些地方不得使用明露高热的强光源?(P359)",
+      "questionType": "essay",
+      "questionCategory": "第3章 建筑工程施工技术",
+      "correctAnswer": "存放易燃、可燃材料的库房、木工加工场所、油漆配料房及防水作业场所队长口诀：水木燃油",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:57.872Z",
+      "lastWrongAt": "2026-05-19T07:04:57.872Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafuae",
+      "questionId": "q_mpc0xjtd_8tp584_532",
+      "questionTitle": "与组合钢模板比，钢框木胶合板模板的特点有（",
+      "questionType": "single",
+      "questionCategory": "第2章 建筑材料性能与应用",
+      "correctAnswer": "自重轻、强度高、周转次数多",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:57.878Z",
+      "lastWrongAt": "2026-05-19T07:04:57.878Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafual",
+      "questionId": "q_mpc0xkec_2o25a3_1582",
+      "questionTitle": "施工项目目标成本分解的方法有哪些？",
+      "questionType": "essay",
+      "questionCategory": "第3章 建筑工程施工技术",
+      "correctAnswer": "(1)施工项目目标成本可选择以下方法进行分解： (2)临时设施摊销费、办公费、差旅费、管理薪酬、劳动保护费、工程保修费等。",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:57.885Z",
+      "lastWrongAt": "2026-05-19T07:04:57.885Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafuar",
+      "questionId": "q_mpc0frw8_29ssxg_2725",
+      "questionTitle": "若该公文为小张负责草拟，则填入画横线⑥处作为这份公文落款的正确选项是（ ）。",
+      "questionType": "single",
+      "questionCategory": "公文写作",
+      "correctAnswer": "C",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:57.891Z",
+      "lastWrongAt": "2026-05-19T07:04:57.891Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafuax",
+      "questionId": "q_mpc0xjw0_1nlykl_744",
+      "questionTitle": "下列场所中，照明电压不得大于 12V 的有（）。",
+      "questionType": "multiple",
+      "questionCategory": "综合/其他",
+      "correctAnswer": "CD",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:57.897Z",
+      "lastWrongAt": "2026-05-19T07:04:57.897Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafub4",
+      "questionId": "q_mpc0fs5p_go3kk9_3042",
+      "questionTitle": "器，属于弹拨乐器的有（ ）。",
+      "questionType": "single",
+      "questionCategory": "中国特色社会主义",
+      "correctAnswer": "BCD",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:57.904Z",
+      "lastWrongAt": "2026-05-19T07:04:57.904Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafuba",
+      "questionId": "q_mpc0xkp6_scwhsd_1957",
+      "questionTitle": "下列施工生产常见危险源中，属于第一类危险源的有（）。",
+      "questionType": "multiple",
+      "questionCategory": "第3章 建筑工程施工技术",
+      "correctAnswer": "DE",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:57.910Z",
+      "lastWrongAt": "2026-05-19T07:04:57.910Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafubg",
+      "questionId": "q_mpc0frxx_w6u89f_2784",
+      "questionTitle": "紧急程度是公文送达和办理的时限要求，正确的标注方法是（ ）。",
+      "questionType": "single",
+      "questionCategory": "公文写作",
+      "correctAnswer": "D",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:57.916Z",
+      "lastWrongAt": "2026-05-19T07:04:57.916Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafubn",
+      "questionId": "q_mpc0xkg1_gduhrd_1649",
+      "questionTitle": "建筑材料质量控制的四个环节?(P366)",
+      "questionType": "essay",
+      "questionCategory": "第9章 施工质量管理",
+      "correctAnswer": "材料的采购、材料进场试验检验、过程保管和材料使用。",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:57.923Z",
+      "lastWrongAt": "2026-05-19T07:04:57.923Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafubu",
+      "questionId": "q_mpc0xk6c_vaabb8_1284",
+      "questionTitle": "垃圾运输管道主要由哪些构件组成？（P148）",
+      "questionType": "essay",
+      "questionCategory": "第13章 施工资源管理",
+      "correctAnswer": "主要由: 楼层垃圾入口、主管道、减速门、垃圾出口、专用垃圾箱、管道与结构连接件等主要构件组成,",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:57.930Z",
+      "lastWrongAt": "2026-05-19T07:04:57.930Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafuc0",
+      "questionId": "q_mpc0xjwa_kmtbat_755",
+      "questionTitle": "下列项目工程资料的责任部门是工程部门的有（）。",
+      "questionType": "multiple",
+      "questionCategory": "综合/其他",
+      "correctAnswer": "ACE",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:57.936Z",
+      "lastWrongAt": "2026-05-19T07:04:57.936Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafuc7",
+      "questionId": "q_mpc0xjvu_wpapps_730",
+      "questionTitle": "根据《危险性较大的分部分项工程安全管理规定》，专项施工方案实施前，（）应当向施工现场管理人员进行方案交底",
+      "questionType": "multiple",
+      "questionCategory": "第4-5章 相关法规与标准",
+      "correctAnswer": "AC",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:57.943Z",
+      "lastWrongAt": "2026-05-19T07:04:57.943Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafucd",
+      "questionId": "q_mpc0frtq_tk57a1_2645",
+      "questionTitle": "下列关于决议的说法正确的有（ ）。",
+      "questionType": "multiple",
+      "questionCategory": "马克思主义哲学",
+      "correctAnswer": "BCD",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:57.949Z",
+      "lastWrongAt": "2026-05-19T07:04:57.949Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafucj",
+      "questionId": "q_mpc0xkog_ugr5j2_1936",
+      "questionTitle": "钢筋机械连接现场检验的主要检测试验参数是（）。",
+      "questionType": "single",
+      "questionCategory": "第9章 施工质量管理",
+      "correctAnswer": "C",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:57.955Z",
+      "lastWrongAt": "2026-05-19T07:04:57.955Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafucp",
+      "questionId": "q_mpc0fs2k_8s4btx_2944",
+      "questionTitle": "亡，赵某的行为构成（ ）。",
+      "questionType": "single",
+      "questionCategory": "法律基础",
+      "correctAnswer": "A",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:57.961Z",
+      "lastWrongAt": "2026-05-19T07:04:57.961Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafucw",
+      "questionId": "q_mpc0xkcj_i3qchk_1511",
+      "questionTitle": "砌体结构子分部包括哪些分项工程？（P395）",
+      "questionType": "essay",
+      "questionCategory": "第9章 施工质量管理",
+      "correctAnswer": "砌体结构子分部包括的分项工程： 砖砌体，混凝土小型空心砌块砌体，石砌体，配筋砌体，填充墙砌体。",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:57.968Z",
+      "lastWrongAt": "2026-05-19T07:04:57.968Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafud2",
+      "questionId": "q_mpc0xjpq_ba9luj_172",
+      "questionTitle": "存放危险品的仓库应远离现场单独设置，离在建工程距离不小于（）。",
+      "questionType": "single",
+      "questionCategory": "综合/其他",
+      "correctAnswer": "C",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:57.974Z",
+      "lastWrongAt": "2026-05-19T07:04:57.974Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafud9",
+      "questionId": "q_mpc0xkoq_6vlleh_1947",
+      "questionTitle": "砂石地基施工过程中检查的内容不包括（）。",
+      "questionType": "single",
+      "questionCategory": "第3章 建筑工程施工技术",
+      "correctAnswer": "C",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:57.981Z",
+      "lastWrongAt": "2026-05-19T07:04:57.981Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafudf",
+      "questionId": "q_mpc0xklj_sbfpf6_1839",
+      "questionTitle": "关于钢筋接头位置的说法，正确的有（）。",
+      "questionType": "multiple",
+      "questionCategory": "第2章 建筑材料性能与应用",
+      "correctAnswer": "BE",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:57.987Z",
+      "lastWrongAt": "2026-05-19T07:04:57.987Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafudl",
+      "questionId": "q_mpc0xjpa_ckd2eo_106",
+      "questionTitle": "适用于含水量较小土层的沉管灌注桩施工方法是（）。",
+      "questionType": "single",
+      "questionCategory": "第3章 建筑工程施工技术",
+      "correctAnswer": "A",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:57.993Z",
+      "lastWrongAt": "2026-05-19T07:04:57.993Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafudr",
+      "questionId": "q_mpc0xjtb_7wpu3u_526",
+      "questionTitle": "垫层混凝土应在基础验槽后应（）浇筑，混凝土强度达到（）后方可进行后续施工。",
+      "questionType": "single",
+      "questionCategory": "第2章 建筑材料性能与应用",
+      "correctAnswer": "A",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:57.999Z",
+      "lastWrongAt": "2026-05-19T07:04:57.999Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafudy",
+      "questionId": "q_mpc0xjse_vsx6gw_446",
+      "questionTitle": "以下属于有机涂料的是（）。",
+      "questionType": "multiple",
+      "questionCategory": "综合/其他",
+      "correctAnswer": "AC",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.006Z",
+      "lastWrongAt": "2026-05-19T07:04:58.006Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafue4",
+      "questionId": "q_mpc0xk0y_bxk0t8_1040",
+      "questionTitle": "下列混凝土外加剂中，不能显著改善混凝土拌合物流变性能的是（）。",
+      "questionType": "single",
+      "questionCategory": "第2章 建筑材料性能与应用",
+      "correctAnswer": "C",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.012Z",
+      "lastWrongAt": "2026-05-19T07:04:58.012Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafueb",
+      "questionId": "q_mpc0xjxh_eior9u_836",
+      "questionTitle": "下列关于同一配合比的混凝土试件取样规则，说法正确的是（）。 荣胜教育 破题提分·建筑",
+      "questionType": "fill",
+      "questionCategory": "第9章 施工质量管理",
+      "correctAnswer": "A",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.019Z",
+      "lastWrongAt": "2026-05-19T07:04:58.019Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafueh",
+      "questionId": "q_mpc0xk02_gidbmp_990",
+      "questionTitle": "针对事件二，根据各工作完成情况于图中绘制实际进度前锋线，分析各项工作进度有无偏差，并说明对总工期的影响。",
+      "questionType": "multiple",
+      "questionCategory": "第8章 施工进度管理",
+      "correctAnswer": "CD",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.025Z",
+      "lastWrongAt": "2026-05-19T07:04:58.025Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafuen",
+      "questionId": "q_mpc0xjrv_tjzq4g_392",
+      "questionTitle": "下列建筑钢材的化学元素中，属于有害元素的有（）。",
+      "questionType": "multiple",
+      "questionCategory": "第2章 建筑材料性能与应用",
+      "correctAnswer": "BCD",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.031Z",
+      "lastWrongAt": "2026-05-19T07:04:58.031Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafuet",
+      "questionId": "q_mpc0xjy1_vx78hp_868",
+      "questionTitle": "按照施工项目成本划分为（）。",
+      "questionType": "single",
+      "questionCategory": "第2章 建筑材料性能与应用",
+      "correctAnswer": "见解析",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.037Z",
+      "lastWrongAt": "2026-05-19T07:04:58.037Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafuf0",
+      "questionId": "q_mpc0xkb7_62fc05_1463",
+      "questionTitle": "安全防护设施验收应包括哪些内容？（P333）",
+      "questionType": "essay",
+      "questionCategory": "第4-5章 相关法规与标准",
+      "correctAnswer": "（1）防护栏杆的设置与搭设；",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.044Z",
+      "lastWrongAt": "2026-05-19T07:04:58.044Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafuf6",
+      "questionId": "q_mpc0xjvb_gmbsji_693",
+      "questionTitle": "根据《建筑与市政地基基础通用规范》的有关规定，下列说法错误的是（）。",
+      "questionType": "single",
+      "questionCategory": "第3章 建筑工程施工技术",
+      "correctAnswer": "A",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.050Z",
+      "lastWrongAt": "2026-05-19T07:04:58.050Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafufd",
+      "questionId": "q_mpc0xk0c_n7brsb_1001",
+      "questionTitle": "某办公楼项目，高度 115m，占地面积 4614m²，总建筑面积 37355m²。设地下室 3 层，基坑平面尺寸 56.6m×36.5m，开挖深度 10.05m，采用锚拉式灌注桩排桩支护结构，混凝土强",
+      "questionType": "fill",
+      "questionCategory": "第3章 建筑工程施工技术",
+      "correctAnswer": "锚拉式灌注桩排桩支护结构施工工艺流程：测量放线→桩位复核→成孔→钢筋笼制作与安装→灌注混凝土→养护→桩顶冠梁施工→锚杆钻孔→锚杆制作与安装→注浆→张拉锁定→腰梁施工。",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.057Z",
+      "lastWrongAt": "2026-05-19T07:04:58.057Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafufj",
+      "questionId": "q_mpc0xjxn_r6nrs8_847",
+      "questionTitle": "某办公楼工程，建筑面积 18500 \\, m^{2} 现浇钢筋混凝土框架结构，筏板基础。施工总承包单位在基础工程自检合格后，将分部工程的质量控制资料整理成册报送监理机构审查。专业监理工程师及时组织施工",
+      "questionType": "fill",
+      "questionCategory": "第6-7章 项目组织与合同管理",
+      "correctAnswer": "不妥之处：1. 专业监理工程师组织验收；2. 验收人员缺少监理单位项目负责人。正确做法：地基与基础分部工程验收应由总监理工程师组织，施工单位项目负责人、项目技术负责人、质量负责人等参加。",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.063Z",
+      "lastWrongAt": "2026-05-19T07:04:58.063Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafufp",
+      "questionId": "q_mpc0xjvc_asncrs_697",
+      "questionTitle": "某公司新建一幢大楼，建筑面积 48000 \\, m^{2} ，框架剪力墙结构，地下 1 层，地上 10 层，建筑场地地基土为湿陷性黄土，为增强地基承载能力，采用灰土地基。地基施工时分层铺填，铺填厚度为",
+      "questionType": "fill",
+      "questionCategory": "第9章 施工质量管理",
+      "correctAnswer": "1. 铺填厚度500mm不符合要求；2. 全部铺填完毕后整体夯压密实不符合要求；3. 压实遍数按经验确定不符合要求；4. 采用环刀法检验地基的施工质量不符合要求。",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.069Z",
+      "lastWrongAt": "2026-05-19T07:04:58.069Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafufv",
+      "questionId": "q_mpc0xjsn_x0gkkd_461",
+      "questionTitle": "下列关于工程测量仪器的说法中，正确的是（）。",
+      "questionType": "multiple",
+      "questionCategory": "综合/其他",
+      "correctAnswer": "ABD",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.075Z",
+      "lastWrongAt": "2026-05-19T07:04:58.075Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafug2",
+      "questionId": "q_mpc0xjvq_a4gc2c_721",
+      "questionTitle": "“健康舒适”指标的评分项包括哪些？“资源节约”指标的评分项包括哪些？",
+      "questionType": "multiple",
+      "questionCategory": "第9章 施工质量管理",
+      "correctAnswer": "CD",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.082Z",
+      "lastWrongAt": "2026-05-19T07:04:58.082Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafug8",
+      "questionId": "q_mpc0xjrc_1s0e32_339",
+      "questionTitle": "关于电梯和楼梯设置要求的说法正确的有（）。",
+      "questionType": "multiple",
+      "questionCategory": "第1章 建筑设计技术",
+      "correctAnswer": "BCDE",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.088Z",
+      "lastWrongAt": "2026-05-19T07:04:58.088Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafugf",
+      "questionId": "q_mpc0xjuw_sk0yj3_653",
+      "questionTitle": "冬期施工配制混凝土采用蒸汽养护时，宜选用（）。",
+      "questionType": "single",
+      "questionCategory": "第3章 建筑工程施工技术",
+      "correctAnswer": "C",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.095Z",
+      "lastWrongAt": "2026-05-19T07:04:58.095Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafugl",
+      "questionId": "q_mpc0xjso_knddby_462",
+      "questionTitle": "施工测量的基本工作包括（）。",
+      "questionType": "multiple",
+      "questionCategory": "第3章 建筑工程施工技术",
+      "correctAnswer": "BDE",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.101Z",
+      "lastWrongAt": "2026-05-19T07:04:58.101Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafugr",
+      "questionId": "q_mpc0xk1k_ecvnmm_1070",
+      "questionTitle": "关于地下连续墙施工要求，正确的有（）。",
+      "questionType": "multiple",
+      "questionCategory": "第3章 建筑工程施工技术",
+      "correctAnswer": "CDE",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.107Z",
+      "lastWrongAt": "2026-05-19T07:04:58.107Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafugx",
+      "questionId": "q_mpc0xk0y_ngcmb6_1041",
+      "questionTitle": "一般用于房屋防潮层以下砌体的砂浆是（）。",
+      "questionType": "single",
+      "questionCategory": "第2章 建筑材料性能与应用",
+      "correctAnswer": "A",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.113Z",
+      "lastWrongAt": "2026-05-19T07:04:58.113Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafuh4",
+      "questionId": "q_mpc0xjq2_tn2lwy_201",
+      "questionTitle": "下列施工合同文件的排序符合优先解释顺序的是（）。",
+      "questionType": "single",
+      "questionCategory": "第3章 建筑工程施工技术",
+      "correctAnswer": "B",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.120Z",
+      "lastWrongAt": "2026-05-19T07:04:58.120Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafuha",
+      "questionId": "q_mpc0xkig_v40ch3_1734",
+      "questionTitle": "消能器与主体结构的连接形式包括（）。",
+      "questionType": "multiple",
+      "questionCategory": "第1章 建筑设计技术",
+      "correctAnswer": "ABCE",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.126Z",
+      "lastWrongAt": "2026-05-19T07:04:58.126Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafuhh",
+      "questionId": "q_mpc0xjpf_78wyu0_129",
+      "questionTitle": "下列行为中，不属于重大事故隐患情形的是（）。",
+      "questionType": "single",
+      "questionCategory": "第11章 施工安全管理",
+      "correctAnswer": "D",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.133Z",
+      "lastWrongAt": "2026-05-19T07:04:58.133Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafuhn",
+      "questionId": "q_mpc0frzj_19vmi0_2840",
+      "questionTitle": "我国现行宪法共进行了（ ）次修订。",
+      "questionType": "single",
+      "questionCategory": "中国特色社会主义",
+      "correctAnswer": "D",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.139Z",
+      "lastWrongAt": "2026-05-19T07:04:58.139Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafuht",
+      "questionId": "q_mpc0xjy3_a6povc_872",
+      "questionTitle": "使用差额计算法分析各因素对成本增加的影响？",
+      "questionType": "single",
+      "questionCategory": "第10章 施工成本管理",
+      "correctAnswer": "B",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.145Z",
+      "lastWrongAt": "2026-05-19T07:04:58.145Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafui0",
+      "questionId": "q_mpc0xjpo_5v67qu_162",
+      "questionTitle": "填充墙不应使用轻骨料混凝土小型空心砌块或蒸压加气混凝土砌块砌体的部位或环境为（）。",
+      "questionType": "multiple",
+      "questionCategory": "第2章 建筑材料性能与应用",
+      "correctAnswer": "ABCD",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.152Z",
+      "lastWrongAt": "2026-05-19T07:04:58.152Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafui6",
+      "questionId": "q_mpc0xjpp_vnt9kj_167",
+      "questionTitle": "以下场所中电压不得高于 24 \\mathrm{~V} 的是（）。",
+      "questionType": "single",
+      "questionCategory": "综合/其他",
+      "correctAnswer": "A",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.158Z",
+      "lastWrongAt": "2026-05-19T07:04:58.158Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafuic",
+      "questionId": "q_mpc0xkna_y0la41_1899",
+      "questionTitle": "下列情形中，应判定为重大事故隐患的有（）。",
+      "questionType": "multiple",
+      "questionCategory": "第11章 施工安全管理",
+      "correctAnswer": "ACDE",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.164Z",
+      "lastWrongAt": "2026-05-19T07:04:58.164Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafuij",
+      "questionId": "q_mpc0frdz_5gsuc5_2083",
+      "questionTitle": "依法治国的论述正确的有（ ）。",
+      "questionType": "single",
+      "questionCategory": "马克思主义哲学",
+      "correctAnswer": "A",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.171Z",
+      "lastWrongAt": "2026-05-19T07:04:58.171Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafuip",
+      "questionId": "q_mpc0xjx9_c6fbx4_819",
+      "questionTitle": "在图中标出第 15 周末的实际进度前锋线。",
+      "questionType": "multiple",
+      "questionCategory": "第8章 施工进度管理",
+      "correctAnswer": "CE",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.177Z",
+      "lastWrongAt": "2026-05-19T07:04:58.177Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafuiw",
+      "questionId": "q_mpc0xk2x_vwl89v_1141",
+      "questionTitle": "【答案】 【考点来源】第九章第四节第二目主体结构工程质量验收 案例（六） 背景资料： 某住宅工程由 7 栋单体组成，地下 2 层，地上 10～13 层，总建筑面积 11.5 万平方米。施工总承包单位中",
+      "questionType": "fill",
+      "questionCategory": "第9章 施工质量管理",
+      "correctAnswer": "主体结构工程的分部工程验收还需参加人员：设计单位项目负责人、施工单位项目负责人、监理单位总监理工程师。结构实体检验除混凝土强度外还有：钢筋保护层厚度、结构位置与尺寸偏差、楼板厚度等。",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.184Z",
+      "lastWrongAt": "2026-05-19T07:04:58.184Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafuj2",
+      "questionId": "q_mpc0xjr7_ehxf1q_320",
+      "questionTitle": "下列关于热工环境的说法，正确的有（）。",
+      "questionType": "multiple",
+      "questionCategory": "综合/其他",
+      "correctAnswer": "CE",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.190Z",
+      "lastWrongAt": "2026-05-19T07:04:58.190Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafuj8",
+      "questionId": "q_mpc0xjv1_ljoe39_665",
+      "questionTitle": "施工安全管理有下列（）情形的，应判定为重大事故隐患。",
+      "questionType": "multiple",
+      "questionCategory": "第11章 施工安全管理",
+      "correctAnswer": "ACDE",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.196Z",
+      "lastWrongAt": "2026-05-19T07:04:58.196Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafujf",
+      "questionId": "q_mpc0xjwt_30pod8_797",
+      "questionTitle": "下列参数中，不属于流水施工参数的是（）。",
+      "questionType": "single",
+      "questionCategory": "第3章 建筑工程施工技术",
+      "correctAnswer": "C",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.203Z",
+      "lastWrongAt": "2026-05-19T07:04:58.203Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafujm",
+      "questionId": "q_mpc0xkpl_4qnp7b_1972",
+      "questionTitle": "项目对外宣传网页可显示的信息有（）。",
+      "questionType": "multiple",
+      "questionCategory": "综合/其他",
+      "correctAnswer": "ABCE",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.210Z",
+      "lastWrongAt": "2026-05-19T07:04:58.210Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafujs",
+      "questionId": "q_mpc0fs1y_ku5of9_2921",
+      "questionTitle": "正案内容的是（ ）。",
+      "questionType": "single",
+      "questionCategory": "法律基础",
+      "correctAnswer": "D",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.216Z",
+      "lastWrongAt": "2026-05-19T07:04:58.216Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafujy",
+      "questionId": "q_mpc0xkal_wvgmog_1443",
+      "questionTitle": "“起重吊装” 检查评定的保证项目有哪些？(P319)",
+      "questionType": "essay",
+      "questionCategory": "第3章 建筑工程施工技术",
+      "correctAnswer": "起重吊装检查评定的保证项目包括：施工方案、起重机械、钢丝绳与地锚、索具、作业环境、作业人员。",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.222Z",
+      "lastWrongAt": "2026-05-19T07:04:58.222Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafuk4",
+      "questionId": "q_mpc0xjsa_eppnw2_431",
+      "questionTitle": "建筑陶瓷按照吸水率划分，下列属于高吸水率砖的是（）。",
+      "questionType": "single",
+      "questionCategory": "综合/其他",
+      "correctAnswer": "D",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.228Z",
+      "lastWrongAt": "2026-05-19T07:04:58.228Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafukh",
+      "questionId": "q_mpc0xjts_6338uh_563",
+      "questionTitle": "以下关于混凝土养护的说法，正确的有（）。",
+      "questionType": "multiple",
+      "questionCategory": "第2章 建筑材料性能与应用",
+      "correctAnswer": "ACE",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.241Z",
+      "lastWrongAt": "2026-05-19T07:04:58.241Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafuko",
+      "questionId": "q_mpc0xk96_j0no70_1387",
+      "questionTitle": "进度计划的调整方法有哪些？（P272）",
+      "questionType": "essay",
+      "questionCategory": "第8章 施工进度管理",
+      "correctAnswer": "改变某些工作间的逻辑关系； 剩余工作重新编制进度计划； 资源调整； 关键工作的调整； 非关键 工作调整。",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.248Z",
+      "lastWrongAt": "2026-05-19T07:04:58.248Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafuku",
+      "questionId": "q_mpc0xkl0_mfr1t5_1820",
+      "questionTitle": "关于土方回填施工工艺的说法，错误的是（）。",
+      "questionType": "single",
+      "questionCategory": "第3章 建筑工程施工技术",
+      "correctAnswer": "D",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.254Z",
+      "lastWrongAt": "2026-05-19T07:04:58.254Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcaful1",
+      "questionId": "q_mpc0xjro_zj1kcq_366",
+      "questionTitle": "混凝土结构构造要求正确的是（）。 荣胜教育 破题提分·建筑 ©",
+      "questionType": "multiple",
+      "questionCategory": "第2章 建筑材料性能与应用",
+      "correctAnswer": "ADE",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.261Z",
+      "lastWrongAt": "2026-05-19T07:04:58.261Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcaful7",
+      "questionId": "q_mpc0fro1_dqbpee_2446",
+      "questionTitle": "二十世纪西方文化三大发现指的是（ ）。",
+      "questionType": "multiple",
+      "questionCategory": "马克思主义哲学",
+      "correctAnswer": "BCD",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.267Z",
+      "lastWrongAt": "2026-05-19T07:04:58.267Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafule",
+      "questionId": "q_mpc0xkf4_tyxu4b_1610",
+      "questionTitle": "周转料具需用计划依据施工组织设计按什么进行编制?★★(P363)",
+      "questionType": "essay",
+      "questionCategory": "第3章 建筑工程施工技术",
+      "correctAnswer": "按品种、规格、数量、需用时间、进度编制。",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.274Z",
+      "lastWrongAt": "2026-05-19T07:04:58.274Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafulk",
+      "questionId": "q_mpc0xknj_h5etss_1902",
+      "questionTitle": "以下建筑材料及设施的生产许可证管理，由省级工业产品生产许可证主管部门负责实施的有（）。",
+      "questionType": "multiple",
+      "questionCategory": "第4-5章 相关法规与标准",
+      "correctAnswer": "ABDE",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.280Z",
+      "lastWrongAt": "2026-05-19T07:04:58.280Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafulr",
+      "questionId": "q_mpc0xkbp_2op8wz_1483",
+      "questionTitle": "简述“文明施工六化”的具体内容。(P357)",
+      "questionType": "essay",
+      "questionCategory": "第3章 建筑工程施工技术",
+      "correctAnswer": "安全设施规范化；施工现场应当做到围挡、大门、标牌标准化；材料码放整齐化；生活设施整洁化；职工行为文明化；工作生活秩序化。",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.287Z",
+      "lastWrongAt": "2026-05-19T07:04:58.287Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafulx",
+      "questionId": "q_mpc0xjov_gvo2s2_58",
+      "questionTitle": "木材在使用前进行烘干的主要目的是（）。",
+      "questionType": "single",
+      "questionCategory": "第2章 建筑材料性能与应用",
+      "correctAnswer": "A",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.293Z",
+      "lastWrongAt": "2026-05-19T07:04:58.293Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafum4",
+      "questionId": "q_mpc0xka1_hxilqm_1419",
+      "questionTitle": "专项施工成本分析包括哪些内容？（P303）",
+      "questionType": "essay",
+      "questionCategory": "第10章 施工成本管理",
+      "correctAnswer": "包括：技术措施节约效果分析、资金成本分析、质量成本分析、其他有利因素和不利因素分析、成本盈亏异常分析、工期成本分析。",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.300Z",
+      "lastWrongAt": "2026-05-19T07:04:58.300Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafuma",
+      "questionId": "q_mpc0xko4_wnafqn_1924",
+      "questionTitle": "下列建筑工程中，施工总承包二级资质可承接的有（）。",
+      "questionType": "multiple",
+      "questionCategory": "第6-7章 项目组织与合同管理",
+      "correctAnswer": "BCE",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.306Z",
+      "lastWrongAt": "2026-05-19T07:04:58.306Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafumh",
+      "questionId": "q_mpc0xk2s_5k7kf8_1133",
+      "questionTitle": "【答案】 （1）地下防水子分部的分项还有：主体结构防水，细部构造防水，特殊施工法结构防水。 （2）建设工程地基与基础工程验收按施工企业自评、设计认可、监理核定、业主验收、政府监督的程序进 行。 【考点",
+      "questionType": "fill",
+      "questionCategory": "第9章 施工质量管理",
+      "correctAnswer": "（1）地下防水子分部的分项还有：主体结构防水，细部构造防水，特殊施工法结构防水。（2）建设工程地基与基础工程验收按施工企业自评、设计认可、监理核定、业主验收、政府监督的程序进行。",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.313Z",
+      "lastWrongAt": "2026-05-19T07:04:58.313Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafumn",
+      "questionId": "q_mpc0xkka_gubk7b_1798",
+      "questionTitle": "节能装饰型玻璃包括（）。",
+      "questionType": "multiple",
+      "questionCategory": "第1章 建筑设计技术",
+      "correctAnswer": "CDE",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.319Z",
+      "lastWrongAt": "2026-05-19T07:04:58.319Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafumu",
+      "questionId": "q_mpc0xjrv_g0ai2t_391",
+      "questionTitle": "下列钢材的化学元素中，其含量增加会使钢材强度提高，而塑性和韧性下降的有（）。",
+      "questionType": "multiple",
+      "questionCategory": "第2章 建筑材料性能与应用",
+      "correctAnswer": "ACE",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.326Z",
+      "lastWrongAt": "2026-05-19T07:04:58.326Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafun0",
+      "questionId": "q_mpc0xjpb_ecpnen_111",
+      "questionTitle": "下列隔墙类型中，属于轻质隔墙的有（）。",
+      "questionType": "multiple",
+      "questionCategory": "综合/其他",
+      "correctAnswer": "ABC",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.332Z",
+      "lastWrongAt": "2026-05-19T07:04:58.332Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafun7",
+      "questionId": "q_mpc0xjzy_8wdahr_982",
+      "questionTitle": "计算主体施工阶段需要多少名劳动力？",
+      "questionType": "single",
+      "questionCategory": "第3章 建筑工程施工技术",
+      "correctAnswer": "B",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.339Z",
+      "lastWrongAt": "2026-05-19T07:04:58.339Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafund",
+      "questionId": "q_mpc0xjpt_ynhl39_183",
+      "questionTitle": "建筑工程施工现场检测试验技术管理程序的第一步应是（）。",
+      "questionType": "single",
+      "questionCategory": "第9章 施工质量管理",
+      "correctAnswer": "B",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.345Z",
+      "lastWrongAt": "2026-05-19T07:04:58.345Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafunk",
+      "questionId": "q_mpc0xkmj_6tngpr_1871",
+      "questionTitle": "关于地下工程防水卷材施工的说法，正确的有（）。",
+      "questionType": "multiple",
+      "questionCategory": "第1章 建筑设计技术",
+      "correctAnswer": "CE",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.352Z",
+      "lastWrongAt": "2026-05-19T07:04:58.352Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafunq",
+      "questionId": "q_mpc0xkdt_tgq2zv_1558",
+      "questionTitle": "流水施工的基本组织形式有哪些？表达方式有哪些？",
+      "questionType": "essay",
+      "questionCategory": "第3章 建筑工程施工技术",
+      "correctAnswer": "(1)无节奏流水施工、等节奏流水施工、异节奏流水施工(等步距异节奏流水施工、异步距异节奏流水施工)。 (2) 网络图、横道图、垂直图。 (3)绘图简单,施工过程及其先后顺序表达清楚,时间和空间状况形象直观,使用方便。",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.358Z",
+      "lastWrongAt": "2026-05-19T07:04:58.358Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafunx",
+      "questionId": "q_mpc0xkaz_k2gj9y_1453",
+      "questionTitle": "如果悬臂式支护结构位移超过设计值时, 应采取什么措施? (P322)",
+      "questionType": "essay",
+      "questionCategory": "第3章 建筑工程施工技术",
+      "correctAnswer": "应采取：①加设支撑或锚杆、 ②支护墙背卸土等方法及时进行处理。 ③如果悬臂式支护结构发生深层滑动时，应及时浇筑垫层， ④必要时也可以加厚垫层，形成下部水平支撑。",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.365Z",
+      "lastWrongAt": "2026-05-19T07:04:58.365Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafuo3",
+      "questionId": "q_mpc0xjxc_d57vrl_825",
+      "questionTitle": "基坑验槽时，应重点观察的部位有（）。",
+      "questionType": "multiple",
+      "questionCategory": "第3章 建筑工程施工技术",
+      "correctAnswer": "ACDE",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.371Z",
+      "lastWrongAt": "2026-05-19T07:04:58.371Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafuoa",
+      "questionId": "q_mpc0xk2h_1nftzj_1115",
+      "questionTitle": "【答案】不妥之处的正确做法分别如下： （1）灌注桩桩身设计强度等级不应低于 C25，采用水下灌注时提高一个等级。 【考点来源】第五章第二节第一目《建筑与市政地基基础通用规范》有关规定 【考点来源】第三",
+      "questionType": "fill",
+      "questionCategory": "第3章 建筑工程施工技术",
+      "correctAnswer": "灌注桩桩身设计强度等级不应低于C25，采用水下灌注时提高一个等级",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.378Z",
+      "lastWrongAt": "2026-05-19T07:04:58.378Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafuog",
+      "questionId": "q_mpc0xkk9_wksv2e_1797",
+      "questionTitle": "常用作隔墙、顶棚、门面板、墙裙等的人造木板是（）。",
+      "questionType": "single",
+      "questionCategory": "综合/其他",
+      "correctAnswer": "C",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.384Z",
+      "lastWrongAt": "2026-05-19T07:04:58.384Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafuon",
+      "questionId": "q_mpc0xkq0_63ajwb_1987",
+      "questionTitle": "仓库内严禁使用的灯具是（）。",
+      "questionType": "single",
+      "questionCategory": "综合/其他",
+      "correctAnswer": "C",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.391Z",
+      "lastWrongAt": "2026-05-19T07:04:58.391Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafuot",
+      "questionId": "q_mpc0xknt_h1xkmg_1912",
+      "questionTitle": "民用建筑工程室内装修所用水性胶粘剂必须检测合格的项目是（）。",
+      "questionType": "single",
+      "questionCategory": "第1章 建筑设计技术",
+      "correctAnswer": "C",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.397Z",
+      "lastWrongAt": "2026-05-19T07:04:58.397Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafup0",
+      "questionId": "q_mpc0xk21_tmt2b4_1098",
+      "questionTitle": "施工现场水收集综合利用技术： 施工现场水收集综合利用技术包括基坑施工降水回收利用技术、雨水回收利用技术、现场生产和生活废水 回收利用技术。",
+      "questionType": "fill",
+      "questionCategory": "第12章 绿色建造与环境管理",
+      "correctAnswer": "施工现场水收集综合利用技术包括基坑施工降水回收利用技术、雨水回收利用技术、现场生产和生活废水回收利用技术。",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.404Z",
+      "lastWrongAt": "2026-05-19T07:04:58.404Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcafup6",
+      "questionId": "q_mpc0frjt_rj2gmc_2300",
+      "questionTitle": "的理解，错误的是（ ）。",
+      "questionType": "single",
+      "questionCategory": "马克思主义哲学",
+      "correctAnswer": "B",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:04:58.410Z",
+      "lastWrongAt": "2026-05-19T07:04:58.410Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcamyq3",
+      "questionId": "q_mpc0xjzs_eyv49h_972",
+      "questionTitle": "可用于挖地下水位以下土方的机械有（）。",
+      "questionType": "multiple",
+      "questionCategory": "第3章 建筑工程施工技术",
+      "correctAnswer": "AB",
+      "userAnswer": "BD",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T07:10:30.219Z",
+      "lastWrongAt": "2026-05-19T07:10:30.219Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcegl01",
+      "questionId": "q_mpc0xjoe_65crlu_6",
+      "questionTitle": "根据《民用建筑设计统一标准》GB50352-2019，下列说法正确的是（）。",
+      "questionType": "single",
+      "questionCategory": "第1章 建筑设计技术",
+      "correctAnswer": "B",
+      "userAnswer": "A",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T08:57:30.961Z",
+      "lastWrongAt": "2026-05-19T08:57:30.961Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpceigrc",
+      "questionId": "q_mpc0xjog_bgntyd_8",
+      "questionTitle": "下列关于楼梯的构造要求，说法正确的是（）。",
+      "questionType": "single",
+      "questionCategory": "第1章 建筑设计技术",
+      "correctAnswer": "D",
+      "userAnswer": "A",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T08:58:58.776Z",
+      "lastWrongAt": "2026-05-19T08:58:58.776Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcermxs",
+      "questionId": "q_mpc0xjom_xov083_28",
+      "questionTitle": "下列不属于消能器与支撑、连接件之间宜采用的连接方式的是（）。",
+      "questionType": "single",
+      "questionCategory": "第1章 建筑设计技术",
+      "correctAnswer": "A",
+      "userAnswer": "D",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T09:06:06.688Z",
+      "lastWrongAt": "2026-05-19T09:06:06.688Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcet5l9",
+      "questionId": "q_mpc0xjou_zi8ksv_56",
+      "questionTitle": "广泛用于车辆、船舶、飞机等内部装饰和楼梯、踏板等防滑部位的装饰装修用铝合金是（）。",
+      "questionType": "single",
+      "questionCategory": "第1章 建筑设计技术",
+      "correctAnswer": "A",
+      "userAnswer": "B",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T09:07:17.517Z",
+      "lastWrongAt": "2026-05-19T09:07:17.517Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpceup05",
+      "questionId": "q_mpc0xjph_uua7lc_138",
+      "questionTitle": "楼梯、阳台、平台、走道和中庭等临空部位的玻璃栏板应采用（）。",
+      "questionType": "single",
+      "questionCategory": "第1章 建筑设计技术",
+      "correctAnswer": "A",
+      "userAnswer": "C",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T09:08:29.333Z",
+      "lastWrongAt": "2026-05-19T09:08:29.333Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcewbuw",
+      "questionId": "q_mpc0xjpi_166yhz_142",
+      "questionTitle": "下列关于《建筑节能与可再生能源利用通用规范》说法错误的有（）。",
+      "questionType": "single",
+      "questionCategory": "第1章 建筑设计技术",
+      "correctAnswer": "C",
+      "userAnswer": "A",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T09:09:45.608Z",
+      "lastWrongAt": "2026-05-19T09:09:45.608Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcewwu6",
+      "questionId": "q_mpc0xjpj_quh2tb_147",
+      "questionTitle": "卧室、起居室和一般病房的采光等级不应低于（）的要求。",
+      "questionType": "single",
+      "questionCategory": "第1章 建筑设计技术",
+      "correctAnswer": "B",
+      "userAnswer": "D",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T09:10:12.798Z",
+      "lastWrongAt": "2026-05-19T09:10:12.798Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpceyo87",
+      "questionId": "q_mpc0xjpj_7ppxpx_148",
+      "questionTitle": "某 32 米高的办公楼建筑, 建筑外墙外保温系统与基层墙体、装饰层之间无空腔, 保温材料的燃烧性能不应低于 ( ) 级。",
+      "questionType": "single",
+      "questionCategory": "第1章 建筑设计技术",
+      "correctAnswer": "C",
+      "userAnswer": "B",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T09:11:34.951Z",
+      "lastWrongAt": "2026-05-19T09:11:34.951Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcezw00",
+      "questionId": "q_mpc0xjpm_hp83iz_153",
+      "questionTitle": "下列不属于屋面保温隔热材料进场复验内容的是（）。",
+      "questionType": "single",
+      "questionCategory": "第1章 建筑设计技术",
+      "correctAnswer": "D",
+      "userAnswer": "C",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T09:12:31.680Z",
+      "lastWrongAt": "2026-05-19T09:12:31.680Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    },
+    {
+      "id": "err_mpcr9hzm",
+      "questionId": "q_mpc0xk4u_04cz0z_1222",
+      "questionTitle": "消能器进场验收应提供哪些资料？（P13）",
+      "questionType": "essay",
+      "questionCategory": "第1章 建筑设计技术",
+      "correctAnswer": "①消能器检验报告；②监理单位、建设单位对消能器检验的确认单。",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T14:55:55.474Z",
+      "lastWrongAt": "2026-05-19T14:55:55.474Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
+    }
+  ],
+  "practiceLog": [
+    {
+      "questionId": "q_mpbju14f_42m9x2_1144",
+      "userAnswer": "B",
+      "correct": false,
+      "timestamp": "2026-05-18T18:40:22.023Z",
+      "mode": "random"
+    },
+    {
+      "questionId": "q_mpbju1n6_iodgtg_1868",
+      "userAnswer": "C",
+      "correct": true,
+      "timestamp": "2026-05-18T18:40:26.911Z",
+      "mode": "random"
+    },
+    {
+      "questionId": "q_mpbju16z_z3s559_1258",
+      "userAnswer": "甲级、软弱地基上的乙级基础、结构安全等级1、2级、重要的建筑、长条形的建筑",
+      "correct": false,
+      "timestamp": "2026-05-18T18:42:12.831Z",
+      "mode": "random"
+    },
+    {
+      "questionId": "q_mpbju0ye_ijsztd_847",
+      "userAnswer": "ABC",
+      "correct": false,
+      "timestamp": "2026-05-18T18:42:32.638Z",
+      "mode": "random"
+    },
+    {
+      "questionId": "q_mpbju1d0_28td1s_1486",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-18T18:42:35.926Z",
+      "mode": "random"
+    },
+    {
+      "questionId": "q_mpbju13g_75wmv1_1098",
+      "userAnswer": "B",
+      "correct": false,
+      "timestamp": "2026-05-18T18:42:41.454Z",
+      "mode": "random"
+    },
+    {
+      "questionId": "q_mpbju0qa_lou34x_212",
+      "userAnswer": "C",
+      "correct": true,
+      "timestamp": "2026-05-18T18:42:53.286Z",
+      "mode": "random"
+    },
+    {
+      "questionId": "q_mpbju1q1_dv64zr_1942",
+      "userAnswer": "C",
+      "correct": true,
+      "timestamp": "2026-05-18T18:42:59.350Z",
+      "mode": "random"
+    },
+    {
+      "questionId": "q_mpbju0qi_i9mjwx_247",
+      "userAnswer": "B",
+      "correct": false,
+      "timestamp": "2026-05-18T18:43:03.783Z",
+      "mode": "random"
+    },
+    {
+      "questionId": "q_mpbju0r7_e1b3d3_304",
+      "userAnswer": "D",
+      "correct": true,
+      "timestamp": "2026-05-18T18:43:30.070Z",
+      "mode": "random"
+    },
+    {
+      "questionId": "q_mpbx7j85_iyb74u_0",
+      "userAnswer": "C",
+      "correct": false,
+      "timestamp": "2026-05-19T00:55:01.258Z",
+      "mode": "sequential"
+    },
+    {
+      "questionId": "q_mpbx7j8a_xrdaki_1",
+      "userAnswer": "A",
+      "correct": true,
+      "timestamp": "2026-05-19T00:55:11.178Z",
+      "mode": "sequential"
+    },
+    {
+      "questionId": "q_mpbx7j8b_jqtumv_2",
+      "userAnswer": "B",
+      "correct": false,
+      "timestamp": "2026-05-19T00:55:31.122Z",
+      "mode": "sequential"
+    },
+    {
+      "questionId": "q_mpc0xjon_8fwt7i_31",
+      "userAnswer": "E",
+      "correct": false,
+      "timestamp": "2026-05-19T02:39:22.246Z",
+      "mode": "sequential"
+    },
+    {
+      "questionId": "q_mpc0xjoj_anwq9u_17",
+      "userAnswer": "A",
+      "correct": false,
+      "timestamp": "2026-05-19T02:41:46.509Z",
+      "mode": "random"
+    },
+    {
+      "questionId": "q_mpc0xkmf_lxwmwr_1866",
+      "userAnswer": "C",
+      "correct": true,
+      "timestamp": "2026-05-19T03:00:40.771Z",
+      "mode": "random"
+    },
+    {
+      "questionId": "q_mpc0xk4u_9wj4g7_1223",
+      "userAnswer": "天然橡胶支座、铅芯橡胶支座、高阻尼橡胶支座、弹性滑板、摩擦摆",
+      "correct": true,
+      "timestamp": "2026-05-19T03:07:33.929Z",
+      "mode": "random"
+    },
+    {
+      "questionId": "q_mpc0xk68_7q475p_1279",
+      "userAnswer": "纤维、板状、整体\n",
+      "correct": false,
+      "timestamp": "2026-05-19T03:09:18.913Z",
+      "mode": "random"
+    },
+    {
+      "questionId": "q_mpc0xk1f_eqkc6d_1061",
+      "userAnswer": "A",
+      "correct": true,
+      "timestamp": "2026-05-19T03:10:26.425Z",
+      "mode": "random"
+    },
+    {
+      "questionId": "q_mpc0xkkm_jzmv1g_1805",
+      "userAnswer": "C",
+      "correct": false,
+      "timestamp": "2026-05-19T03:10:51.761Z",
+      "mode": "random"
+    },
+    {
+      "questionId": "q_mpc0xjra_yja18k_332",
+      "userAnswer": "1",
+      "correct": false,
+      "timestamp": "2026-05-19T06:58:45.542Z",
+      "mode": "random"
+    },
+    {
+      "questionId": "q_mpc0xjsc_jzxvqs_436",
+      "userAnswer": "D",
+      "correct": false,
+      "timestamp": "2026-05-19T06:59:10.327Z",
+      "mode": "random"
+    },
+    {
+      "questionId": "q_mpc0xjv0_z7yhfz_664",
+      "userAnswer": "ADE",
+      "correct": false,
+      "timestamp": "2026-05-19T06:59:37.214Z",
+      "mode": "random"
+    },
+    {
+      "questionId": "q_mpc0xknb_xoiawf_1900",
+      "userAnswer": "B",
+      "correct": false,
+      "timestamp": "2026-05-19T07:00:48.550Z",
+      "mode": "random"
+    },
+    {
+      "questionId": "q_mpc0xkjd_z1w6wk_1763",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xk6m_mvgoje_1296",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xkak_711eqj_1441",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjsq_s85os0_470",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjts_6vicno_564",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xkij_kkt8bm_1737",
+      "userAnswer": "ACDE",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjzo_3iehyj_965",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xk6y_fnwgyy_1303",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjvk_tgc380_703",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjst_1g1t34_482",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjv8_qb5akg_685",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjr2_svpxu9_303",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xkea_y8sdxd_1579",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xk5v_w9d679_1262",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjoo_v27hto_37",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xkgr_fcw6aj_1673",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjtd_8tp584_532",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xkec_2o25a3_1582",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0frw8_29ssxg_2725",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjw0_1nlykl_744",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0fs5p_go3kk9_3042",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xkp6_scwhsd_1957",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0frxx_w6u89f_2784",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xkg1_gduhrd_1649",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xk6c_vaabb8_1284",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjwa_kmtbat_755",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjvu_wpapps_730",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0frtq_tk57a1_2645",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xkog_ugr5j2_1936",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0fs2k_8s4btx_2944",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xkcj_i3qchk_1511",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjpq_ba9luj_172",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xkoq_6vlleh_1947",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xklj_sbfpf6_1839",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjpa_ckd2eo_106",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjtb_7wpu3u_526",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjse_vsx6gw_446",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xk0y_bxk0t8_1040",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjxh_eior9u_836",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xk02_gidbmp_990",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjrv_tjzq4g_392",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjy1_vx78hp_868",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xkb7_62fc05_1463",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjvb_gmbsji_693",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xk0c_n7brsb_1001",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjxn_r6nrs8_847",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjvc_asncrs_697",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjsn_x0gkkd_461",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjvq_a4gc2c_721",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjrc_1s0e32_339",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjuw_sk0yj3_653",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjso_knddby_462",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xk1k_ecvnmm_1070",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xk0y_ngcmb6_1041",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjq2_tn2lwy_201",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xkig_v40ch3_1734",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjpf_78wyu0_129",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0frzj_19vmi0_2840",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjy3_a6povc_872",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjpo_5v67qu_162",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjpp_vnt9kj_167",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xkna_y0la41_1899",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0frdz_5gsuc5_2083",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjx9_c6fbx4_819",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xk2x_vwl89v_1141",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjr7_ehxf1q_320",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjv1_ljoe39_665",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjwt_30pod8_797",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xkpl_4qnp7b_1972",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0fs1y_ku5of9_2921",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xkal_wvgmog_1443",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjsa_eppnw2_431",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjv0_z7yhfz_664",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjts_6338uh_563",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xk96_j0no70_1387",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xkl0_mfr1t5_1820",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjro_zj1kcq_366",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0fro1_dqbpee_2446",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xkf4_tyxu4b_1610",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xknj_h5etss_1902",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xkbp_2op8wz_1483",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjov_gvo2s2_58",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xka1_hxilqm_1419",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xko4_wnafqn_1924",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xk2s_5k7kf8_1133",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xkka_gubk7b_1798",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjrv_g0ai2t_391",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjpb_ecpnen_111",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjzy_8wdahr_982",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjpt_ynhl39_183",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xkmj_6tngpr_1871",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xkdt_tgq2zv_1558",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xkaz_k2gj9y_1453",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjxc_d57vrl_825",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xk2h_1nftzj_1115",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xkk9_wksv2e_1797",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xkq0_63ajwb_1987",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xknt_h1xkmg_1912",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xk21_tmt2b4_1098",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0frjt_rj2gmc_2300",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T07:04:58.411Z",
+      "mode": "exam"
+    },
+    {
+      "questionId": "q_mpc0xjzs_eyv49h_972",
+      "userAnswer": "BD",
+      "correct": false,
+      "timestamp": "2026-05-19T07:10:30.212Z",
+      "mode": "sequential"
+    },
+    {
+      "questionId": "q_mpc0xjo9_6nqr7y_0",
+      "userAnswer": "D",
+      "correct": true,
+      "timestamp": "2026-05-19T08:56:34.249Z",
+      "mode": "sequential"
+    },
+    {
+      "questionId": "q_mpc0xjod_9youqk_2",
+      "userAnswer": "D",
+      "correct": true,
+      "timestamp": "2026-05-19T08:56:40.071Z",
+      "mode": "sequential"
+    },
+    {
+      "questionId": "q_mpc0xjod_wl18rj_4",
+      "userAnswer": "D",
+      "correct": true,
+      "timestamp": "2026-05-19T08:56:50.567Z",
+      "mode": "sequential"
+    },
+    {
+      "questionId": "q_mpc0xjoe_65crlu_6",
+      "userAnswer": "A",
+      "correct": false,
+      "timestamp": "2026-05-19T08:57:30.952Z",
+      "mode": "sequential"
+    },
+    {
+      "questionId": "q_mpc0xjog_bgntyd_8",
+      "userAnswer": "A",
+      "correct": false,
+      "timestamp": "2026-05-19T08:58:58.767Z",
+      "mode": "sequential"
+    },
+    {
+      "questionId": "q_mpc0xjoi_lqd4zg_11",
+      "userAnswer": "B",
+      "correct": true,
+      "timestamp": "2026-05-19T09:00:23.663Z",
+      "mode": "sequential"
+    },
+    {
+      "questionId": "q_mpc0xjoj_0tvpo0_15",
+      "userAnswer": "D",
+      "correct": true,
+      "timestamp": "2026-05-19T09:00:49.079Z",
+      "mode": "sequential"
+    },
+    {
+      "questionId": "q_mpc0xjok_vqt890_21",
+      "userAnswer": "D",
+      "correct": true,
+      "timestamp": "2026-05-19T09:03:12.551Z",
+      "mode": "sequential"
+    },
+    {
+      "questionId": "q_mpc0xjom_eq7ngk_26",
+      "userAnswer": "A",
+      "correct": true,
+      "timestamp": "2026-05-19T09:04:00.319Z",
+      "mode": "sequential"
+    },
+    {
+      "questionId": "q_mpc0xjom_9uvy4l_27",
+      "userAnswer": "B",
+      "correct": true,
+      "timestamp": "2026-05-19T09:05:41.445Z",
+      "mode": "sequential"
+    },
+    {
+      "questionId": "q_mpc0xjom_xov083_28",
+      "userAnswer": "D",
+      "correct": false,
+      "timestamp": "2026-05-19T09:06:06.678Z",
+      "mode": "sequential"
+    },
+    {
+      "questionId": "q_mpc0xjon_lr8rvg_32",
+      "userAnswer": "D",
+      "correct": true,
+      "timestamp": "2026-05-19T09:06:26.590Z",
+      "mode": "sequential"
+    },
+    {
+      "questionId": "q_mpc0xjor_1ywa1h_45",
+      "userAnswer": "D",
+      "correct": true,
+      "timestamp": "2026-05-19T09:06:56.798Z",
+      "mode": "sequential"
+    },
+    {
+      "questionId": "q_mpc0xjou_zi8ksv_56",
+      "userAnswer": "B",
+      "correct": false,
+      "timestamp": "2026-05-19T09:07:17.510Z",
+      "mode": "sequential"
+    },
+    {
+      "questionId": "q_mpc0xjow_5oyh10_62",
+      "userAnswer": "C",
+      "correct": true,
+      "timestamp": "2026-05-19T09:07:38.790Z",
+      "mode": "sequential"
+    },
+    {
+      "questionId": "q_mpc0xjox_vctkjp_64",
+      "userAnswer": "D",
+      "correct": true,
+      "timestamp": "2026-05-19T09:07:53.382Z",
+      "mode": "sequential"
+    },
+    {
+      "questionId": "q_mpc0xjp0_9mxxmv_76",
+      "userAnswer": "C",
+      "correct": true,
+      "timestamp": "2026-05-19T09:08:02.238Z",
+      "mode": "sequential"
+    },
+    {
+      "questionId": "q_mpc0xjph_uua7lc_138",
+      "userAnswer": "C",
+      "correct": false,
+      "timestamp": "2026-05-19T09:08:29.327Z",
+      "mode": "sequential"
+    },
+    {
+      "questionId": "q_mpc0xjpi_166yhz_142",
+      "userAnswer": "A",
+      "correct": false,
+      "timestamp": "2026-05-19T09:09:45.598Z",
+      "mode": "sequential"
+    },
+    {
+      "questionId": "q_mpc0xjpi_kvmw7y_145",
+      "userAnswer": "D",
+      "correct": true,
+      "timestamp": "2026-05-19T09:10:05.230Z",
+      "mode": "sequential"
+    },
+    {
+      "questionId": "q_mpc0xjpj_quh2tb_147",
+      "userAnswer": "D",
+      "correct": false,
+      "timestamp": "2026-05-19T09:10:12.790Z",
+      "mode": "sequential"
+    },
+    {
+      "questionId": "q_mpc0xjpj_7ppxpx_148",
+      "userAnswer": "B",
+      "correct": false,
+      "timestamp": "2026-05-19T09:11:34.942Z",
+      "mode": "sequential"
+    },
+    {
+      "questionId": "q_mpc0xjpm_hp83iz_153",
+      "userAnswer": "C",
+      "correct": false,
+      "timestamp": "2026-05-19T09:12:31.671Z",
+      "mode": "sequential"
+    },
+    {
+      "questionId": "q_mpc0xk4u_04cz0z_1222",
+      "userAnswer": "",
+      "correct": false,
+      "timestamp": "2026-05-19T14:55:55.464Z",
+      "mode": "sequential"
+    }
+  ],
+  "examLog": [
+    {
+      "date": "2026-05-19T07:04:58.411Z",
+      "total": 100,
+      "correct": 0,
+      "accuracy": 0,
+      "timeUsed": 98,
+      "results": [
+        {
+          "questionId": "q_mpc0xkjd_z1w6wk_1763",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xk6m_mvgoje_1296",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xkak_711eqj_1441",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjsq_s85os0_470",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjts_6vicno_564",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xkij_kkt8bm_1737",
+          "userAnswer": "ACDE",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjzo_3iehyj_965",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xk6y_fnwgyy_1303",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjvk_tgc380_703",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjst_1g1t34_482",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjv8_qb5akg_685",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjr2_svpxu9_303",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xkea_y8sdxd_1579",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xk5v_w9d679_1262",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjoo_v27hto_37",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xkgr_fcw6aj_1673",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjtd_8tp584_532",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xkec_2o25a3_1582",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0frw8_29ssxg_2725",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjw0_1nlykl_744",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0fs5p_go3kk9_3042",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xkp6_scwhsd_1957",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0frxx_w6u89f_2784",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xkg1_gduhrd_1649",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xk6c_vaabb8_1284",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjwa_kmtbat_755",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjvu_wpapps_730",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0frtq_tk57a1_2645",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xkog_ugr5j2_1936",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0fs2k_8s4btx_2944",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xkcj_i3qchk_1511",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjpq_ba9luj_172",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xkoq_6vlleh_1947",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xklj_sbfpf6_1839",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjpa_ckd2eo_106",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjtb_7wpu3u_526",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjse_vsx6gw_446",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xk0y_bxk0t8_1040",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjxh_eior9u_836",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xk02_gidbmp_990",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjrv_tjzq4g_392",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjy1_vx78hp_868",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xkb7_62fc05_1463",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjvb_gmbsji_693",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xk0c_n7brsb_1001",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjxn_r6nrs8_847",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjvc_asncrs_697",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjsn_x0gkkd_461",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjvq_a4gc2c_721",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjrc_1s0e32_339",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjuw_sk0yj3_653",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjso_knddby_462",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xk1k_ecvnmm_1070",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xk0y_ngcmb6_1041",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjq2_tn2lwy_201",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xkig_v40ch3_1734",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjpf_78wyu0_129",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0frzj_19vmi0_2840",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjy3_a6povc_872",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjpo_5v67qu_162",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjpp_vnt9kj_167",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xkna_y0la41_1899",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0frdz_5gsuc5_2083",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjx9_c6fbx4_819",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xk2x_vwl89v_1141",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjr7_ehxf1q_320",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjv1_ljoe39_665",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjwt_30pod8_797",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xkpl_4qnp7b_1972",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0fs1y_ku5of9_2921",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xkal_wvgmog_1443",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjsa_eppnw2_431",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjv0_z7yhfz_664",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjts_6338uh_563",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xk96_j0no70_1387",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xkl0_mfr1t5_1820",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjro_zj1kcq_366",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0fro1_dqbpee_2446",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xkf4_tyxu4b_1610",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xknj_h5etss_1902",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xkbp_2op8wz_1483",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjov_gvo2s2_58",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xka1_hxilqm_1419",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xko4_wnafqn_1924",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xk2s_5k7kf8_1133",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xkka_gubk7b_1798",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjrv_g0ai2t_391",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjpb_ecpnen_111",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjzy_8wdahr_982",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjpt_ynhl39_183",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xkmj_6tngpr_1871",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xkdt_tgq2zv_1558",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xkaz_k2gj9y_1453",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xjxc_d57vrl_825",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xk2h_1nftzj_1115",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xkk9_wksv2e_1797",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xkq0_63ajwb_1987",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xknt_h1xkmg_1912",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0xk21_tmt2b4_1098",
+          "userAnswer": "",
+          "correct": false
+        },
+        {
+          "questionId": "q_mpc0frjt_rj2gmc_2300",
+          "userAnswer": "",
+          "correct": false
+        }
+      ]
+    }
+  ],
   "aiQuestions": [
     {
+      "id": "q_mpc0frbn_anjk4z_1998",
       "answer": "C",
       "analysis": "本题要求选出没有体现量变和质变关系的诗句。量变和质变关系强调事物发展过程中，量的积累达到一定程度会引起质的飞跃。\n\nA选项“积土成山，风雨兴焉；积水成渊，蛟龙生焉”出自《荀子·劝学》，意为堆积土石成为高山，风雨就会兴起；汇积水流成为深渊，蛟龙就会生长。这体现了量变（积土、积水）到质变（成山、成渊）的过程，符合量变和质变关系。\n\nB选项“夫尽小者大，积微者箸，德至者色泽洽，行尽而声问远”出自《荀子·大略》，意为积累小的东西就会变大，积累细微的东西就会显著，德行达到最高境界时神色和悦，行为完美而名声远扬。这同样体现了从微小积累到显著变化的量变质变过程。\n\nC选项“山重水复疑无路，柳暗花明又一村”出自陆游《游山西村》，描绘了山水环绕、道路难辨时突然发现新景象的情景。这句诗主要体现的是事物发展中的曲折性和前进性，或者说是矛盾转化中的偶然性，而非强调量的积累导致质的飞跃。它更多表达的是在困境中看到希望，而非量变到质变的必然过程。\n\nD选项“夫祸患常积于忽微，而智勇多困于所溺”出自欧阳修《伶官传序》，意为祸患常常由微小的事情积累而成，而智勇的人往往被自己所溺爱的事物困住。这明确体现了量变（忽微的积累）导致质变（祸患的发生）的关系。\n\n因此，只有C选项没有体现量变和质变关系，故正确答案为C。"
+    },
+    {
+      "id": "q_mpc0frbo_huvey1_1999",
+      "answer": "D",
+      "analysis": "本题要求找出中共十一届三中全会与遵义会议的共同点中不包括的选项。A选项正确，两者都是中国共产党历史上重要的转折点，遵义会议确立了毛泽东的领导地位，十一届三中全会开启了改革开放新时期。B选项正确，遵义会议在红军长征面临严重困难时召开，十一届三中全会在文革后经济濒临崩溃时召开。C选项正确，两者都对中国历史进程产生了重大影响，遵义会议挽救了党和革命，十一届三中全会推动了现代化建设。D选项错误，遵义会议实际上确立了毛泽东在党和红军中的领导地位，但毛泽东思想作为党的指导思想是在1945年中共七大上正式确立的；十一届三中全会主要确立的是邓小平理论的核心地位，而非毛泽东思想。因此，共同点不包括D。"
+    },
+    {
+      "id": "q_mpc0frbp_3jnzg4_2000",
+      "answer": "B",
+      "analysis": "本题考察社会意识与社会存在的关系。题目中红马甲志愿者通过讲述致富案例、传授知识等方式，以对象化、分众化、互动化、通俗化的形式开展志愿服务，这些活动属于社会意识的范畴（如思想、观念、知识等）。这些社会意识活动提升了农户的生产积极性和技术水平，帮助实现增产增收，即对社会存在（农户的生产实践和物质生活）产生了积极的推动作用。因此，这体现了社会意识对社会存在具有能动反作用。\n\n选项A：社会意识是具体的历史的，强调社会意识随社会存在的变化而变化，但题目主要体现的是社会意识对社会存在的反作用，而非其历史性。\n选项B：正确，如上所述，社会意识通过志愿服务反作用于农户的生产实践，促进增产增收。\n选项C：社会意识与社会存在发展具有不完全同步性和不平衡性，指社会意识可能超前或落后于社会存在，但题目未体现这种超前或落后关系。\n选项D：社会意识各形式相互影响且各自具有历史继承性，强调不同社会意识形式（如道德、艺术等）之间的关联和传承，但题目未涉及不同形式间的相互影响或历史继承。\n\n因此，正确答案为B。"
+    },
+    {
+      "id": "q_mpc0frbv_qt8029_2001",
+      "answer": "A",
+      "analysis": "本题考察的是中国共产党历史上的整风运动内容。1942年，中国共产党在延安开展了著名的整风运动，其主要内容是反对主观主义以整顿学风，反对宗派主义以整顿党风，反对党八股以整顿文风。因此，整顿的“三风”具体指学风、党风、文风。选项A正确。选项B中的“政风”不属于整风运动的核心内容；选项C中的“作风”过于宽泛，不具体；选项D中的“政风”同样不准确。故正确答案为A。"
+    },
+    {
+      "id": "q_mpc0frbw_6s4kd5_2002",
+      "answer": "B",
+      "analysis": "本题为单选题，要求对党的文艺指导思想按提出时间排序。选项涉及四个关键时间点：①是2021年习近平在中国文联十一大、中国作协十大开幕式上的讲话中提出的；②是1942年毛泽东在延安文艺座谈会上的讲话中提出的；③是2006年胡锦涛在中国文联第八次全国代表大会上提出的；④是1956年毛泽东在中共中央政治局扩大会议上提出的“百花齐放，百家争鸣”方针。按时间顺序排列：②（1942年）最早，其次是④（1956年），然后是③（2006年），最后是①（2021年），因此正确顺序为②④③①，对应选项B。选项A（④②①③）将④置于②之前，错误；选项C（②④①③）将①置于③之前，错误；选项D（④②③①）同样将④置于②之前，错误。故正确答案为B。"
+    },
+    {
+      "id": "q_mpc0frbw_cq4j0s_2003",
+      "answer": "A",
+      "analysis": "题目强调‘掌握阶段变化的规律、技术变革的规律、产业发展的内在规律，才能把经济发展带入一个新境界’，这体现了规律是普遍存在的，即规律存在于各种事物发展过程中，人们需要认识和遵循规律。选项A正确，因为材料直接指出规律存在于不同领域（阶段变化、技术变革、产业发展），说明规律具有普遍性。选项B（要充分发挥主观能动性）虽然与认识和利用规律相关，但材料侧重规律的存在而非主观能动性的发挥，故不是最直接体现。选项C（规律是可以利用的）在材料中隐含，但未明确表述‘利用’，而是强调‘掌握’规律才能进入新境界，因此不如A直接。选项D（规律是时刻发生变化的）错误，规律具有稳定性，并非时刻变化，材料也未体现这一观点。因此，正确答案是A。"
+    },
+    {
+      "id": "q_mpc0frbx_5uzcg8_2004",
+      "answer": "B",
+      "analysis": "题目中前半句说《矛盾论》是第一次比较系统阐述历史唯物主义基本原理的著作，这是错误的。历史唯物主义基本原理的系统阐述最早见于马克思和恩格斯的《德意志意识形态》，而《矛盾论》是毛泽东于1937年撰写的哲学著作，主要阐述唯物辩证法的核心——矛盾规律，并非系统阐述历史唯物主义。题目后半句提及1937年8月中共中央召开的会议，应为洛川会议，该会议强调了坚持统一战线中无产阶级的领导权，并在敌人后方放手发动独立自主的游击战争，但题目表述不完整且与前半句无关。因此，整体判断题应判定为错误。"
+    },
+    {
+      "id": "q_mpc0frby_lkzoxm_2005",
+      "answer": "A",
+      "analysis": "本题考察的是中国共产党在抗日战争时期的重要会议。题目中提到的‘独立自主的山地游击战争’、‘在国民党统治区放手发动抗日的群众运动’以及‘十大纲领’和‘全面抗战路线的正式形成’，均与洛川会议的内容相符。洛川会议于1937年8月召开，制定了《抗日救国十大纲领》，确立了全面抗战路线，强调独立自主的游击战争方针。选项B瓦窑堡会议（1935年）主要讨论建立抗日民族统一战线问题；选项C古田会议（1929年）着重于党和军队的建设；选项D西柏坡会议（1949年）涉及解放战争后期的工作重心转移。因此，正确答案为A。"
+    },
+    {
+      "id": "q_mpc0frbz_wtoodf_2006",
+      "answer": "ACD",
+      "analysis": "哲学基本问题包括两个方面的内容：第一，思维与存在何者为第一性，即物质和意识谁是本原的问题（选项A正确）；第二，思维与存在是否有同一性，即思维能否正确认识存在的问题（选项C和D正确，其中D是同一性问题的具体表述）。选项B“思维能否产生理论”不属于哲学基本问题的内容，而是认识论中的具体问题。因此，正确答案为ACD。"
+    },
+    {
+      "id": "q_mpc0frc0_qqceui_2007",
+      "answer": "C",
+      "analysis": "本题考察实践与认识的关系。题目中，火星地下冰水存在的痕迹和证据是首个重大任务，这体现了实践提出了新的认识课题，推动认识的发展。由中国科学家自主研制的环绕器雷达发挥了重大作用，说明实践提供了认识工具，促进了认识的深化。因此，这体现了实践是认识发展的动力。选项A错误，思维是存在发展的基础属于唯心主义观点，与题意不符。选项B错误，认识对实践有反作用，但影响是主观的而非客观的。选项D错误，认识的目的是指导实践，而非控制客观规律，规律是客观的，不能被控制。因此，正确答案是C。"
+    },
+    {
+      "id": "q_mpc0frc1_gobixj_2008",
+      "answer": "B",
+      "analysis": "本题考察的是中国共产党历史上确立思想建党、政治建军原则的重要文献。选项A《<共产党人>发刊词》是毛泽东于1939年发表的文章，主要论述了党的建设、统一战线和武装斗争三大法宝，并未直接确立思想建党、政治建军原则。选项B《关于纠正党内的错误思想》是毛泽东于1929年古田会议决议的一部分，明确提出了纠正党内非无产阶级思想、加强思想建设，并确立了党对军队的绝对领导，即政治建军原则，因此是正确答案。选项C《关于若干历史问题的决议》是1945年中共六届七中全会通过的文件，主要总结党的历史经验，未直接涉及思想建党、政治建军原则。选项D《星星之火，可以燎原》是毛泽东于1930年写给林彪的信，阐述了农村包围城市、武装夺取政权的革命道路理论，与思想建党、政治建军原则无直接关联。综上，正确答案为B。"
+    },
+    {
+      "id": "q_mpc0frc2_jplohz_2009",
+      "answer": "C",
+      "analysis": "本题考察的是哲学原理的理解与应用。题干中“过犹不及”出自《论语·先进》，意思是事情做得过头，就跟做得不够一样，都是不合适的。这体现了在事物发展过程中，保持适度的重要性。\n\n选项A：主要矛盾和矛盾的主要方面的原理，强调在复杂事物中要抓住主要矛盾，或在同一矛盾中要把握主要方面，与“过犹不及”强调的适度原则无关。\n\n选项B：新事物的发展必然要战胜旧事物的原理，涉及事物发展的趋势和方向，即新事物取代旧事物，与题干中关于“度”的讨论不匹配。\n\n选项C：量变和质变中度的原理，指出事物保持其质的稳定性的数量界限，超过或不足这个界限都会引起质变。“过犹不及”正是强调做事要掌握分寸，避免过度或不足，符合度的原理。\n\n选项D：尊重客观规律与发挥主观能动性的辩证关系原理，强调在尊重规律的基础上发挥主观能动性，与“过犹不及”的直接含义不符。\n\n因此，正确答案是C。"
+    },
+    {
+      "id": "q_mpc0frc2_lt4fpo_2010",
+      "answer": "A",
+      "analysis": "本题考察对矛盾同一性和斗争性辩证关系的理解。选项A错误，因为矛盾的同一性和斗争性的正确关系是：斗争性寓于同一性之中，同一性通过斗争性来体现，而不是同一性寓于斗争性之中。选项B正确，同一性是有条件的、相对的，斗争性是无条件的、绝对的，这是唯物辩证法的基本原理。选项C正确，同一性是事物存在和发展的前提，因为矛盾双方相互依存、相互贯通，为事物发展提供基础。选项D正确，矛盾双方的斗争推动事物发展，是矛盾统一体向另一种统一体过渡的决定力量。因此，说法错误的是A。"
+    },
+    {
+      "id": "q_mpc0frc3_2wdzl9_2011",
+      "answer": "B",
+      "analysis": "本题考察对真理观哲学派别的理解。题干中“真理是‘绝对理念’的自我显现”强调真理源于一种客观存在的精神实体——“绝对理念”，这种理念不依赖于人的主观意识，而是独立存在的客观精神。\n\n选项A：主观唯心主义认为真理是人的主观意识（如感觉、经验）的产物，而题干中的“绝对理念”是客观的，故排除。\n选项B：客观唯心主义主张存在一种客观精神（如“绝对理念”“理”“上帝”等），真理是这种精神的显现，与题干表述一致，故正确。\n选项C：古代朴素唯物主义将真理归结为物质世界的某种具体形态（如水、火等），与“绝对理念”无关，故排除。\n选项D：辩证唯物主义认为真理是客观事物及其规律在人的意识中的正确反映，强调实践检验，而非精神自我显现，故排除。\n因此，正确答案是B。"
+    },
+    {
+      "id": "q_mpc0frc4_inzjve_2012",
+      "answer": "B",
+      "analysis": "本题考察《中国共产党章程》第十条关于党的各级委员会工作制度的规定。该条款明确要求，党的各级委员会实行集体领导和个人分工负责相结合的制度。选项A“集体决策”是集体领导的一部分，但未体现个人分工；选项B“个人分工负责”准确对应党章原文，强调在集体领导下明确个人职责；选项C“个人分工协作”中的“协作”表述不准确，党章规定为“负责”；选项D“主要领导负责”与集体领导原则相悖。因此，正确答案为B。"
+    },
+    {
+      "id": "q_mpc0frc5_surfgk_2013",
+      "answer": "C",
+      "analysis": "本题考察对习近平新时代中国特色社会主义思想核心内容的识别。选项A“以人为本”是科学发展观的核心立场，属于中国特色社会主义理论体系的内容，而非习近平新时代中国特色社会主义思想独创。选项B“建设什么样的党，怎样建设党”是“三个代表”重要思想的核心内容，属于党的建设的经典命题。选项C“坚持人与自然和谐共生”是习近平新时代中国特色社会主义思想中“生态文明建设”的重要内容，体现了新发展理念和绿色发展观，是新时代坚持和发展中国特色社会主义的基本方略之一。选项D“以经济建设为中心、坚持改革开放”是党在社会主义初级阶段基本路线的核心内容，属于邓小平理论及后续发展中的基础原则，并非习近平新时代中国特色社会主义思想独创。因此，只有选项C属于习近平新时代中国特色社会主义思想的具体内容。"
+    },
+    {
+      "id": "q_mpc0frc6_q0isq9_2014",
+      "answer": "A",
+      "analysis": "本题考察的是毛泽东同志提出重要论断的历史会议。选项A八七会议：1927年8月7日，中共中央在汉口召开紧急会议，即八七会议。毛泽东在会上提出了“政权是由枪杆子中取得的”著名论断，强调武装斗争的重要性，因此A正确。选项B洛川会议：1937年8月召开的洛川会议，主要讨论抗日战争的战略方针和国共合作问题，未涉及该论断，故B错误。选项C古田会议：1929年12月召开的古田会议，重点解决党和军队的建设问题，确立了思想建党、政治建军原则，未提出该论断，故C错误。选项D瓦窑堡会议：1935年12月召开的瓦窑堡会议，主要讨论建立抗日民族统一战线问题，未涉及该论断，故D错误。因此，正确答案是A。"
+    },
+    {
+      "id": "q_mpc0frc7_fsdmti_2015",
+      "answer": "D",
+      "analysis": "题目中“转”字体现了事物是不断变化发展的，即绝对运动；而“推动人民生活持续改善”则强调了在一定条件下，事物保持相对稳定和连续性的状态，即相对静止。因此，该题目体现了绝对运动与相对静止的统一。选项A共性与个性的统一，强调普遍性与特殊性的关系，与题意不符；选项B社会存在与社会意识的统一，强调社会存在决定社会意识，社会意识反作用于社会存在，与题意不符；选项C运动是物质的唯一特性，表述错误，物质的唯一特性是客观实在性，运动是物质的根本属性。故正确答案为D。"
+    },
+    {
+      "id": "q_mpc0frc8_p2rti5_2016",
+      "answer": "A",
+      "analysis": "本题考察意识本质的理解。题目中“打招呼、拜年等用语的内容转变”反映了社会习俗和语言表达随时代变化，这种变化源于客观世界（如社会关系、文化环境）的发展，而意识作为对客观世界的反映，其内容（如用语）会随之改变。选项A“意识是客观世界的主观映像”正确，因为用语转变体现了意识内容由客观世界决定，同时以主观形式（如语言）表达。选项B“意识是人脑自主形成的”错误，意识虽由人脑产生，但内容来源于客观世界，并非完全自主。选项C“意识对改造客观世界具有能动的反作用”与题意无关，题目未涉及意识对世界的改造作用。选项D“意识是主观内容和客观形式的统一”表述有误，正确说法是意识是客观内容（反映对象）和主观形式（如感觉、思维）的统一，而非“主观内容和客观形式”。因此，A为正确答案。"
+    },
+    {
+      "id": "q_mpc0frc9_93iyuv_2017",
+      "answer": "ACD",
+      "analysis": "本题考查邓小平理论中价值观的相关内容。邓小平理论价值观的核心是以人民利益为取向，强调一切工作都要以人民利益为出发点和落脚点，因此选项A“邓小平价值观的取向——人民利益”准确。选项B“邓小平价值观的主题——建设世界一流军队”错误，邓小平价值观的主题是“什么是社会主义、怎样建设社会主义”，而非单纯建设军队，建设世界一流军队是新时代强军目标的一部分。选项C“邓小平价值观的标准—‘三个有利于’”准确，“三个有利于”即是否有利于发展社会主义社会的生产力、是否有利于增强社会主义国家的综合国力、是否有利于提高人民的生活水平，是邓小平提出的判断工作是非得失的根本标准。选项D“邓小平价值观的基础——集体主义”准确，邓小平强调集体主义原则，认为个人利益要服从集体利益，同时兼顾个人利益，集体主义是社会主义价值观的基础。因此，准确的说法是A、C、D。"
+    },
+    {
+      "id": "q_mpc0frca_x63tvn_2018",
+      "answer": "B",
+      "analysis": "本题考察唯物辩证法中关于发展过程和质量互变规律的理解。材料描述了从‘全面建成小康社会’到‘基本实现现代化’再到‘全面建成社会主义现代化强国’的阶段性发展，体现了事物发展由量变到质变、质变又为新的量变开辟道路的过程。\n\n选项A：事物的发展是通过其内在矛盾运动以自我否定的方式实现的。这涉及辩证否定观，但材料主要强调阶段性递进，而非自我否定或扬弃，因此不直接体现。\n\n选项B：质变是量变的必然结果，并为新的量变开辟道路。材料中每个目标的实现（如全面建成小康社会）是质变，它又为下一阶段（基本实现现代化）的量变奠定基础，符合质量互变规律，因此正确。\n\n选项C：任何事物的发展都需要量的积累的过程。虽然材料隐含量变，但未突出量变的必要性，且选项表述过于绝对，不如B直接对应材料中的阶段性质变。\n\n选项D：事物的发展是前进性与曲折性的统一。材料只展示了前进性（逐步推进），未涉及曲折性（如困难、反复），因此不全面。\n\n综上，最直接体现的哲理是B。"
+    },
+    {
+      "id": "q_mpc0frca_w81cx5_2019",
+      "answer": "D",
+      "analysis": "本题考察对相对静止概念的理解。题目中描述宇航员和航天飞机以地球为参照物是运动的，但以航天飞机为参照物，宇航员是静止的，这体现了相对静止的含义。选项A错误，因为运动是绝对的，但静止是相对的、有条件的，并非不存在；选项B错误，相对静止不仅指位置无变化，还包括事物性质在一定范围内的稳定，且表述不完整；选项C错误，相对静止是运动的特殊状态，而非普遍状态；选项D正确，相对静止是指物质运动在一定条件和范围内处于暂时稳定和平衡状态，符合哲学定义。因此，正确答案是D。"
+    },
+    {
+      "id": "q_mpc0frcb_85eepp_2020",
+      "answer": "B",
+      "analysis": "该题目考查的是毛泽东关于新民主主义国家制度的重要著作。题干中‘人民为基础而在工人阶级领导之下的统一战线的民主联盟的国家制度’这一表述，出自毛泽东在1945年中共七大上所作的政治报告《论联合政府》。该报告系统阐述了建立新民主主义国家制度的主张，强调在工人阶级领导下，联合各革命阶级建立民主联盟。选项A《中国革命和中国共产党》主要分析中国社会性质和革命对象；选项C《关于正确处理人民内部矛盾的问题》是1957年关于社会主义社会矛盾的著作；选项D《论人民民主专政》是1949年关于新中国国体的论述，虽涉及人民民主专政，但未直接使用题干中的统一表述。因此，正确答案为B。"
+    },
+    {
+      "id": "q_mpc0frcc_z3b08l_2021",
+      "answer": "B",
+      "analysis": "本题考察真理的属性。题干指出“它们的理论都是对微观世界同一规律的阐释”，强调不同理论（如量子力学的多种解释）从不同角度揭示同一客观规律，体现了真理的绝对性（对客观规律的正确反映）与相对性（认识深度和广度的局限性）的统一。选项A错误，因为真理是客观的，但主观真理指真理的形式是主观的，内容客观，不能绝对否定主观形式；选项C正确但不符合题意，题干未涉及检验标准；选项D正确但不符合题意，题干强调同一规律的不同理论，而非内容一元与形式多样的关系。因此，B最符合题意。"
+    },
+    {
+      "id": "q_mpc0frcd_9shijl_2022",
+      "answer": "A",
+      "analysis": "本题要求找出大会及其对应的历史时间与历史意义完全一致的选项。逐一分析：A项，党的七大（1945年）正式确立毛泽东思想为党的指导思想，正确；B项，党的十二大（1982年）提出建设有中国特色社会主义，但开启中国特色社会主义现代化建设的新时期通常指十一届三中全会（1978年），故不完全一致；C项，党的十七大（2007年）提出实现全面建设小康社会奋斗目标的新要求，而全面建设小康社会目标最早由党的十六大（2002年）提出，故不一致；D项，党的十九大（2017年）将习近平新时代中国特色社会主义思想确立为党的指导思想并写入党章，但确定其历史地位是在十九大报告中，表述为“确立习近平新时代中国特色社会主义思想的历史地位”与事实基本一致，但更精确的表述是“确立为党的指导思想”，且与A项相比，A项更经典无误。因此，只有A项完全正确。"
+    },
+    {
+      "id": "q_mpc0frce_czmai9_2023",
+      "answer": "D",
+      "analysis": "本题考查对唯物辩证法中普遍联系原理的理解。普遍联系是指事物内部各要素之间以及事物之间相互影响、相互制约、相互作用的关系。\n\nA选项“乌鸦叫丧，喜鹊叫喜”是主观臆造的联系，将乌鸦和喜鹊的叫声与人的吉凶祸福强行关联，违背了联系的客观性，不属于普遍联系的体现。\n\nB选项“咬定青山不放松，立根原在破岩中”出自郑板桥的《竹石》，描写竹子扎根于岩石中坚韧不拔的品质，强调事物内部矛盾和发展，未体现事物之间的相互联系。\n\nC选项“士别三日，刮目相看”出自《三国志》，强调用发展的眼光看待事物，体现了发展的观点，而非普遍联系。\n\nD选项“竹外桃花三两枝，春江水暖鸭先知”出自苏轼的《惠崇春江晚景》，描写了竹子、桃花、江水、鸭子等自然景物之间的相互关联：桃花开放预示着春天到来，鸭子感知水温变化，体现了自然界中事物之间的相互影响和制约，符合普遍联系的观点。\n\n因此，正确答案是D。"
+    },
+    {
+      "id": "q_mpc0frcf_wtcpel_2024",
+      "answer": "ACD",
+      "analysis": "本题考察对中国革命历史事件的准确理解。逐一分析选项：A选项正确，1927年10月毛泽东领导秋收起义部队到达井冈山，创建了第一个农村革命根据地——井冈山革命根据地；B选项错误，湘赣边界第一个红色政权是1927年11月成立的茶陵县工农兵政府，而非江西瑞金工农兵政府，瑞金工农兵政府是1931年成立的中华苏维埃共和国临时中央政府；C选项正确，1927年9月三湾改编中，毛泽东首次提出“支部建在连上”的原则，确立了党对军队的绝对领导；D选项正确，1929年12月古田会议通过了《古田会议决议》，确立了思想建党、政治建军的原则。因此，正确选项为A、C、D。"
+    },
+    {
+      "id": "q_mpc0frcg_zxhldy_2025",
+      "answer": "C",
+      "analysis": "辩证唯物主义认为，物质是标志客观实在的哲学范畴，而运动是物质的根本属性和存在方式。选项A客观性是物质的唯一特性，但不是根本属性；选项B规律性是物质运动过程中固有的本质的必然的联系，并非根本属性；选项C运动正确，因为物质和运动不可分割，运动是物质的存在方式和固有属性；选项D联系是事物之间及事物内部各要素之间的相互影响、相互制约和相互作用，不是物质的根本属性。因此，正确答案是C。"
+    },
+    {
+      "id": "q_mpc0frch_12sepn_2026",
+      "answer": "C",
+      "analysis": "本题考察对价值观概念的理解。价值观是人们在实践中形成的关于价值和价值关系的根本观点、根本看法和根本态度，它涉及对事物价值的评价标准和原则。选项A世界观是人们对整个世界的总的看法和根本观点，范围更广；选项B人生观是关于人生目的、意义和价值的根本看法，侧重于人生领域；选项C价值观直接对应题目描述，强调对价值关系的根本观点和态度；选项D消费观是价值观在消费领域的具体表现，属于价值观的一部分而非根本观点。因此，正确答案是C。"
+    },
+    {
+      "id": "q_mpc0frch_6p8y0a_2027",
+      "answer": "B",
+      "analysis": "中国共产党历史上的第一部党章诞生于1922年召开的中共二大。中共一大（1921年）通过了党的第一个纲领，但并未制定党章；中共二大（1922年）正式通过了《中国共产党章程》，这是党的第一部完整章程，标志着党的创建工作的完成；中共三大（1923年）主要讨论国共合作问题，对党章进行了局部修改；中共六大（1928年）在莫斯科召开，通过了新的党章，但并非第一部。因此，正确答案是B。选项A错误，因为一大只有纲领；选项C错误，因为三大修改而非首创；选项D错误，因为六大的党章是后续版本。"
+    },
+    {
+      "id": "q_mpc0frci_kx0c8q_2028",
+      "answer": "D",
+      "analysis": "本题考察对惠能观点的哲学理解。惠能所言‘不是风动，不是幡动，仁者心动’，属于主观唯心主义观点，认为心（意识）是运动的本源，否认了运动是物质的根本属性。选项A：惠能并未直接否认物质是意识的根源，而是强调心决定运动，故不准确；选项B：惠能观点涉及运动与心的关系，但未明确讨论运动规律性，故不选；选项C：惠能否认了运动的客观性，而非相对性，相对性指运动与静止的关系，与此无关；选项D：惠能认为心动决定风动、幡动，即运动由心产生，否认了运动是物质的固有属性，符合题意。因此正确答案为D。"
+    },
+    {
+      "id": "q_mpc0frcj_oxe55h_2029",
+      "answer": "BC",
+      "analysis": "本题考查哲学史上的“两个对子”，即唯物主义与唯心主义的对立、辩证法与形而上学的对立。选项分析如下：\n- A项：“道阻且长，行则将至”强调实践和努力，属于辩证法的观点；“理生万物，理主动静”是客观唯心主义观点（理为绝对精神）。两者分别属于辩证法与唯心主义，不是直接对应“两个对子”中的同一对，故不选。\n- B项：“形存神存，形谢神灭”是古代朴素唯物主义观点（形神关系）；“眼开花明，眼闭花寂”是主观唯心主义观点（依赖感觉）。两者构成唯物主义与唯心主义的对立，符合“两个对子”之一，故正确。\n- C项：“岁月不居，时节如流”强调事物运动变化，属于辩证法观点；“万物独化，物各自生”是形而上学观点（否认联系和变化）。两者构成辩证法与形而上学的对立，符合“两个对子”之一，故正确。\n- D项：“头痛医头，脚痛医脚”是形而上学观点（孤立看问题）；“竭泽而渔，杀鸡取卵”也是形而上学观点（片面追求眼前利益）。两者均属形而上学，未形成对立，故不选。\n因此，正确答案为BC。"
+    },
+    {
+      "id": "q_mpc0frck_pppe8t_2030",
+      "answer": "B",
+      "analysis": "本题要求找出与其他三项思想不同的选项。题目围绕“人民至上”这一核心思想展开，需要分析每个选项所体现的核心理念。\n\n- **选项A：宜将剩勇追穷寇，不可沽名学霸王**。这句出自毛泽东的《七律·人民解放军占领南京》，引用项羽的典故，强调在革命胜利后要彻底消灭敌人，不能因虚名而半途而废。这体现了对人民解放事业的坚定决心和彻底性，与“人民至上”中维护人民根本利益、实现彻底解放的思想一致。\n\n- **选项B：大鹏一日同风起，扶摇直上九万里**。这句出自李白的《上李邕》，以大鹏自喻，表达豪情壮志和追求个人抱负的志向。它强调的是个人理想和奋斗精神，与“人民至上”的集体主义、以人民为中心的思想无直接关联，更多体现个人英雄主义或自我实现。\n\n- **选项C：万物各得其和以生**。这句出自《荀子·天论》，意思是万物各自得到自然的和谐而生长。它体现了顺应自然、和谐共生的理念，在治国理政中可引申为尊重人民、顺应民心，与“人民至上”中关注民生、促进社会和谐的思想相契合。\n\n- **选项D：度之往事，验之来事，参之平素，可则决之**。这句出自《鬼谷子·决篇》，强调决策时要参考历史经验、未来趋势和日常情况。这体现了实事求是、从实际出发的治理智慧，与“人民至上”中依靠人民、尊重实践、科学决策的思想一致。\n\n综上所述，选项A、C、D均直接或间接与“人民至上”的治国理念相关，强调以人民利益为出发点、顺应民心或科学决策。而选项B则侧重于个人志向和抱负，与集体主义的人民至上思想不同。因此，正确答案是B。"
+    },
+    {
+      "id": "q_mpc0frcl_cas5af_2031",
+      "answer": "A",
+      "analysis": "本题要求选出关于‘当家作主’说法正确的选项。逐一分析：A项正确，人民代表大会制度是我国的根本政治制度，是人民当家作主的重要途径和最高实现形式，符合我国宪法和政治制度的基本原理。B项错误，2024年是新中国成立75周年，但全国人民代表大会成立于1954年，2024年是全国人民代表大会成立70周年，但题目未明确年份，且该表述在一般语境下需结合具体时间，但作为单选题，A项更直接正确。C项错误，人民代表大会制度为党领导人民创造经济快速发展奇迹和社会长期稳定奇迹提供了重要制度保障，这一说法本身正确，但题目要求选择‘正确的有’，且A项更核心地直接对应‘当家作主’主题。D项错误，全国人大一届一次会议通过《中华人民共和国宪法》，标志着人民代表大会制度正式建立，这一说法正确，但同样，A项更直接体现‘当家作主’的核心内涵。综合比较，A项是最准确、最直接体现‘当家作主’的选项，因此正确答案为A。"
+    },
+    {
+      "id": "q_mpc0frcm_gkw27h_2032",
+      "answer": "A",
+      "analysis": "本题考察的是“三个代表”重要思想形成的背景。题目中提到“本路线，加深了对什么是社会主义，怎样建设社会主义和建设什么样的党，怎样建设党的认识，形成了‘三个代表’重要思想”，这指的是党的十三届四中全会。十三届四中全会于1989年6月召开，确立了以江泽民同志为核心的党的第三代中央领导集体，此后在总结国内外形势和党的建设经验的基础上，逐步形成了“三个代表”重要思想。选项A正确。选项B十三届五中全会（1989年11月）主要讨论经济治理整顿问题；选项C十四届二中全会（1993年3月）审议通过《关于调整“八五”计划若干指标的建议》；选项D十四届三中全会（1993年11月）通过《关于建立社会主义市场经济体制若干问题的决定》。这些会议均与“三个代表”重要思想的形成无直接关联。因此，正确答案是A。"
+    },
+    {
+      "id": "q_mpc0frcn_ryiyg3_2033",
+      "answer": "A",
+      "analysis": "本题考察的是对“是非观”在行为规范中作用的理解。题目中“各种出轨越界、跑冒滴漏”指的是行为偏离正确轨道、出现违规或失误，这通常源于对基本对错判断的模糊。选项A“是非观”指辨别对错、善恶的基本观念，是行为底线的基础，缺乏是非观容易导致行为失范，符合题意。选项B“义利观”涉及道义与利益的权衡，虽与行为相关，但更侧重价值选择，而非直接导致“出轨越界”的根本原因。选项C“权力观”指对权力的认识和态度，主要针对掌权者，与普遍行为规范关联较弱。选项D“事业观”关乎对工作的看法和追求，影响工作态度，但非直接导致越界行为的关键。因此，正确答案是A。"
+    },
+    {
+      "id": "q_mpc0frco_08p0g5_2034",
+      "answer": "C",
+      "analysis": "本题考察推动经济高质量发展的关键因素。选项A深化改革：改革是推动发展的根本动力，但并非直接对应高质量发展的必然要求，更多是制度保障。选项B对外开放：开放促进国际合作与竞争，但高质量发展更强调内在驱动力。选项C科技创新：科技创新是引领发展的第一动力，是推动经济质量变革、效率变革、动力变革的核心，实现高质量发展必须依靠科技创新驱动，因此是必然选择。选项D扩大内需：内需是经济增长的重要支撑，但高质量发展更注重结构优化和效率提升，而非单纯需求扩张。综上，科技创新是推动经济高质量发展的必然要求。"
+    },
+    {
+      "id": "q_mpc0frcp_v08i97_2035",
+      "answer": "B",
+      "analysis": "本题考察矛盾的主次方面与主次矛盾的区分。题干描述了计算机网络带来的积极影响（提高工作效率）和消极影响（黄色、暴力、谣言等），并强调在享受便利的同时要加强治理，提高文明水平。这体现了事物内部既包含主要方面（积极影响）也包含次要方面（消极影响），且次要方面（支流）会影响事物发展，需要重视。\n\n选项A：矛盾主要方面决定事物性质，要求抓主流。题干虽提到积极影响是主流，但重点在于强调不能忽视消极影响，而非仅抓主流，故不选。\n选项B：矛盾次要方面影响事物发展，不可忽视支流。题干明确指出要治理消极影响，这正是重视支流的表现，符合题意。\n选项C：次要矛盾在事物发展过程中起重要作用，必须统筹兼顾。题干讨论的是同一矛盾的两个方面（积极与消极），而非多个矛盾，故不涉及主次矛盾。\n选项D：主要矛盾在事物发展过程中处于支配作用，必须抓重点。题干未涉及多个矛盾中的主要矛盾，而是同一矛盾内部的主次方面，故不选。\n\n因此，正确答案为B。"
+    },
+    {
+      "id": "q_mpc0frcq_4f46xq_2036",
+      "answer": "C",
+      "analysis": "本题要求选出对辩证唯物主义理解不正确的一项。选项A正确，“形存则神存，形谢则神灭”是古代朴素唯物主义观点，强调形体（物质）决定精神（意识），符合物质决定意识的原理。选项B正确，“只要有信心，黄土变成金”体现了意识对物质具有能动的反作用，即正确的意识可以促进物质的发展。选项C错误，“望梅止渴”原意是通过想象梅子的酸味来止渴，这体现了意识（想象）对生理活动的调节作用，属于意识反作用于物质的表现，而非强调物质决定意识。选项D正确，“人有多大胆，地有多大产”是主观唯心主义的表现，夸大了意识的能动作用，忽视了客观规律和物质条件。因此，不正确的一项是C。"
+    },
+    {
+      "id": "q_mpc0frcr_3fg37t_2037",
+      "answer": "D",
+      "analysis": "本题考察的是唯物辩证法中联系的观点。题目“艳丽的月季”通常指通过人工培育或园艺实践，使月季花呈现出艳丽的色彩，这体现了人们通过实践活动改变自然物，建立新的具体联系。\n\n选项A：自在事物的联系是客观的，但题目中的月季艳丽是人为干预的结果，属于人为事物的联系，而非自在事物的联系，因此A不符合题意。\n选项B：事物的联系是有条件的，并非无条件，任何联系都需要特定条件，因此B错误。\n选项C：人为事物的联系虽然是人类实践活动的产物，但一旦建立，其客观性并不以人的意志为转移，因此“主观”说法错误，C排除。\n选项D：人们通过育种、栽培等实践活动，改变了月季的性状，建立了新的联系，这体现了实践是建立新联系的途径，因此D正确。\n\n综上所述，正确答案是D。"
+    },
+    {
+      "id": "q_mpc0frcr_bhwb2n_2038",
+      "answer": "C",
+      "analysis": "本题考察人生观的定义。人生观是人们在实践中形成的对于人生目的和意义的根本看法和态度，它主要关注的是人为什么活着、怎样生活才有意义等核心问题。选项A（自然界）属于自然观的研究范畴；选项B（人类社会）属于历史观或社会观的研究范畴；选项D（客观事物）属于世界观中关于物质世界的一般认识。因此，只有选项C（人生目的和意义）准确概括了人生观的核心内容，是正确答案。"
+    },
+    {
+      "id": "q_mpc0frcs_zi068k_2039",
+      "answer": "B",
+      "analysis": "本题考察的是中国共产党历次全国代表大会关于经济体制改革的重要决策。选项A：十三大（1987年）系统阐述了社会主义初级阶段理论和党的基本路线，但未明确提出建立社会主义市场经济体制的目标。选项B：十四大（1992年）正式将建立社会主义市场经济体制确立为我国经济体制改革的目标，这是改革开放进程中的重大突破。选项C：十五大（1997年）进一步阐述了社会主义初级阶段的基本经济制度，强调公有制为主体、多种所有制经济共同发展，但并非首次确立改革目标。选项D：十六大（2002年）提出完善社会主义市场经济体制，属于后续深化阶段。因此，正确答案是B。"
+    },
+    {
+      "id": "q_mpc0frct_mqi3u6_2040",
+      "answer": "C",
+      "analysis": "毛泽东思想基本形成的主要标志是农村包围城市，武装夺取政权道路的提出。具体分析如下：A选项，人民战争思想的阐明是毛泽东思想在抗日战争时期进一步发展的内容，不是基本形成的标志；B选项，中国革命基本问题的提出属于毛泽东思想萌芽阶段的内容，如《中国社会各阶级的分析》等，但尚未形成完整体系；C选项，农村包围城市，武装夺取政权道路的提出，标志着毛泽东思想在土地革命战争时期开始形成，这是基于中国国情独创的革命道路，体现了毛泽东思想的初步成熟；D选项，新民主主义革命理论的完整论述是毛泽东思想成熟的主要标志，发生在抗日战争时期，晚于基本形成阶段。因此，正确答案为C。"
+    },
+    {
+      "id": "q_mpc0frcu_dx7fvk_2041",
+      "answer": "C",
+      "analysis": "本题考察社会存在与社会意识的关系。题目中，孟姜女故事从春秋时期的原始记载（反映当时丧葬规格）演变为唐末的哭倒长城故事（反映反对苛捐劳役），说明社会意识的内容随社会存在的变化而变化。选项A错误，因为民间传说并非对历史发展规律的直观反映，而是经过艺术加工和时代烙印的产物，可能包含虚构和夸张。选项B错误，规律是客观的，人民群众不能创造规律，只能认识和利用规律推动历史发展。选项C正确，社会意识是社会存在的反映，孟姜女故事在不同时代的演变正是特定历史时期社会状况（如战争、劳役、赋税）的体现。选项D错误，社会意识具有相对独立性，与社会存在并非总是完全同步，可能超前或滞后。因此，正确答案是C。"
+    },
+    {
+      "id": "q_mpc0frcv_u510ms_2042",
+      "answer": "D",
+      "analysis": "本题考察哲学基本派别与观点的对应关系。\n- A选项：“万物皆备于我”出自《孟子》，强调一切事物都内在于我，属于主观唯心主义（认为人的主观精神是世界的本原），而非客观唯心主义（认为独立于人的客观精神是世界的本原），故错误。\n- B选项：“生死由命，富贵在天”认为命运和天意决定一切，属于客观唯心主义（将“命”“天”视为客观精神力量），而非主观唯心主义，故错误。\n- C选项：“于危机中育新机，在变局中开新局”强调在变化中把握机遇、主动转化矛盾，体现了辩证法的联系、发展和矛盾转化观点，与形而上学（静止、孤立、片面看问题）相反，故错误。\n- D选项：“天灾不由人”承认自然规律的客观性（不以人的意志为转移），“抗灾不由天”强调人的主观能动性可以认识和利用规律改造世界，这符合辩证唯物主义关于物质决定意识、意识具有能动作用的观点，故正确。\n因此，正确答案是D。"
+    },
+    {
+      "id": "q_mpc0frcw_4eqtrw_2043",
+      "answer": "D",
+      "analysis": "本题考查新民主主义革命时期党面临的主要任务。根据《中共中央关于党的百年奋斗重大成就和历史经验的决议》，新民主主义革命时期党面临的主要任务是：反对帝国主义、封建主义、官僚资本主义，争取民族独立、人民解放，为实现中华民族伟大复兴创造根本社会条件。选项A、B、C均符合这一表述。选项D“实现新民主主义至社会主义转变”是新中国成立后社会主义革命时期的主要任务，而非新民主主义革命时期的主要任务，因此不正确。故正确答案为D。"
+    },
+    {
+      "id": "q_mpc0frcx_4tthuz_2044",
+      "answer": "D",
+      "analysis": "本题考察对‘勿以善小而不为，勿以恶小而为之’这句话的理解。这句话出自《三国志·蜀书·先主传》，是刘备临终前告诫其子刘禅的话，意思是不要因为善事小就不去做，也不要因为恶事小就去做。它强调道德修养要从点滴小事做起，积累善行，避免小恶。选项A‘严于律己，做到慎独’虽然涉及自律，但更侧重独处时的自我约束，与题干强调的‘小事积累’不完全一致；选项B‘无欲则刚，不要有太多欲望’讲的是克制欲望，与题干无关；选项C‘树立大局意识，以天下为己任’强调宏观责任，未直接体现从小事做起；选项D‘坚持从小事做起，积少成多，积善成德’准确对应了题干中‘善小’和‘恶小’的启示，强调通过积累小善形成美德，因此是正确答案。"
+    },
+    {
+      "id": "q_mpc0frcy_l7k38y_2045",
+      "answer": "A",
+      "analysis": "本题考察意识能动性的哲学原理。选项A正确，因为科技成就是人类意识能动地认识世界的结果，体现了意识能够透过现象把握本质和规律。选项B错误，科技是客观规律的反映，但人脑是物质器官而非主观的，主观指的是意识内容。选项C错误，感性认识到理性认识的桥梁是实践，而非科技本身。选项D错误，人们可以通过多种方式认识世界，科技是重要途径但不是唯一途径。因此，正确答案为A。"
+    },
+    {
+      "id": "q_mpc0frcy_z8tdq4_2046",
+      "answer": "D",
+      "analysis": "本题考察的是对主观能动性概念的理解。题目中的表述“就没有人的存在”强调了人的意识或思维在认识世界和改造世界中的重要作用。选项A“心灵是认识自己的工具”虽然涉及心灵的作用，但未直接体现题目中关于人的存在的核心观点；选项B“感觉器官无法认识外界事物”过于绝对，且与题目无关；选项C“心灵想到什么，就会感知到什么”带有主观唯心主义色彩，不符合辩证唯物主义认识论；选项D“头脑的思维活动体现了人的主观能动性”准确概括了人的意识对客观世界的能动反映和反作用，与题目中强调人的存在依赖于意识活动的逻辑一致，因此D为正确答案。"
+    },
+    {
+      "id": "q_mpc0frcz_gn76or_2047",
+      "answer": "C",
+      "analysis": "题目要求找出材料不能说明的选项。材料描述了山东利用智能网箱等科技创新建设海洋牧场，体现了生产工具（智能网箱）是生产力发展水平的标志（A正确）；人们通过发挥主观能动性（创新之智、转型之手）改造自然界（B正确）；人们认识和利用海洋规律（如养殖规律）实现目的（D正确）。而C选项说‘科学技术是第一生产力，是生产力中最活跃的因素’，虽然这句话本身正确，但材料中并未直接体现‘科学技术是生产力中最活跃的因素’这一具体论断，材料强调的是科技的应用和效果，而非比较其活跃性。因此，C选项是材料不能直接说明的。"
+    },
+    {
+      "id": "q_mpc0frd0_6cd9he_2048",
+      "answer": "C",
+      "analysis": "本题考查社会存在与社会意识的关系。题目描述的是以毛泽东为代表的中国共产党人根据1927年大革命失败后的社会实际（社会存在），开辟了农村包围城市的革命道路（社会意识）。这体现了社会意识是社会存在的反映，即社会存在决定社会意识。选项A错误，因为社会意识对社会存在有反作用，但题干强调的是社会存在决定社会意识，而非社会意识的规范引导作用；选项B错误，社会意识具有相对独立性且对社会存在有反作用，但题干未突出反作用，而是强调社会意识来源于社会实际；选项C正确，题干明确指出革命道路是从当时的社会实际出发开辟的，说明社会意识归根到底都是社会存在的反映；选项D错误，社会意识与社会存在的发展不完全同步，有时会超前或滞后。因此，正确答案是C。"
+    },
+    {
+      "id": "q_mpc0frd1_eid4pf_2049",
+      "answer": "C",
+      "analysis": "题目中强调将工作重点放在重点人群、重症救治、保障日常医疗需求和防止医疗资源挤兑上，这体现了在复杂问题中抓住关键环节和主要矛盾，即抓主要矛盾和矛盾主要方面的哲学观点。选项A（一切从实际出发）强调根据实际情况制定策略，但题目更侧重于突出重点；选项B（具体问题具体分析）强调针对不同情况采取不同措施，但题目未体现具体情境的差异性；选项D（社会意识和社会存在）涉及社会意识与社会存在的关系，与题目内容无关。因此，正确答案为C。"
+    },
+    {
+      "id": "q_mpc0frd2_4cnr9d_2050",
+      "answer": "B",
+      "analysis": "八七会议是1927年8月7日在汉口召开的一次紧急会议，会议纠正了陈独秀的右倾投降主义错误，确定了实行土地革命和武装反抗国民党反动派的总方针，并把发动农民举行秋收起义作为当前党的最主要任务。但会议并没有提出党的工作重心由城市转移到农村，党的工作重心转移是在秋收起义后，毛泽东率领部队进军井冈山，建立农村革命根据地，开辟农村包围城市、武装夺取政权的道路后才实现的。因此，题干说法错误，应选B。"
+    },
+    {
+      "id": "q_mpc0frd7_54qubk_2051",
+      "answer": "D",
+      "analysis": "本题考察的是中国共产党独立领导革命战争和创建人民军队的标志性事件。选项A：武昌起义是1911年辛亥革命的首义，由孙中山领导的同盟会等革命党人发动，并非中国共产党领导，故排除。选项B：秋收起义是1927年9月毛泽东领导的工农武装起义，虽然重要，但并非最早标志独立领导革命战争和创建军队的事件。选项C：北伐战争是1926年至1928年国共合作进行的反帝反封建革命战争，由国民党领导，共产党参与，并非独立领导。选项D：南昌起义发生于1927年8月1日，由周恩来、贺龙、叶挺、朱德、刘伯承等领导，打响了武装反抗国民党反动派的第一枪，标志着中国共产党独立领导革命战争、创建人民军队和武装夺取政权的开始。因此，正确答案是D。"
+    },
+    {
+      "id": "q_mpc0frd8_sj0d74_2052",
+      "answer": "A",
+      "analysis": "本题考察的是中国共产党历史上的三个重要历史决议。中国共产党在历史上共通过了三个具有里程碑意义的历史决议，分别是：1945年党的六届七中全会通过的《关于若干历史问题的决议》（选项B）、1981年党的十一届六中全会通过的《关于建国以来党的若干历史问题的决议》（选项C）、以及2021年党的十九届六中全会通过的《中共中央关于党的百年奋斗重大成就和历史经验的决议》（选项D）。选项A《中国共产党章程（修正案）》是党对章程的修改，属于党章修订范畴，并非专门的历史决议，因此不属于这三个历史决议。故正确答案为A。"
+    },
+    {
+      "id": "q_mpc0frd9_zek3oa_2053",
+      "answer": "C",
+      "analysis": "本题考察的是毛泽东同志在株洲地区的革命实践历史。选项A“八七会议”是1927年8月7日在汉口召开的中共中央紧急会议，主要纠正右倾错误并确定土地革命和武装斗争方针，与“支部建在连上”无关。选项B“茶陵工农兵政府”是1927年11月建立的第一个县级红色政权，但并非“支部建在连上”的实践。选项C“水口建党”是指1927年10月毛泽东在株洲炎陵县水口镇主持的首次连队建党活动，将党支部建在连上，确立了党对军队的绝对领导，是“支部建在连上”的首次具体实践，符合题意。选项D“醴陵先农坛”是毛泽东考察湖南农民运动的地点之一，与军队建党无关。因此，正确答案为C。"
+    },
+    {
+      "id": "q_mpc0frda_aeoos9_2054",
+      "answer": "B",
+      "analysis": "唯心史观（历史唯心主义）认为社会意识决定社会存在，把历史发展归结为少数英雄人物或精神力量的作用，否认人民群众是历史的创造者。题干中‘唯心史观认为少数杰出人物创造了历史’是正确的，但‘同时肯定了群众也是创造历史的主体’是错误的，因为唯心史观恰恰否定人民群众的历史主体地位。因此，该判断错误，应选B。"
+    },
+    {
+      "id": "q_mpc0frdb_ivwwhq_2055",
+      "answer": "C",
+      "analysis": "本题考查革命烈士的经典名言。题目中引用的诗句“敌人只能砍下我们的头颅，决不能动摇我们的信仰！”出自方志敏烈士在狱中写下的《死！——共产主义的殉道者的记述》。方志敏是中国共产党早期领导人之一，1935年被捕后坚贞不屈，在狱中写下《可爱的中国》《清贫》等不朽篇章，最终英勇就义。\n\n选项分析：\nA. 江竹筠（江姐）：她是小说《红岩》中江姐的原型，1949年牺牲于重庆渣滓洞监狱，其著名誓言是“竹签子是竹子做的，共产党员的意志是钢铁”，与题干诗句不符。\nB. 刘胡兰：1947年被国民党杀害，年仅15岁，毛泽东为其题词“生的伟大，死的光荣”，但题干诗句并非出自她。\nC. 方志敏：正确选项，如上所述。\nD. 瞿秋白：1935年牺牲，曾写下《多余的话》，但题干诗句并非其作品。\n\n因此，正确答案为C。"
+    },
+    {
+      "id": "q_mpc0frdb_qvjvse_2056",
+      "answer": "ABC",
+      "analysis": "新发展理念是习近平新时代中国特色社会主义经济思想的主要内容，具体包括创新、协调、绿色、开放、共享五个方面。选项A创新：正确，创新是引领发展的第一动力，强调科技创新、制度创新等。选项B协调：正确，协调是持续健康发展的内在要求，注重城乡、区域、经济社会等协调发展。选项C绿色：正确，绿色是永续发展的必要条件，强调生态文明建设和可持续发展。选项D合作：错误，合作不属于新发展理念的五大内容，新发展理念中与外部关系相关的是开放，而非合作。因此，正确答案为ABC。"
+    },
+    {
+      "id": "q_mpc0frdc_okoup1_2057",
+      "answer": "B",
+      "analysis": "本题考察的是中国共产党对社会主义初级阶段基本国情的认识过程。选项A，党的十二大（1982年）提出了“建设有中国特色的社会主义”的命题，但并未明确提出社会主义初级阶段的基本国情。选项B，党的十三大（1987年）系统阐述了社会主义初级阶段理论，明确指出我国正处于并将长期处于社会主义初级阶段，这是对基本国情的科学判断。选项C，党的十四大（1992年）确立了社会主义市场经济体制的改革目标，但未首次提出社会主义初级阶段。选项D，党的十五大（1997年）进一步强调社会主义初级阶段理论，但并非首次明确提出。因此，正确答案是B。"
+    },
+    {
+      "id": "q_mpc0frdd_fto1kq_2058",
+      "answer": "B",
+      "analysis": "本题要求找出与其他三个选项观点相悖的选项。逐一分析如下：\n- A选项：“万物的本原是一，一产生出二，从一和二产生出无穷的数”是古希腊毕达哥拉斯学派的观点，认为数是万物的本原，属于客观唯心主义或朴素唯物主义倾向，强调客观存在的本原。\n- B选项：“观念的产生，并无必要假设外物的存在”是主观唯心主义（如贝克莱的“存在即被感知”）的观点，认为观念完全源于主体，无需外物，这与强调客观本原或规律的立场相悖。\n- C选项：“天行有常，不为尧存，不为桀亡”是荀子的观点，强调自然规律客观存在，不以人的意志为转移，属于唯物主义。\n- D选项：“世界是我的观念，我的活动，我的经验”是主观唯心主义（如费希特或马赫主义）的观点，将世界归结为个人主观经验。\nA和C都承认客观本原或规律，属于唯物主义或客观唯心主义；B和D虽同属主观唯心主义，但B极端否定外物存在，而D强调世界是个人经验，两者在主观唯心主义内部有细微差异。然而，题目要求找出“观点相悖”，即与其他选项根本对立的选项。A、C、D都承认某种形式的实在（无论是数、自然规律还是经验中的世界），而B彻底否定外物存在，认为观念无需外物，这与A、C、D的实在论立场直接冲突。因此，B是与其他三个选项观点相悖的选项。\n正确答案为B。"
+    },
+    {
+      "id": "q_mpc0frde_42o7y4_2059",
+      "answer": "C",
+      "analysis": "本题考察的是对中国共产党领导核心作用的准确表述。选项A“指导全局，统领四方”表述不够规范，通常用于描述宏观指导作用；选项B“执掌全国，四海归一”带有封建色彩，不符合现代政治术语；选项C“总揽全局，协调各方”是中国共产党领导核心作用的规范表述，强调党在全局工作中的领导地位和协调各方力量的作用；选项D“统帅全民，指点江山”表述过于夸张且不准确。因此，正确答案为C。"
+    },
+    {
+      "id": "q_mpc0frdf_lr0pye_2060",
+      "answer": "D",
+      "analysis": "本题考察对“创”的哲学内涵的理解。选项A错误，因为“创”并非特指解决事物矛盾的根本方法，矛盾分析法才是根本方法，且“创”更侧重于创新和变革。选项B错误，虽然创新常以现存事物为基础，但题目中“创”的内涵强调突破和超越，而非简单依赖现有事物。选项C错误，因为“创”并非仅抛弃消极因素，而是包含对积极因素的继承和发展，全盘抛弃不符合辩证否定观。选项D正确，因为“创”的核心目标是“新”，即创造符合事物发展规律、具有远大前途的新事物，这体现了辩证否定中“扬弃”和前进发展的本质。因此，正确答案为D。"
+    },
+    {
+      "id": "q_mpc0frdg_ym3gji_2061",
+      "answer": "A",
+      "analysis": "本题考察对哲学基本派别中主观唯心主义的理解。题干中“眼开则花明，眼闭则花寂”出自明代哲学家王阳明的观点，意思是当眼睛睁开时，花显现出明亮；当眼睛闭上时，花便归于沉寂。这强调了人的感觉、意识（即“眼”的开闭）决定了客观事物（花）的存在与否，认为精神（人的主观意识）是世界的本原，物质世界依赖于人的感觉而存在。\n\n选项分析：\nA. 主观唯心论：正确。主观唯心主义把个人的主观精神（如感觉、经验、心灵、意识等）看作世界的本原，认为客观事物依赖于人的主观意识而存在。题干中的观点正是典型的主观唯心主义表现。\nB. 客观唯心论：错误。客观唯心主义认为世界的本原是某种客观精神或理念（如“绝对精神”、“理”等），独立于人的意识之外。题干强调个人主观感觉，而非客观精神。\nC. 机械唯物主义：错误。机械唯物主义承认物质第一性，但用机械的、形而上学的观点解释世界，否认意识的能动作用，与题干中强调精神主宰物质相反。\nD. 实践唯物主义：错误。实践唯物主义即马克思主义哲学，强调实践是认识的基础，物质决定意识，意识对物质有能动反作用，但并非精神主宰物质。\n\n因此，正确答案是A。"
+    },
+    {
+      "id": "q_mpc0frdg_ty71df_2062",
+      "answer": "B",
+      "analysis": "该题考查对我国社会主要矛盾变化与历史阶段关系的理解。虽然我国社会主要矛盾已经转化为人民日益增长的美好生活需要和不平衡不充分的发展之间的矛盾，但我国仍处于并将长期处于社会主义初级阶段的基本国情没有变，我国是世界最大发展中国家的国际地位没有变。因此，主要矛盾的变化并不意味着社会主义所处历史阶段的改变。题目中“随着我国社会主要矛盾的变化，我国社会主义所处历史阶段也随之改变”的说法是错误的。故正确答案为B。"
+    },
+    {
+      "id": "q_mpc0frdh_kdqpvc_2063",
+      "answer": "C",
+      "analysis": "本题考察对‘坚持系统观念’科学思想方法的理解。系统观念强调用普遍联系、全面系统、发展变化的观点观察事物，注重整体与部分、当前与长远、内部与外部的关系。选项A‘通过历史看现实’侧重于历史与现实的纵向联系，属于历史唯物主义方法，而非系统观念的核心。选项B‘透过现象看本质’强调透过表象把握本质，属于辩证思维方法，不直接体现系统观念的整体性。选项C‘把握好当前和长远的关系’直接体现了系统观念中发展变化、整体联系的要求，即从时间维度统筹全局，是系统观念的典型表现。选项D‘把握好主要矛盾和次要矛盾的关系’属于矛盾分析法，侧重于抓重点，而非系统观念的整体性。因此，正确答案为C。"
+    },
+    {
+      "id": "q_mpc0frdi_2l1eny_2064",
+      "answer": "C",
+      "analysis": "本题考查毛泽东思想的活的灵魂的三个基本方面（实事求是、群众路线、独立自主）的出处。毛泽东思想的活的灵魂是贯穿于毛泽东思想各个组成部分的立场、观点和方法，其三个基本方面首次被系统阐述是在《反对本本主义》一文中。\n\n- A选项《新民主主义论》：主要论述了中国革命的性质、对象、动力、前途等新民主主义革命理论，并未集中概括活的灵魂的三个基本方面。\n- B选项《矛盾论》：重点阐述了唯物辩证法的核心——矛盾规律，属于哲学著作，但未直接提出三个基本方面。\n- C选项《反对本本主义》：毛泽东在1930年撰写此文，提出了“没有调查，没有发言权”的著名论断，强调实事求是、群众路线和独立自主的思想，已经包含了这三个基本因子的雏形，因此是正确答案。\n- D选项《星星之火，可以燎原》：主要探讨中国革命道路和农村包围城市的理论，未系统涉及三个基本方面。\n\n因此，正确答案为C。"
+    },
+    {
+      "id": "q_mpc0frdj_j3263l_2065",
+      "answer": "A",
+      "analysis": "本题考察对‘新路’核心内涵的理解。选项A‘创新’是正确答案，因为‘新路’通常指代通过创新开辟的发展路径，强调突破传统、探索新方法。选项B‘革命’虽涉及变革，但更侧重根本性推翻旧制度，与‘新路’的渐进创新不同；选项C‘奋斗’强调努力过程，而非路径本身；选项D‘民主’是一种政治制度，与‘新路’的直接关联较弱。因此，结合语境，‘创新’最符合‘新路’的实质含义。"
+    },
+    {
+      "id": "q_mpc0frdk_44lpiv_2066",
+      "answer": "C",
+      "analysis": "本题考查矛盾的对立统一原理。'兼听则明，偏信则暗'意为听取多方面意见就能明辨是非，偏信单方面意见就会昏聩糊涂，体现了矛盾双方相互依存、相互转化（明与暗、兼听与偏信的对立统一）。选项A'九层之台，始于累土'强调量变引起质变，属于质量互变规律；选项B'金无足赤，人无完人'说明事物都有两面性，但侧重矛盾普遍性而非对立转化；选项C'艰难困苦，玉汝于成'意为艰难困苦能磨砺人并助其成功，体现了困难与成功这对矛盾相互转化，与题干哲理一致；选项D'前事不忘，后事之师'强调借鉴历史经验，属于联系和发展的观点。因此，正确答案为C。"
+    },
+    {
+      "id": "q_mpc0frdl_pxied7_2067",
+      "answer": "B",
+      "analysis": "本题考察的是中国共产党历史上重要会议的内容。题目明确指出，会议在延安召开，并且第一次明确把毛泽东思想确立为全党思想并写入党章。\n\nA. 中共六大：1928年在莫斯科召开，并非在延安，且未涉及毛泽东思想确立。\nB. 中共七大：1945年在延安召开，会议通过了新党章，第一次将毛泽东思想确立为党的指导思想并写入党章，符合题意。\nC. 中共八大：1956年在北京召开，此时毛泽东思想早已确立，主要讨论社会主义建设问题。\nD. 中共九大：1969年在北京召开，主要涉及文化大革命，与毛泽东思想首次确立无关。\n\n因此，正确答案是B。中共七大在延安召开，是毛泽东思想被确立为全党指导思想并写入党章的关键会议。"
+    },
+    {
+      "id": "q_mpc0frdm_fi550f_2068",
+      "answer": "A",
+      "analysis": "题目包含两部分：第一部分是关于“一国两制”方针政策基本内容的多选题，第二部分是关于党员相关情况的单选题。\n\n第一部分：\n“一国两制”方针政策的基本内容包括：\n- A. 坚持一个中国是前提：正确，这是“一国两制”的核心和基础，必须坚持一个中国原则。\n- B. 和平统一祖国是核心：正确，“一国两制”旨在通过和平方式实现国家统一。\n- C. 保证“高度自治”繁荣稳定的局面：正确，香港、澳门特别行政区享有高度自治权，保持繁荣稳定。\n- D. “两种制度”之间相互支援，共同发展，为国家的繁荣，民族的振兴共同做出贡献：正确，这是“一国两制”的延伸目标，促进共同发展。\n因此，第一部分正确答案为ABCD。\n\n第二部分：\n分析每个说法：\n① 正确：根据《关于中国共产党党费收缴、使用和管理的规定》，党员自愿一次性交纳1000元及以上党费，中央组织部会开具收据。\n② 错误：党员被安排到党校学习，时间在3个月及以上的，才需要转接党员组织关系；1个月的学习时间不需要转接。\n③ 错误：党龄从预备党员转为正式党员之日算起。小王2020年6月20日成为预备党员，一年后按期转正（2021年6月20日），到当前时间（假设为2023年），党龄应为2年，而非1年。\n④ 错误：根据规定，党员出国留学，应当办理保留党籍手续，而非停止党籍。停止党籍适用于出国定居等情况。\n因此，只有①正确，对应选项A（①②中①正确，②错误；①③中①正确，③错误；②④中②④均错误；③④中③④均错误）。\n\n综合两部分，题目要求返回多选题的正确答案，即ABCD。但注意题目格式中第二部分是单选题，可能为干扰。根据用户提供的完整内容，第一部分是多选题，第二部分是单选题，但用户要求返回“正确答案”和“详细解析”，且示例中只返回一个答案。考虑到用户输入中第一部分是明确的多选题，第二部分是独立的单选题，但题目整体要求解析，故按第一部分处理。\n\n最终答案：ABCD"
+    },
+    {
+      "id": "q_mpc0frdn_hy59f7_2069",
+      "answer": "C",
+      "analysis": "本题考察矛盾的特殊性原理及其方法论。题目中提到的“式”发展模式强调工业化、城镇化和信息化齐头并进、交叉融合，这是一种结合具体国情和发展阶段形成的独特模式，体现了不同国家或地区在发展道路上的特殊性。选项A错误，因为题目未涉及矛盾普遍性与特殊性的转化，而是强调具体模式的特殊性。选项B错误，矛盾的特殊性表现普遍性是正确的，但“在一定条件下超越普遍性”表述不准确，特殊性不能脱离普遍性。选项C正确，矛盾的特殊性要求具体问题具体分析，题目中根据实际情况制定“式”模式正是这一方法论原则的体现。选项D错误，矛盾的特殊性在事物发展中起重要作用，但决定性作用通常由主要矛盾或矛盾的主要方面承担，而非特殊性本身。因此，正确答案为C。"
+    },
+    {
+      "id": "q_mpc0frdn_jfb5q0_2070",
+      "answer": "A",
+      "analysis": "本题考察对中国式现代化内涵的理解。选项A错误，因为中国式现代化强调共同富裕和协调发展，但并非要求各地区、各民族“齐步走”，而是允许有先有后、因地制宜，发挥各自优势，实现整体推进。选项B正确，中国式现代化坚持可持续发展，注重生态环境保护，追求人与自然和谐共生。选项C正确，中国式现代化倡导和平发展，反对殖民扩张和霸权主义，通过合作共赢实现现代化。选项D正确，中国式现代化以人民为中心，摒弃西方以资本为中心的现代化模式，注重社会公平和共同富裕。因此，理解错误的是A。"
+    },
+    {
+      "id": "q_mpc0frdo_0umhjz_2071",
+      "answer": "ACD",
+      "analysis": "本题考查家庭美德的基本规范。家庭美德是人们在家庭生活中调整成员间关系、处理家庭问题所遵循的道德规范。根据《公民道德建设实施纲要》，家庭美德的主要内容包括：尊老爱幼、男女平等、夫妻和睦、勤俭持家、邻里互助。\n\n选项A“男女平等”正确，这是家庭美德的基本规范之一，强调家庭成员在地位、权利和义务上的平等。\n\n选项B“相夫教子”错误，这一表述带有传统性别角色刻板印象，强调女性在家庭中的从属地位，不符合现代家庭美德中男女平等和相互尊重的原则。\n\n选项C“邻里互助”正确，这是家庭美德的重要组成部分，强调邻里之间相互关心、帮助，营造和谐社区环境。\n\n选项D“勤俭持家”正确，这是家庭美德的基本规范，倡导节约资源、合理理财，培养良好家风。\n\n因此，正确答案为ACD。"
+    },
+    {
+      "id": "q_mpc0frdp_x34o6s_2072",
+      "answer": "A",
+      "analysis": "本题考察的是矛盾的特性。题目中未提供具体情境，但从哲学角度分析，矛盾具有特殊性是指不同事物的矛盾各有其特点，同一事物的矛盾在不同发展阶段也有不同特点，这是马克思主义哲学中矛盾特殊性的核心含义。选项A正确。选项B矛盾具有普遍性是指矛盾存在于一切事物中并贯穿于事物发展过程的始终，但题目未体现普遍性。选项C矛盾具有斗争性是指矛盾双方相互排斥、相互分离的趋势，题目未涉及。选项D矛盾具有同一性是指矛盾双方相互依存、相互贯通，题目也未体现。因此，在缺乏具体情境的情况下，根据常见哲学题目设计，通常考察矛盾特殊性，故选择A。"
+    },
+    {
+      "id": "q_mpc0frdq_avzubd_2073",
+      "answer": "ABC",
+      "analysis": "本题要求选出关于中国革命圣地说法不正确的选项。逐一分析如下：\n- A选项：遵义会议确立了毛泽东的领导地位，但确立毛泽东思想为党的指导思想是在1945年中共七大上，因此A选项错误。\n- B选项：井冈山是党在土地革命战争时期创建的第一个农村革命根据地，而非抗战时期，抗战时期创建的是陕甘宁等根据地，因此B选项错误。\n- C选项：延安精神的本质是坚定正确的政治方向、解放思想实事求是的思想路线、全心全意为人民服务的根本宗旨、自力更生艰苦奋斗的创业精神，而顾全大局、严守纪律、紧密团结是西柏坡精神的内涵之一，因此C选项错误。\n- D选项：西柏坡是中国共产党召开具有历史意义的中共七届二中全会的所在地，该会议提出了“两个务必”，因此D选项正确。\n综上，不正确的选项为A、B、C。"
+    },
+    {
+      "id": "q_mpc0frdr_3zydro_2074",
+      "answer": "A",
+      "analysis": "题目中“好汉”的观点认为重力是宗教迷信观念，只要抛弃它就能避免溺死，这体现了主观唯心主义，即把主观意识（如观念、意志）当作世界的本原，否认客观规律。选项A“理生万物，理主动静”是客观唯心主义，认为“理”（客观精神）是世界的本原，与主观唯心主义同属唯心主义阵营，因此属于同一哲学派别。选项B“古今异俗，新故异备”是法家的历史发展观，属于唯物主义或辩证法思想；选项C“只见树木，不见森林”是形而上学的片面观点，属于方法论错误；选项D“天地之变，阴阳之化”是古代朴素唯物主义，认为阴阳是物质本原。因此，只有A与“好汉”的观点同属唯心主义派别。"
+    },
+    {
+      "id": "q_mpc0frds_zlc8i6_2075",
+      "answer": "C",
+      "analysis": "本题要求选择与题干中“上述认识的世界观一致”的选项，但题干未明确给出“上述认识”的具体内容。根据常见哲学考题的语境，通常此类题目考查唯物主义与唯心主义的区分。选项分析：A. “气者，理之依也”是古代朴素唯物主义观点，认为“气”是物质本源，“理”依赖于“气”；B. “道者器之道，无其器则无其道”强调“道”（规律）依赖于具体事物“器”，属于唯物主义；C. “未有此气，已有此理”是客观唯心主义观点，认为“理”先于物质世界存在，与唯物主义对立；D. “金、木、水、火、土构成万物”是古代朴素唯物主义。若题干“上述认识”指唯物主义世界观，则A、B、D均一致，但单选题只能选一个，且C是唯一唯心主义选项，故推测题干“上述认识”可能指唯心主义观点，因此正确答案为C。若题干有具体表述，需根据实际内容判断，但基于常见考题模式，C为最可能答案。"
+    },
+    {
+      "id": "q_mpc0frdt_4o730a_2076",
+      "answer": "D",
+      "analysis": "本题考察的是哲学中关于事物联系和发展的基本范畴。题目中“加强协作，共同应对经济全球化带来的挑战和人类面对的共同难题”强调了各国之间相互联系、相互协作，形成一个整体系统来应对问题。选项A“整体和部分之间的关系”虽然涉及整体与部分，但更侧重于整体由部分构成、部分影响整体的关系，而题目强调的是系统内各要素（国家）之间的协作与互动，而非简单的整体与部分；选项B“量变和质变之间的关系”描述的是事物发展过程中数量变化与根本性质变化的关系，与题目内容无关；选项C“内因和外因之间的关系”强调事物发展的内部原因和外部条件，题目中各国协作属于外部条件，但未突出内因作用；选项D“系统和要素之间的关系”准确反映了各国作为要素（子系统）通过协作构成一个应对全球挑战的系统整体，要素之间相互影响、相互配合，共同实现系统功能，因此最符合题意。正确答案为D。"
+    },
+    {
+      "id": "q_mpc0frdu_90y3b0_2077",
+      "answer": "B",
+      "analysis": "“一叶障目，不见泰山”形容一个人被局部或暂时的现象所迷惑，看不到全局或整体，这属于认识论中的片面性错误，即形而上学或主观主义的错误，而非唯心主义。唯心主义是指认为意识决定物质、精神第一性的哲学观点，与本题描述的方法论错误不同。因此，该说法错误，应选B。"
+    },
+    {
+      "id": "q_mpc0frdv_bnlxe8_2078",
+      "answer": "C",
+      "analysis": "本题考察的是中国共产党第一次全国代表大会代表的相关历史知识。党的一大共有13位代表出席，代表全国50多名党员。其中，邓恩铭是唯一的少数民族代表，他是水族人（也有资料称其为水族或布依族，但普遍认可其为水族）。以下是对各选项的分析：A. 李汉俊：湖北人，汉族，是上海共产党早期组织成员，参与了一大筹备工作，但不是少数民族。B. 刘仁静：湖北人，汉族，是北京共产党早期组织成员，也是一大代表中最年轻的一位，但不是少数民族。C. 邓恩铭：贵州人，水族，是山东共产党早期组织成员，作为唯一的少数民族代表出席了一大，后为革命牺牲。D. 包惠僧：湖北人，汉族，由陈独秀指派参加一大，但不是少数民族。因此，正确答案是C。"
+    },
+    {
+      "id": "q_mpc0frdw_ejl112_2079",
+      "answer": "A",
+      "analysis": "本题考察的是《共产党宣言》中文译本的首译者。陈望道是《共产党宣言》中文全译本的第一个翻译者，他于1919年底至1920年初完成了翻译工作，并于1920年8月在上海出版。选项A正确。选项B陈独秀是中国共产党主要创始人之一，但未翻译《共产党宣言》；选项C李大钊是马克思主义在中国的早期传播者，曾撰写相关文章，但并非首译者；选项D李达是马克思主义理论家，翻译过其他著作，但《共产党宣言》首译者为陈望道。因此，正确答案为A。"
+    },
+    {
+      "id": "q_mpc0frdx_uehl8b_2080",
+      "answer": "C",
+      "analysis": "本题考察的是中国工农红军长征胜利结束的标志性事件。长征始于1934年10月，中央红军从江西瑞金出发。1935年10月，中央红军到达陕北吴起镇，与陕北红军会师，但此时红二、四方面军尚未到达。1936年10月，红一、二、四方面军在甘肃会宁地区胜利会师，标志着长征的胜利结束。因此，正确答案是C（1936年）。选项A（1934年）是长征开始的时间；选项B（1935年）是中央红军到达陕北的时间；选项D（1937年）是全面抗战爆发的时间，均不符合题意。"
+    },
+    {
+      "id": "q_mpc0frdx_irw4m7_2081",
+      "answer": "D",
+      "analysis": "本题考查实践作为检验真理唯一标准的根据。实践具有直接现实性品格，即实践能够把主观认识转化为客观现实，从而直接检验认识与客观实际是否相符。选项A自觉能动性强调实践的主体性，但并非检验真理的主要根据；选项B社会历史性说明实践受社会条件制约，但未直接体现检验功能；选项C客观规律性指实践遵循客观规律，但检验真理的关键在于实践的直接现实性。因此，正确答案为D。"
+    },
+    {
+      "id": "q_mpc0frdy_yjw55x_2082",
+      "answer": "AC",
+      "analysis": "党徽由镰刀和锤头组成，象征工农联盟。选项A镰刀代表农民阶级，选项C锤头代表工人阶级，两者交叉排列构成党徽核心图案。选项B斧头并非党徽组成部分，常见于其他标志；选项D麦穗通常用于国徽或党旗中的装饰元素，但非党徽主体。因此正确答案为AC。"
+    },
+    {
+      "id": "q_mpc0frdz_5gsuc5_2083",
+      "answer": "A",
+      "analysis": "本题考察依法治国的基本内涵。选项A正确，依法治国的主体是中国共产党领导下的人民群众，体现了人民当家作主的原则。选项B正确，行政机关必须严格依法行政，这是依法治国的关键环节。选项C正确，司法机关要公正司法、严格执法，确保法律正确实施。选项D正确，有法可依是依法治国的前提条件，即建立完善的法律体系。四个选项均正确，但题目要求选择‘正确的有’，且为单选题，通常此类题目可能设计为多选或单选，但根据常见考试形式，若为单选题，则需选择最全面或最核心的表述。然而，题目未明确说明是单选还是多选，但根据指令‘只返回单个选项字母’，且选项A涵盖了依法治国的主体，是基础性表述，故选择A作为正确答案。解析：依法治国的主体是人民，党的领导是根本保证，其他选项虽正确但属于具体方面，A更根本。"
+    },
+    {
+      "id": "q_mpc0fre0_63c4ek_2084",
+      "answer": "A",
+      "analysis": "该题目包含两个部分。第一部分‘中国特色社会主义是改革开放以来党的全部理论和实践的主题’是党的十九大报告中的明确表述，强调中国特色社会主义是改革开放以来党的理论和实践的核心内容，因此这一判断是正确的。第二部分引用《墨经》中的‘力，形之所以奋也’来说明创新的重要性，并以此强调提供高质量科技供给，这与习近平关于创新驱动发展的论述相符，旨在说明创新是推动发展的动力。两部分内容均符合官方表述，无错误之处，故整体判断为正确。选项A正确，选项B错误。"
+    },
+    {
+      "id": "q_mpc0fre1_os4ke8_2085",
+      "answer": "C",
+      "analysis": "本题考察的是哲学中关于事物发展原因的原理。题干中“给”字可能为笔误，实际应为“着力支撑现代化经济体系建设”，但核心在于理解“着力”一词的哲学含义。选项A“事物是永恒发展的”强调发展的普遍性，但题干未直接体现发展过程；选项B“动力是事物运动的原因”表述不准确，哲学上通常认为矛盾是事物发展的动力；选项C“内因是事物变化的根据”符合题意，因为“着力”强调依靠自身力量，即内因在事物发展中的决定性作用；选项D“否定是事物发展的环节”涉及辩证否定观，但题干未涉及否定或扬弃。因此，正确答案为C，解析需逐一排除其他选项，突出内因的哲学原理。"
+    },
+    {
+      "id": "q_mpc0fre2_cbxt2t_2086",
+      "answer": "C",
+      "analysis": "本题要求选出没有对中国共产党的历史经验进行总结的决议。A选项《关于若干历史问题的决议》是1945年党的六届七中全会通过，系统总结了建党以来特别是六届四中全会至遵义会议前的历史经验；B选项《关于建国以来党的若干历史问题的决议》是1981年党的十一届六中全会通过，总结了建国以来党的历史经验和教训；D选项《中共中央关于党的百年奋斗重大成就和历史经验的决议》是2021年党的十九届六中全会通过，全面总结了党的百年奋斗重大成就和历史经验。而C选项《关于增强党的团结的决议》是1954年党的七届四中全会通过，主要针对高岗、饶漱石反党分裂活动，强调维护党的团结和统一，并未涉及对党的历史经验的系统总结。因此，正确答案是C。"
+    },
+    {
+      "id": "q_mpc0fre3_5qnoft_2087",
+      "answer": "ABD",
+      "analysis": "本题考察中国特色社会主义总任务的相关知识。中国特色社会主义总任务是实现社会主义现代化和中华民族伟大复兴，在全面建成小康社会的基础上，分两步走在本世纪中叶建成富强民主文明和谐美丽的社会主义现代化强国。\n\nA选项正确：总任务在当下阶段要求完成全面建成小康社会的任务，这是实现总任务的基础步骤。\nB选项正确：总任务明确了未来事业目标是实现中华民族伟大复兴，这是总任务的核心内容。\nC选项错误：中国特色社会主义总任务是在中国特色社会主义理论体系中提出的，特别是习近平新时代中国特色社会主义思想的重要内容，毛泽东思想、邓小平理论虽然为中国特色社会主义奠定基础，但总任务的具体表述并非其直接内容。\nD选项正确：总任务要求分两步走、两个阶段完成目标，即从2020年到2035年基本实现社会主义现代化，从2035年到本世纪中叶建成社会主义现代化强国。\n\n因此，正确答案为ABD。"
+    },
+    {
+      "id": "q_mpc0fre4_uxv6ap_2088",
+      "answer": "D",
+      "analysis": "题目强调发展稳定、内政外交国防、治党治国治军各方面任务繁重，面临的风险挑战严峻，体现了事物复杂性和矛盾普遍性，要求全面应对。选项A“日中则昃、月满则亏”蕴含物极必反、矛盾转化的哲理，与题目侧重全面性不同；选项B“积羽沉舟，群轻折轴”强调量变引起质变，与题目中“任务繁重”的积累性相关，但未直接体现风险挑战的全面性；选项C“不啻微芒，造炬成阳”强调积累微小力量成就大事，也侧重量变；选项D“无所不备，无所不寡”出自《孙子兵法》，意为处处防备则处处薄弱，强调全面应对时需注意资源有限性，与题目中各方面任务繁重、风险严峻的全面性挑战相契合，因此正确答案为D。"
+    },
+    {
+      "id": "q_mpc0fre4_vfh5y1_2089",
+      "answer": "D",
+      "analysis": "本题考察的是延迟退休弹性实施背后的哲学原理。选项A错误，因为价值选择虽有主体差异性，但社会可以通过协商达成统一的价值标准，如延迟退休政策本身就是在广泛征求意见后制定的。选项B错误，事物联系的客观性不取决于人类实践活动的多样性，而是客观存在的，实践多样性只是影响人们对联系的认识。选项C错误，虽然真理性认识需要多次反复，但题干强调的是弹性实施的具体做法，而非认识过程。选项D正确，延迟退休弹性实施体现了矛盾的普遍性（延迟退休的总体要求）与特殊性（个人自主选择提前退休的空间）的结合，只有把握这种联结，才能认识延迟退休政策的本质，即既坚持原则性又体现灵活性。因此，正确答案是D。"
+    },
+    {
+      "id": "q_mpc0fre5_am018l_2090",
+      "answer": "B",
+      "analysis": "本题考查正确发挥主观能动性的前提。选项A（社会实践）是主观能动性实现的根本途径，而非前提；选项B（从实际出发）是正确发挥主观能动性的基本前提，因为只有尊重客观实际和规律，才能有效发挥能动性；选项C（正确认识物质和意识的关系）是发挥主观能动性的理论指导，但并非直接前提；选项D（物质条件和物质手段）是发挥主观能动性的客观基础，但前提是必须从这些条件出发。因此，正确答案是B。"
+    },
+    {
+      "id": "q_mpc0fre6_nfofv9_2091",
+      "answer": "C",
+      "analysis": "本题考察科学发展观的根本方法。科学发展观的第一要义是发展，核心是以人为本，基本要求是全面协调可持续，根本方法是统筹兼顾。题目中提到在发展‘互联网+’等新行业、新业态的过程中，要处理好新业态与传统行业的关系，既要推动新业态发展，又要兼顾传统行业受到的冲击，这体现了统筹兼顾的方法。选项A‘发展为重’是科学发展观的第一要义，但不是根本方法；选项B‘以人为本’是核心；选项D‘与时俱进’是马克思主义的理论品质，但不是科学发展观的根本方法。因此，正确答案是C。"
+    },
+    {
+      "id": "q_mpc0fre7_613pp9_2092",
+      "answer": "B",
+      "analysis": "本题考察马克思主义的基本特征。题目中强调马克思主义“以事实为依据、以规律为对象，以实践作为检验标准”，这直接指向其科学性。科学性是指马克思主义严格遵循客观事实，揭示自然、社会和思维发展的普遍规律，并通过实践不断验证和发展。选项A人民性强调马克思主义代表最广大人民的利益，但题目未涉及立场问题；选项C革命性强调其批判和变革精神，但题目侧重理论依据和检验标准；选项D发展开放性强调其与时俱进的特点，但题目核心是理论本身的客观性和真理性。因此，正确答案为B。"
+    },
+    {
+      "id": "q_mpc0fre8_os90vi_2093",
+      "answer": "C",
+      "analysis": "本题考察毛泽东思想的形成条件。毛泽东思想是马克思主义中国化的第一次历史性飞跃，其产生和形成需要特定的物质基础。选项A：新文化运动的兴起为马克思主义在中国的传播创造了思想文化条件，属于思想基础，而非物质基础。选项B：马克思列宁主义的传入与传播提供了理论来源，属于理论基础。选项C：新的社会生产力的增长和工人运动的发展，反映了近代中国社会经济结构的变化和无产阶级的壮大，这为毛泽东思想的产生提供了现实的物质基础和阶级条件，是正确答案。选项D：中国共产党人领导的人民革命是毛泽东思想指导下的实践，是思想形成后的应用和发展，而非其产生的物质基础。因此，正确答案为C。"
+    },
+    {
+      "id": "q_mpc0fre9_n78qjo_2094",
+      "answer": "C",
+      "analysis": "本题考察的是习近平新时代中国特色社会主义思想确立为党的指导思想的历史节点。选项A：十七大（2007年）将科学发展观写入党章，但未涉及习近平新时代中国特色社会主义思想；选项B：十八大（2012年）确立了科学发展观的历史地位，并选举习近平为中央总书记，但尚未正式提出习近平新时代中国特色社会主义思想；选项C：十九大（2017年）将习近平新时代中国特色社会主义思想写入党章，确立为党必须长期坚持的指导思想，并明确其历史地位；选项D：二十大（2022年）进一步丰富和发展了该思想，但首次确立历史地位是在十九大。因此，正确答案为C。"
+    },
+    {
+      "id": "q_mpc0frea_jdnr40_2095",
+      "answer": "D",
+      "analysis": "题目中提到“军队的开始”和“8月1日成为中国人民解放军诞生纪念日”，这直接指向南昌起义。1927年8月1日，周恩来、贺龙、叶挺、朱德、刘伯承等领导了南昌起义，打响了武装反抗国民党反动派的第一枪，标志着中国共产党独立领导革命战争、创建人民军队和武装夺取政权的开始。因此，8月1日被定为中国人民解放军建军节。选项A秋收起义发生在1927年9月，是毛泽东领导的农民起义，但并非军队诞生的标志；选项B黄花岗起义是1911年辛亥革命前夕的起义，与人民军队无关；选项C广州起义发生在1927年12月，是继南昌起义和秋收起义后的又一次起义，但也不是军队诞生的起点。故正确答案为D。"
+    },
+    {
+      "id": "q_mpc0freb_op3nxd_2096",
+      "answer": "C",
+      "analysis": "本题考察矛盾的相关哲学原理。题目描述中国人民化危为机，体现了矛盾双方（危与机）相互贯通，在一定条件下相互转化，故①正确。矛盾的同一性是相对的，斗争性是绝对的，同一性寓于斗争性中，但表述应为“斗争性寓于同一性中”，故②错误。题目未涉及主要矛盾与次要矛盾的关系，故③不选。矛盾双方既对立又统一，由此推动事物发展，题目中“化危为机”体现了矛盾推动发展，故④正确。因此，正确选项为C（①④）。"
+    },
+    {
+      "id": "q_mpc0frec_5mt226_2097",
+      "answer": "A",
+      "analysis": "唯物主义和唯心主义是哲学基本问题第一方面的两种根本对立观点，它们回答的是世界‘是什么’的问题，即世界的本原是物质还是意识。选项A正确。选项B‘怎么样’涉及世界状态问题，属于辩证法与形而上学的对立；选项C‘可知性’是哲学基本问题第二方面，涉及思维与存在的同一性；选项D‘可塑性’不是哲学基本问题范畴。因此，只有A符合题意。"
     }
   ]
 }
