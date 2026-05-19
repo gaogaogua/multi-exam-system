@@ -404,7 +404,7 @@ const Practice = {
   },
 
   /**
-   * 渲染当前题目
+   * 渲染当前题目 — 编排各子渲染器
    */
   renderQuestion() {
     const area = document.getElementById('practice-area');
@@ -413,146 +413,162 @@ const Practice = {
     const current = this.currentIndex + 1;
     const progress = (current / total) * 100;
 
-    // 题目列表导航
-    const typeIcons = { single: '①', multiple: '②', judge: '③', fill: '④', essay: '⑤' };
-    let navHtml = '<div class="practice-nav" id="practice-nav">';
-    this.questions.forEach((nq, ni) => {
-      const answered = this.userAnswers[nq.id] !== undefined;
-      const isCur = ni === this.currentIndex;
-      navHtml += `<button class="pq-nav-btn ${isCur ? 'pq-cur' : ''} ${answered ? 'pq-answered' : ''}"
-        onclick="event.stopPropagation();Practice.goToQuestion(${ni})"
-        title="${this.escapeHtml((nq.title||'').substring(0,40))}">${ni+1}${typeIcons[nq.type]||''}</button>`;
-    });
-    navHtml += '</div>';
-
-    let html = `
+    const navHtml = this._renderNav();
+    const html = `
       <div class="practice-container">
-        <div class="practice-progress">
-          <div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div>
-          <span class="progress-text" onclick="const n=document.getElementById('practice-nav');n.style.display=n.style.display==='none'?'flex':'none'" style="cursor:pointer;" title="点击展开/收起题目列表">📋 ${current} / ${total}</span>
-          <button class="btn btn-outline btn-sm" onclick="Practice.exit()">退出练习</button>
-        </div>
+        ${this._renderProgress(current, total, progress)}
         ${navHtml}
         <div class="practice-question-card">
           <span class="question-type-badge">${App.getTypeName(q.type)}</span>
-          <div class="question-text">${current}. ${this.escapeHtml(q.title)}</div>`;
+          <div class="question-text">${current}. ${this.escapeHtml(q.title)}</div>
+          ${this._renderOptions(q)}
+          ${this._renderResult(q)}
+        </div>
+        ${this._renderActions(current, total)}
+      </div>`;
+    area.innerHTML = html;
+  },
 
-    if (q.options && q.options.length > 0) {
-      html += `<div class="options-list">`;
-      const savedAnswer = this.userAnswers[q.id] || '';
-      const isMulti = q.type === 'multiple';
-      const inputType = isMulti ? 'checkbox' : 'radio';
+  /** 题目列表导航栏 */
+  _renderNav() {
+    const icons = { single: '①', multiple: '②', judge: '③', fill: '④', essay: '⑤' };
+    let h = '<div class="practice-nav" id="practice-nav">';
+    this.questions.forEach((nq, ni) => {
+      const answered = this.userAnswers[nq.id] !== undefined;
+      const isCur = ni === this.currentIndex;
+      h += `<button class="pq-nav-btn ${isCur ? 'pq-cur' : ''} ${answered ? 'pq-answered' : ''}"
+        onclick="event.stopPropagation();Practice.goToQuestion(${ni})"
+        title="${this.escapeHtml((nq.title||'').substring(0,40))}">${ni+1}${icons[nq.type]||''}</button>`;
+    });
+    return h + '</div>';
+  },
 
-      q.options.forEach(opt => {
-        let optClass = 'option-item';
-        if (this.showResult) {
-          const isCorrect = q.answer.includes(opt.label);
-          const isSelected = savedAnswer.includes(opt.label);
-          if (isCorrect && isSelected) optClass += ' correct';
-          else if (!isCorrect && isSelected) optClass += ' wrong';
-          else if (isCorrect) optClass += ' correct';
-        } else if (savedAnswer.includes(opt.label)) {
-          optClass += ' selected';
-        }
+  /** 进度条 */
+  _renderProgress(current, total, progress) {
+    return `<div class="practice-progress">
+      <div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div>
+      <span class="progress-text" onclick="const n=document.getElementById('practice-nav');n.style.display=n.style.display==='none'?'flex':'none'" style="cursor:pointer;" title="点击展开/收起题目列表">📋 ${current} / ${total}</span>
+      <button class="btn btn-outline btn-sm" onclick="Practice.exit()">退出练习</button>
+    </div>`;
+  },
 
-        html += `
-          <div class="${optClass}" onclick="Practice.selectOption('${q.id}', '${opt.label}', '${inputType}')">
-            <input type="${inputType}" name="q_${q.id}" value="${opt.label}" ${savedAnswer.includes(opt.label) ? 'checked' : ''} style="pointer-events:none;">
-            <span class="option-label">${opt.label}.</span> ${this.escapeHtml(opt.text)}
-          </div>`;
-      });
-      html += `</div>`;
+  /** 选择题选项 或 填空/简答文本输入 */
+  _renderOptions(q) {
+    if (!q.options || q.options.length === 0) {
+      const saved = this.userAnswers[q.id] || '';
+      return `<div class="form-group">
+        <textarea id="essay-answer" rows="4" placeholder="请输入你的答案..." onchange="Practice.saveEssayAnswer('${q.id}', this.value)">${this.escapeHtml(saved)}</textarea>
+      </div>`;
+    }
+    const savedAnswer = this.userAnswers[q.id] || '';
+    const isMulti = q.type === 'multiple';
+    const inputType = isMulti ? 'checkbox' : 'radio';
+    let h = '<div class="options-list">';
+    q.options.forEach(opt => {
+      let cls = 'option-item';
+      if (this.showResult) {
+        const isCorrect = q.answer.includes(opt.label);
+        const isSelected = savedAnswer.includes(opt.label);
+        if (isCorrect && isSelected) cls += ' correct';
+        else if (!isCorrect && isSelected) cls += ' wrong';
+        else if (isCorrect) cls += ' correct';
+      } else if (savedAnswer.includes(opt.label)) {
+        cls += ' selected';
+      }
+      h += `<div class="${cls}" onclick="Practice.selectOption('${q.id}','${opt.label}','${inputType}')">
+        <input type="${inputType}" name="q_${q.id}" value="${opt.label}" ${savedAnswer.includes(opt.label)?'checked':''} style="pointer-events:none;">
+        <span class="option-label">${opt.label}.</span> ${this.escapeHtml(opt.text)}
+      </div>`;
+    });
+    return h + '</div>';
+  },
+
+  /** 答案结果 + 解析 + AI 按钮 + 编辑 */
+  _renderResult(q) {
+    if (!this.showResult && this.mode !== 'memorize') return '';
+    const isCorrect = this.mode === 'memorize' ? true : this.checkAnswer(q, this.userAnswers[q.id] || '');
+    const userAns = this.mode === 'memorize' ? '' : (this.userAnswers[q.id] || '');
+    const isEssayType = q.type === 'essay' || q.type === 'fill';
+    const boxStyle = this.mode === 'memorize'
+      ? 'margin-top:16px;padding:16px;border-radius:8px;border-left:4px solid #667eea;background:#f0f5ff;'
+      : `margin-top:16px;padding:16px;border-radius:8px;border-left:4px solid ${isCorrect?'var(--success)':'var(--danger)'};background:${isCorrect?'#f6ffed':'#fff2f0'};`;
+
+    let h = `<div class="practice-result" style="${boxStyle}">`;
+    if (this.mode === 'memorize') {
+      h += `<div style="font-size:16px;font-weight:700;margin-bottom:8px;color:#667eea;">📖 背题模式</div>`;
     } else {
-      // 填空题/问答题 - 文本输入
-      const savedAnswer = this.userAnswers[q.id] || '';
-      html += `
-        <div class="form-group">
-          <textarea id="essay-answer" rows="4" placeholder="请输入你的答案..." onchange="Practice.saveEssayAnswer('${q.id}', this.value)">${this.escapeHtml(savedAnswer)}</textarea>
-        </div>`;
+      h += `<div style="font-size:18px;font-weight:700;margin-bottom:8px;">${isCorrect ? '✓ 回答正确！' : '✗ 回答错误'}</div>
+        <div style="margin-bottom:6px;"><strong>你的答案：</strong>${this.escapeHtml(userAns || '未作答')}</div>`;
+    }
+    h += `<div style="margin-bottom:6px;color:var(--success);"><strong>正确答案：</strong>${this.escapeHtml(q.answer)}</div>
+      <div style="margin-bottom:6px;"><strong>题型：</strong>${App.getTypeName(q.type)}</div>`;
+
+    // 解析 + AI 按钮
+    if (q.analysis && q.analysis.trim().length > 5) {
+      h += `<div style="margin-top:8px;padding:12px;background:#fff;border-radius:4px;line-height:1.8;"><strong>📖 解析：</strong><br>${this.escapeHtml(q.analysis)}</div>`;
+      h += `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._aiAnalyze('${q.id}')" style="margin-top:4px;color:var(--accent);border-color:var(--accent);font-size:11px;">🔄 AI重新解析</button><span id="ai-key-hint-${q.id}"></span>`;
+      if (this._chatHistory) {
+        h += `<div style="margin-top:6px;display:flex;gap:4px;"><input id="ai-followup-input-${q.id}" placeholder="追问AI..." onkeydown="if(event.key==='Enter'){event.preventDefault();Practice._aiFollowUp('${q.id}')}" style="flex:1;padding:3px 8px;border:1px solid #d9d9d9;border-radius:4px;font-size:12px;"><button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._aiFollowUp('${q.id}')" style="font-size:11px;color:var(--primary);">发送</button></div><div id="ai-followup-result-${q.id}"></div>`;
+      }
+    } else {
+      h += `<div style="margin-top:8px;font-size:13px;color:var(--text-secondary);">（暂无详细解析）</div>`;
+      h += `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._aiAnalyze('${q.id}')" style="margin-top:4px;color:var(--accent);border-color:var(--accent);">🤖 AI解析此题</button><span id="ai-key-hint-${q.id}"></span>`;
     }
 
-    // 显示结果和解析（或背题模式直接显示）
-    if (this.showResult || this.mode === 'memorize') {
-      const isCorrect = this.mode === 'memorize' ? true : this.checkAnswer(q, this.userAnswers[q.id] || '');
-      const userAns = this.mode === 'memorize' ? '' : (this.userAnswers[q.id] || '');
-      const typeName = App.getTypeName(q.type);
-      const isEssayType = q.type === 'essay' || q.type === 'fill';
-      const boxStyle = this.mode === 'memorize'
-        ? 'margin-top:16px;padding:16px;border-radius:8px;border-left:4px solid #667eea;background:#f0f5ff;'
-        : `margin-top:16px;padding:16px;border-radius:8px;border-left:4px solid ${isCorrect ? 'var(--success)' : 'var(--danger)'};background:${isCorrect ? '#f6ffed' : '#fff2f0'};`;
-
-      html += `<div class="practice-result" style="${boxStyle}">`;
-      if (this.mode === 'memorize') {
-        html += `<div style="font-size:16px;font-weight:700;margin-bottom:8px;color:#667eea;">📖 背题模式</div>`;
-      } else {
-        html += `<div style="font-size:18px;font-weight:700;margin-bottom:8px;">${isCorrect ? '✓ 回答正确！' : '✗ 回答错误'}</div>
-          <div style="margin-bottom:6px;"><strong>你的答案：</strong>${this.escapeHtml(userAns || '未作答')}</div>`;
-      }
-      html += `<div style="margin-bottom:6px;color:var(--success);"><strong>正确答案：</strong>${this.escapeHtml(q.answer)}</div>
-          <div style="margin-bottom:6px;"><strong>题型：</strong>${typeName}</div>`;
-      if (q.analysis && q.analysis.trim().length > 5) {
-        html += `<div style="margin-top:8px;padding:12px;background:#fff;border-radius:4px;line-height:1.8;"><strong>📖 解析：</strong><br>${this.escapeHtml(q.analysis)}</div>`;
-        html += `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._aiAnalyze('${q.id}')" style="margin-top:4px;color:var(--accent);border-color:var(--accent);font-size:11px;">🔄 AI重新解析</button><span id="ai-key-hint-${q.id}"></span>`;
-        if (this._chatHistory) {
-          html += `<div style="margin-top:6px;display:flex;gap:4px;"><input id="ai-followup-input-${q.id}" placeholder="追问AI..." onkeydown="if(event.key==='Enter'){event.preventDefault();Practice._aiFollowUp('${q.id}')}" style="flex:1;padding:3px 8px;border:1px solid #d9d9d9;border-radius:4px;font-size:12px;"><button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._aiFollowUp('${q.id}')" style="font-size:11px;color:var(--primary);">发送</button></div><div id="ai-followup-result-${q.id}"></div>`;
-        }
-      } else {
-        html += `<div style="margin-top:8px;font-size:13px;color:var(--text-secondary);">（暂无详细解析）</div>`;
-        html += `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._aiAnalyze('${q.id}')" style="margin-top:4px;color:var(--accent);border-color:var(--accent);">🤖 AI解析此题</button><span id="ai-key-hint-${q.id}"></span>`;
-      }
-      // AI 批改按钮（主观题）
-      if (isEssayType && userAns && userAns.trim()) {
-        html += `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._aiGradeEssay('${q.id}')" style="margin-top:4px;margin-left:4px;color:#722ed1;border-color:#722ed1;">📝 AI批改</button>`;
-        html += `<div id="ai-grade-result-${q.id}" style="margin-top:8px;"></div>`;
-      }
-      const allLog = Storage.get(Storage.KEYS.PRACTICE_LOG) || [];
-      const practiced = allLog.some(e => e.questionId === q.id);
-      html += `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._showEdit('${q.id}')" style="margin-top:4px;margin-left:4px;color:#666;border-color:#d9d9d9;font-size:11px;">✏️ 编辑</button>`;
-      if (practiced) {
-        html += `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._markUnpracticed('${q.id}')" style="margin-top:4px;margin-left:4px;color:#999;border-color:#d9d9d9;font-size:11px;">↩ 取消已练</button>`;
-      } else {
-        html += `<span style="font-size:11px;color:#d9d9d9;margin-left:4px;">未练</span>`;
-      }
-      html += `<div id="edit-area-${q.id}"></div>`;
-      if (!isCorrect) {
-        html += `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._aiGenVariant('${q.id}')" style="margin-top:4px;margin-left:4px;color:#eb2f96;border-color:#eb2f96;">🔄 生成变体题</button>`;
-        html += `<div id="ai-variant-result-${q.id}" style="margin-top:8px;"></div>`;
-      }
-      html += `</div>`;
+    // AI 批改（主观题）
+    if (isEssayType && userAns && userAns.trim()) {
+      h += `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._aiGradeEssay('${q.id}')" style="margin-top:4px;margin-left:4px;color:#722ed1;border-color:#722ed1;">📝 AI批改</button><div id="ai-grade-result-${q.id}" style="margin-top:8px;"></div>`;
     }
 
-    // ── 题目数据质量标记 ──
+    // 编辑 + 取消已练
+    const allLog = Storage.get(Storage.KEYS.PRACTICE_LOG) || [];
+    const practiced = allLog.some(e => e.questionId === q.id);
+    h += `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._showEdit('${q.id}')" style="margin-top:4px;margin-left:4px;color:#666;border-color:#d9d9d9;font-size:11px;">✏️ 编辑</button>`;
+    h += practiced
+      ? `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._markUnpracticed('${q.id}')" style="margin-top:4px;margin-left:4px;color:#999;border-color:#d9d9d9;font-size:11px;">↩ 取消已练</button>`
+      : `<span style="font-size:11px;color:#d9d9d9;margin-left:4px;">未练</span>`;
+    h += `<div id="edit-area-${q.id}"></div>`;
+
+    // 变体题（答错时）
+    if (!isCorrect) {
+      h += `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation();Practice._aiGenVariant('${q.id}')" style="margin-top:4px;margin-left:4px;color:#eb2f96;border-color:#eb2f96;">🔄 生成变体题</button><div id="ai-variant-result-${q.id}" style="margin-top:8px;"></div>`;
+    }
+    return h + '</div>';
+  },
+
+  /** 数据质量检查 */
+  _checkDataQuality(q) {
     const hasAns = q.answer && q.answer.trim();
     const hasOpts = q.options && q.options.length >= 2 && q.options[0].text && q.options[0].text.length > 2 && !q.options[0].text.startsWith('选项');
     const hasAnalysis = q.analysis && q.analysis.trim().length > 5;
-    const dataOK = hasAns && hasOpts && hasAnalysis;
-    const dataIssues = [];
-    if (!hasAns) dataIssues.push('缺答案');
-    if (!hasOpts) dataIssues.push('选项为占位符');
-    if (!hasAnalysis) dataIssues.push('缺解析');
+    const ok = hasAns && hasOpts && hasAnalysis;
+    const issues = [];
+    if (!hasAns) issues.push('缺答案');
+    if (!hasOpts) issues.push('选项为占位符');
+    if (!hasAnalysis) issues.push('缺解析');
+    return { ok, issues };
+  },
 
-    html += `</div>
-        <div class="practice-actions">
-          <button class="btn btn-outline" ${this.currentIndex === 0 ? 'disabled' : ''} onclick="Practice.prevQuestion()">上一题</button>`;
-
+  /** 操作按钮栏 */
+  _renderActions(current, total) {
+    const q = this.questions[this.currentIndex];
+    const { ok, issues } = this._checkDataQuality(q);
+    let h = `<div class="practice-actions">
+      <button class="btn btn-outline" ${this.currentIndex === 0 ? 'disabled' : ''} onclick="Practice.prevQuestion()">上一题</button>`;
     if (this.mode === 'memorize') {
-      html += `<span style="font-size:12px;color:#eb2f96;margin:0 8px;">📖 背题中</span>`;
-      html += `<button class="btn btn-primary" onclick="Practice.nextQuestion()">${current >= total ? '完成' : '下一题'}</button>`;
+      h += `<span style="font-size:12px;color:#eb2f96;margin:0 8px;">📖 背题中</span>
+        <button class="btn btn-primary" onclick="Practice.nextQuestion()">${current >= total ? '完成' : '下一题'}</button>`;
     } else if (!this.showResult) {
-      html += `<button class="btn btn-primary" onclick="Practice.submitAnswer()">提交答案</button>`;
-      html += `<button class="btn btn-outline" style="color:#fa8c16;border-color:#fa8c16;" onclick="Practice.dontKnow()">不会</button>`;
-      html += `<button class="btn btn-outline" style="color:var(--text-secondary);" onclick="Practice.skipQuestion()">跳过</button>`;
+      h += `<button class="btn btn-primary" onclick="Practice.submitAnswer()">提交答案</button>
+        <button class="btn btn-outline" style="color:#fa8c16;border-color:#fa8c16;" onclick="Practice.dontKnow()">不会</button>
+        <button class="btn btn-outline" style="color:var(--text-secondary);" onclick="Practice.skipQuestion()">跳过</button>`;
     } else {
-      html += `<button class="btn btn-primary" onclick="Practice.nextQuestion()">${current >= total ? '完成练习' : '下一题'}</button>`;
-      if (!dataOK) {
-        html += `<span style="font-size:11px;color:#faad14;margin-left:8px;">⚠ ${dataIssues.join('/')}</span>`;
-      } else {
-        html += `<span style="font-size:11px;color:var(--success);margin-left:8px;">✓ 数据完整</span>`;
-      }
+      h += `<button class="btn btn-primary" onclick="Practice.nextQuestion()">${current >= total ? '完成练习' : '下一题'}</button>`;
+      h += ok
+        ? `<span style="font-size:11px;color:var(--success);margin-left:8px;">✓ 数据完整</span>`
+        : `<span style="font-size:11px;color:#faad14;margin-left:8px;">⚠ ${issues.join('/')}</span>`;
     }
-
-    html += `</div></div>`;
-    area.innerHTML = html;
+    return h + '</div></div>';
   },
 
   /**
