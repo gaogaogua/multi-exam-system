@@ -325,12 +325,31 @@ const Plan = {
 
     const isPast = isToday ? this._isSlotPast(slot.time, date) : false;
 
+    // 计算实际可用题量
+    const bankMap = { '公基': 'gongji', '土木': 'tumu', '一建': 'tumu', '国考': 'gongji', '写作': 'gongji' };
+    const bank = bankMap[subject] || 'gongji';
+    const allQ = QuestionBank.getAll().filter(q => q.bank === bank);
+    const weakCat = weakCats.length > 0 ? weakCats[0] : null;
+    let availableQ = allQ;
+    if (weakCat) availableQ = allQ.filter(q => q.category === weakCat);
+    if (availableQ.length === 0) availableQ = allQ;
+
+    // SM-2 due reviews count toward expected
+    const dueForSubject = dueReviews ? dueReviews.filter(d => d.question && d.question.bank === bank).length : 0;
+
+    // Calculate expected count: target 20-30 questions per hour slot, adjusted by availability
+    let expected = Math.min(30, Math.max(10, Math.round(availableQ.length * 0.1)));
+    if (slot.type === 'review') expected = dueForSubject > 0 ? Math.min(dueForSubject, 30) : 0;
+    if (reviewDue.length > 0 && slot.type === 'normal') expected = Math.min(reviewDue.length, 25);
+
     return {
       time: slot.time, label: slot.label, type: slot.type, taskType: slot.taskType,
       subject, priority, tags, desc, source,
-      expectedCount: slot.type === 'review' ? 0 : 10 + Math.floor(Math.random() * 15),
+      expectedCount: expected,
+      weakCategory: weakCat || '',
+      dueReviewCount: dueForSubject,
       completed: false, correct: 0, total: 0,
-      isPast, // 时段已过标记
+      isPast,
     };
   },
 
@@ -1028,21 +1047,82 @@ const Plan = {
     const plan = plans.find(p => p.date === date);
     if (!plan || !plan.tasks[taskIndex]) return;
     const task = plan.tasks[taskIndex];
-    if (task.isPast) { App.showToast('该时段已过，不能开始练习', 'error'); return; }
+    if (task.isPast) { App.showToast('该时段已过', 'error'); return; }
 
     const bankMap = { '公基': 'gongji', '土木': 'tumu', '一建': 'tumu', '国考': 'gongji', '写作': 'gongji' };
     const bank = bankMap[task.subject] || 'all';
+
+    // Configure practice for this plan task
     Practice.bankFilter = bank;
+    Practice.categoryFilter = task.weakCategory || 'all';
+    Practice.practiceCount = task.expectedCount || 20;
+    Practice.skipPracticed = true; // Don't repeat already-practiced questions
+
     localStorage.setItem('practice_bank_filter', bank);
+    localStorage.setItem('practice_cat_filter', task.weakCategory || 'all');
+    localStorage.setItem('practice_count', task.expectedCount || 20);
+
+    // Store task context for auto-adjust after practice
+    this._activeTaskIndex = taskIndex;
+
     App.navigateTo('practice');
-    Practice.start('random');
+    // Use targeted mode: review questions first, then weak category questions
+    if (task.source.includes('SM-2') || task.source.includes('复习优先')) {
+      Practice.start('errors');
+    } else {
+      Practice.start('plan'); // New mode: respects plan task parameters
+    }
   },
 
-  updateProgress(bank, correct, total) {
+  /** After practice, auto-adjust remaining plan tasks */
+  _adjustAfterPractice(correct, total, bank) {
     const today = new Date().toISOString().split('T')[0];
     const plans = this._getPlans();
     const plan = plans.find(p => p.date === today);
     if (!plan) return;
+
+    // Find and complete the next uncompleted same-subject task
+    const subjMap = { gongji: '公基', tumu: '土木' };
+    const subject = subjMap[bank] || '公基';
+    const idx = plan.tasks.findIndex(t => !t.completed && t.subject === subject);
+    if (idx >= 0) {
+      plan.tasks[idx].completed = true;
+      plan.tasks[idx].correct = correct;
+      plan.tasks[idx].total = total;
+    }
+
+    // Reduce expectedCount for remaining same-subject tasks
+    const accuracy = total > 0 ? Math.round(correct / total * 100) : 0;
+    plan.tasks.forEach(t => {
+      if (!t.completed && t.subject === subject && t.expectedCount > 0) {
+        if (accuracy >= 80) {
+          t.expectedCount = Math.max(5, Math.round(t.expectedCount * 0.7));
+          t.source = t.source.replace('常规学习', '正确率高，减量') || t.source;
+        } else if (accuracy < 50) {
+          t.expectedCount = Math.round(t.expectedCount * 1.3);
+          t.source = t.source.replace('常规学习', '正确率低，加量') || t.source;
+        }
+      }
+    });
+
+    this._savePlans(plans);
+
+    // Update progress record
+    const progress = this._getProgress() || { date: today, tasksCompleted: 0, totalTasks: plan.tasks.length, bankProgress: { gongji: { done: 0, total: 0 }, tumu: { done: 0, total: 0 } } };
+    progress.tasksCompleted = plan.tasks.filter(t => t.completed).length;
+    const gj = plan.tasks.filter(t => t.subject === '公基');
+    const tm = plan.tasks.filter(t => t.subject === '土木');
+    progress.bankProgress.gongji = { done: gj.filter(t => t.completed).length, total: gj.length };
+    progress.bankProgress.tumu = { done: tm.filter(t => t.completed).length, total: tm.length };
+    this._saveProgress(progress);
+
+    if (App.updateStats) App.updateStats();
+  },
+
+  updateProgress(bank, correct, total) {
+    // Delegate to auto-adjust
+    this._adjustAfterPractice(correct, total, bank);
+  },
 
     const subjMap = { gongji: '公基', tumu: '土木' };
     const subject = subjMap[bank] || '公基';

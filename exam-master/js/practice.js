@@ -237,10 +237,24 @@ const Practice = {
         break;
       case 'memorize':
         questions = [...this._getFilteredPool()];
-        // 土木题库按章节排序
         if (this.bankFilter === 'tumu' || this.bankFilter === 'all') {
           questions = QuestionBank._sortByChapter(questions);
         }
+        if (questions.length === 0) {
+          App.showToast(this._poolDiagnose(), 'error');
+          return;
+        }
+        if (this.practiceCount > 0 && questions.length > this.practiceCount) {
+          questions = this._sampleByType(questions, this.practiceCount);
+        }
+        break;
+      case 'plan':
+        // Plan-aware mode: uses plan task's weak category and SM-2 due reviews
+        questions = [...this._getFilteredPool()];
+        // Prefer weak category questions first, then fill with rest
+        const weakQ = questions.filter(q => q.category === this.categoryFilter);
+        const otherQ = questions.filter(q => q.category !== this.categoryFilter);
+        questions = [...weakQ, ...this.shuffle(otherQ)];
         if (questions.length === 0) {
           App.showToast(this._poolDiagnose(), 'error');
           return;
