@@ -350,6 +350,15 @@ const Practice = {
     return result.slice(0, count);
   },
 
+  /** 跳转到指定题目 */
+  goToQuestion(index) {
+    if (index < 0 || index >= this.questions.length) return;
+    this._saveProgress();
+    this.currentIndex = index;
+    this.showResult = this.userAnswers[this.questions[index].id] !== undefined;
+    this.renderQuestion();
+  },
+
   /** 将题目从练习记录中移除（标记为未练） */
   _markUnpracticed(questionId) {
     const log = Storage.get(Storage.KEYS.PRACTICE_LOG) || [];
@@ -404,13 +413,26 @@ const Practice = {
     const current = this.currentIndex + 1;
     const progress = (current / total) * 100;
 
+    // 题目列表导航
+    const typeIcons = { single: '①', multiple: '②', judge: '③', fill: '④', essay: '⑤' };
+    let navHtml = '<div class="practice-nav" id="practice-nav">';
+    this.questions.forEach((nq, ni) => {
+      const answered = this.userAnswers[nq.id] !== undefined;
+      const isCur = ni === this.currentIndex;
+      navHtml += `<button class="pq-nav-btn ${isCur ? 'pq-cur' : ''} ${answered ? 'pq-answered' : ''}"
+        onclick="event.stopPropagation();Practice.goToQuestion(${ni})"
+        title="${this.escapeHtml((nq.title||'').substring(0,40))}">${ni+1}${typeIcons[nq.type]||''}</button>`;
+    });
+    navHtml += '</div>';
+
     let html = `
       <div class="practice-container">
         <div class="practice-progress">
           <div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div>
-          <span class="progress-text">${current} / ${total}</span>
+          <span class="progress-text" onclick="const n=document.getElementById('practice-nav');n.style.display=n.style.display==='none'?'flex':'none'" style="cursor:pointer;" title="点击展开/收起题目列表">📋 ${current} / ${total}</span>
           <button class="btn btn-outline btn-sm" onclick="Practice.exit()">退出练习</button>
         </div>
+        ${navHtml}
         <div class="practice-question-card">
           <span class="question-type-badge">${App.getTypeName(q.type)}</span>
           <div class="question-text">${current}. ${this.escapeHtml(q.title)}</div>`;

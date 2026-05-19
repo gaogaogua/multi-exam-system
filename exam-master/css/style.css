@@ -638,6 +638,26 @@ body {
   transition: width 0.6s ease;
 }
 
+/* ===== Practice Question Navigation ===== */
+.practice-nav {
+  display: flex; flex-wrap: wrap; gap: 3px;
+  padding: 6px 0; max-height: 120px; overflow-y: auto;
+}
+.pq-nav-btn {
+  width: 32px; height: 26px; border: 1px solid var(--border);
+  border-radius: 4px; background: #fff; cursor: pointer;
+  font-size: 10px; color: var(--text-secondary);
+  display: flex; align-items: center; justify-content: center;
+  transition: var(--transition); padding: 0; font-family: inherit;
+}
+.pq-nav-btn:hover { border-color: var(--primary); color: var(--primary); }
+.pq-nav-btn.pq-cur {
+  background: var(--primary); color: #fff; border-color: var(--primary);
+  font-weight: 700; transform: scale(1.1);
+}
+.pq-nav-btn.pq-answered { background: #f6ffed; border-color: var(--success); color: var(--success); }
+.pq-nav-btn.pq-answered.pq-cur { background: var(--success); color: #fff; }
+
 @media (max-width: 480px) {
   .stats-grid { grid-template-columns: 1fr; }
   .week-grid { grid-template-columns: repeat(4, 1fr); }
