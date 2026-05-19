@@ -635,59 +635,70 @@ const Plan = {
 
   /** 考试来源管理卡片 */
   _renderExamSection(isToday) {
-    const targets = this._getExamTargets() || { active: ['zhuhui', 'wangcheng', 'yijian', 'tumu', 'gongji_err'], customDate: {} };
-    const activeExams = this.KNOWN_EXAMS.filter(e => targets.active.includes(e.id));
-    if (activeExams.length === 0) return '';
-
+    const allExams = (typeof ExamDates !== 'undefined') ? ExamDates.exams : this.KNOWN_EXAMS;
     const allQ = QuestionBank.getAll();
     const errors = ErrorNotebook.getAll();
-    const sm2Stats = ErrorNotebook.getSM2Stats();
+    const today = new Date().toISOString().split('T')[0];
+
+    // 分离即将到来和已完成的考试
+    const upcoming = allExams.filter(e => e.status === 0 && e.date >= today).sort((a, b) => a.date.localeCompare(b.date));
+    const completed = allExams.filter(e => e.status === 2).sort((a, b) => b.date.localeCompare(a.date));
+    if (upcoming.length === 0 && completed.length === 0) return '';
 
     let html = `<div class="card" style="margin-top:16px;">
       <div class="plan-summary-header">
-        <strong>📑 考试目标</strong>
-        <button class="btn btn-sm btn-outline" onclick="Plan._editExamTargets()" style="font-size:11px;">管理</button>
+        <strong>📑 考试日历</strong>
+        <span style="font-size:11px;color:var(--text-secondary);">同步自滴答清单</span>
       </div>
       <div class="exam-target-list" style="display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;">`;
 
-    const today = new Date().toISOString().split('T')[0];
+    // 即将到来（橙色/红色强调）
+    upcoming.forEach(exam => {
+      const days = ExamDates.countdown ? ExamDates.countdown(exam.date) : this._getDays(today, exam.date);
+      let urgency, bg;
+      if (days <= 3) { urgency = `${days}天!`; bg = '#fff2f0'; }
+      else if (days <= 7) { urgency = `${days}天`; bg = '#fff7e6'; }
+      else { urgency = `${days}天`; bg = '#f0f5ff'; }
 
-    activeExams.forEach(exam => {
-      let date = targets.customDate[exam.id] || exam.date;
-      let countdown = '';
-      if (date) {
-        const days = Math.ceil((new Date(date) - new Date(today)) / 86400000);
-        if (days < 0) countdown = `<span style="color:var(--danger);">已过${Math.abs(days)}天</span>`;
-        else if (days === 0) countdown = '<span style="color:var(--danger);">今天!</span>';
-        else if (days <= 7) countdown = `<span style="color:#fa8c16;">${days}天后</span>`;
-        else if (days <= 30) countdown = `<span style="color:var(--primary);">${days}天后</span>`;
-        else countdown = `<span style="color:var(--text-secondary);">${days}天后</span>`;
-      }
-
-      const bankMap = { '公基': 'gongji', '一建': 'tumu', '土木': 'tumu', '国考': 'gongji' };
-      const bank = bankMap[exam.subject] || 'gongji';
+      const bank = exam.subject.includes('一建') || exam.subject.includes('土木') ? 'tumu' : 'gongji';
       const bankQ = allQ.filter(q => q.bank === bank);
-      const subjectErrors = errors.filter(e => !e.mastered && e.questionCategory);
-      const practiced = new Set((Storage.get(Storage.KEYS.PRACTICE_LOG) || []).map(l => l.questionId));
-      const bankPracticed = bankQ.filter(q => practiced.has(q.id)).length;
+      const errCount = errors.filter(e => !e.mastered).length;
 
       html += `
-        <div class="exam-target-card" style="flex:1;min-width:180px;max-width:280px;padding:12px;border-radius:8px;border:1px solid var(--border);background:#fafafa;">
+        <div class="exam-target-card" style="flex:1;min-width:170px;max-width:260px;padding:12px;border-radius:8px;border:1px solid ${days<=3?'#ff4d4f':days<=7?'#fa8c16':'var(--border)'};background:${bg};">
           <div style="display:flex;justify-content:space-between;align-items:center;">
             <strong style="font-size:13px;">${exam.name}</strong>
             <span style="font-size:11px;color:var(--text-secondary);">${exam.subject}</span>
           </div>
-          <div style="margin-top:4px;font-size:12px;color:var(--text-secondary);">
-            ${countdown ? `<span>📅 ${date} ${countdown}</span>` : '<span>日期待定</span>'}
+          <div style="margin-top:4px;font-size:12px;font-weight:600;color:${days<=3?'#ff4d4f':days<=7?'#fa8c16':'var(--primary)'};">
+            📅 ${exam.date} · ${urgency}
           </div>
           <div style="margin-top:6px;font-size:11px;color:var(--text-secondary);line-height:1.6;">
-            题库: ${bankQ.length}题 | 已练: ${bankPracticed} | 错题: ${subjectErrors.length}
+            题库: ${bankQ.length}题 | 待复习: ${errCount}题
           </div>
         </div>`;
     });
 
     html += `</div></div>`;
+
+    // 已完成
+    if (completed.length > 0) {
+      html += `<div class="card" style="margin-top:8px;opacity:0.7;">
+        <div class="plan-summary-header" style="margin-bottom:6px;">
+          <strong style="font-size:13px;color:var(--text-secondary);">✅ 已完成考试</strong>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;font-size:12px;color:var(--text-secondary);">`;
+      completed.forEach(e => {
+        html += `<span style="padding:2px 8px;background:#f6ffed;border-radius:4px;">${e.name} ${e.date}</span>`;
+      });
+      html += `</div></div>`;
+    }
+
     return html;
+  },
+
+  _getDays(today, date) {
+    return Math.ceil((new Date(date) - new Date(today)) / 86400000);
   },
 
   /** 编辑考试目标 */
