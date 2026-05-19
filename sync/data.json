@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-05-19T15:20:20.153Z",
+  "updatedAt": "2026-05-19T15:51:23.650Z",
   "errors": [
     {
       "id": "err_mpc0yaa7",
@@ -2542,6 +2542,27 @@
         "efactor": 2.5,
         "nextReviewAt": "2026-05-20"
       }
+    },
+    {
+      "id": "err_mpct88om",
+      "questionId": "q_mpc0xk52_lth3k9_1232",
+      "questionTitle": "常用保温隔热材料有哪些？（P65）",
+      "questionType": "essay",
+      "questionCategory": "第1章 建筑设计技术",
+      "correctAnswer": "1）聚氨酯泡沫塑料；2）改性酚醛泡沫塑料； 3) 聚苯乙烯泡沫塑料; 4) 岩棉、矿渣棉制品; 5) 玻璃棉制品。",
+      "userAnswer": "",
+      "notes": "",
+      "wrongCount": 1,
+      "firstWrongAt": "2026-05-19T15:50:55.990Z",
+      "lastWrongAt": "2026-05-19T15:50:55.990Z",
+      "mastered": false,
+      "reviewCount": 0,
+      "sm2": {
+        "interval": 1,
+        "repetition": 0,
+        "efactor": 2.5,
+        "nextReviewAt": "2026-05-20"
+      }
     }
   ],
   "practiceLog": [
@@ -3579,13 +3600,6 @@
       "userAnswer": "C",
       "correct": false,
       "timestamp": "2026-05-19T09:12:31.671Z",
-      "mode": "sequential"
-    },
-    {
-      "questionId": "q_mpc0xk4z_33j2ji_1229",
-      "userAnswer": "",
-      "correct": false,
-      "timestamp": "2026-05-19T15:09:10.943Z",
       "mode": "sequential"
     }
   ],
