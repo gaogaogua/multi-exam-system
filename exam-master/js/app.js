@@ -746,7 +746,8 @@ const App = {
   saveQuestion(editId) {
     const type = document.getElementById('q-type').value;
     const title = document.getElementById('q-title').value.trim();
-    const answer = document.getElementById('q-answer').value.trim().toUpperCase();
+    const rawAnswer = document.getElementById('q-answer').value.trim();
+    const answer = ['single','multiple','judge'].includes(type) ? rawAnswer.toUpperCase() : rawAnswer;
     const analysis = document.getElementById('q-analysis').value.trim();
     const category = document.getElementById('q-category').value.trim();
     const difficulty = document.getElementById('q-difficulty').value;

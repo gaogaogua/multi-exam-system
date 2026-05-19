@@ -9,6 +9,9 @@ const Exam = {
   totalTime: 0,
   submitted: false,
 
+  // Delegate shuffle to Practice utility
+  shuffle(arr) { return Practice.shuffle(arr); },
+
   /**
    * 开始考试
    */

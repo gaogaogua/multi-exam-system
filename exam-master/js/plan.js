@@ -373,14 +373,14 @@ const Plan = {
     }
     App.showToast('AI生成写作题目中...', 'info');
     try {
-      const resp = await fetch('https://api.deepseek.com/v1/chat/completions', {
+      const resp = await fetch(ApiConfig.DEEPSEEK_URL, {
         method: 'POST',
         headers: {
           'Authorization': 'Bearer ' + ApiConfig.getDeepSeekApiKey(),
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          model: 'deepseek-chat',
+          model: ApiConfig.DEEPSEEK_MODEL,
           messages: [
             { role: 'system', content: '你是公考/事业编考试写作辅导老师。出1道写作题，只返回题目文本，不要多余的话。' },
             { role: 'user', content: '请出一道适合公务员考试申论或事业单位公文写作的题目。可以是申论大作文题、公文写作题、案例分析题或时事评论题。题目要有明确的材料背景或情景设置，50-100字。' },

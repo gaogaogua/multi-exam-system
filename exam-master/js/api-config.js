@@ -2,11 +2,11 @@
  * API配置 - MinerU后端连接设置 + DeepSeek AI分析
  */
 const ApiConfig = {
-  // 后端服务地址（修改为实际部署地址）
+  // 后端服务地址
   BASE_URL: 'http://localhost:8765',
-
-  // 解析策略: "auto" | "mineru" | "pymupdf" | "pdfplumber"
   STRATEGY: 'auto',
+  DEEPSEEK_URL: 'https://api.deepseek.com/v1/chat/completions',
+  DEEPSEEK_MODEL: 'deepseek-chat',
 
   // 请求超时(毫秒)
   TIMEOUT: 120000,
@@ -251,14 +251,14 @@ const ApiConfig = {
 2. 解析要详细、准确，解释选择该答案的原因，对选择题需逐一分析每个选项
 3. 对于判断题，A表示正确/对，B表示错误/错`;
 
-    const resp = await fetch('https://api.deepseek.com/v1/chat/completions', {
+    const resp = await fetch(this.DEEPSEEK_URL, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'deepseek-chat',
+        model: this.DEEPSEEK_MODEL,
         messages: [
           { role: 'system', content: '你是一个专业的考试题目解析助手，只返回JSON格式的结果。' },
           { role: 'user', content: prompt },
@@ -322,14 +322,14 @@ const ApiConfig = {
 2. 对填空题，关键信息正确即可
 3. 给出有建设性的反馈，帮助考生改进`;
 
-    const resp = await fetch('https://api.deepseek.com/v1/chat/completions', {
+    const resp = await fetch(this.DEEPSEEK_URL, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'deepseek-chat',
+        model: this.DEEPSEEK_MODEL,
         messages: [
           { role: 'system', content: '你是一个严格的考试阅卷老师，只返回JSON格式的批改结果。' },
           { role: 'user', content: prompt },
@@ -395,14 +395,14 @@ const ApiConfig = {
 3. 答案和解析要准确
 4. 如果是判断题，options仅A和B`;
 
-    const resp = await fetch('https://api.deepseek.com/v1/chat/completions', {
+    const resp = await fetch(this.DEEPSEEK_URL, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'deepseek-chat',
+        model: this.DEEPSEEK_MODEL,
         messages: [
           { role: 'system', content: '你是一个专业考试出题老师，只返回JSON格式的题目。' },
           { role: 'user', content: prompt },
@@ -438,14 +438,14 @@ const ApiConfig = {
       { role: 'user', content: question },
     ];
 
-    const resp = await fetch('https://api.deepseek.com/v1/chat/completions', {
+    const resp = await fetch(this.DEEPSEEK_URL, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'deepseek-chat',
+        model: this.DEEPSEEK_MODEL,
         messages,
         temperature: 0.5,
         max_tokens: 512,
@@ -500,14 +500,14 @@ ${examInfo ? '近期考试：\n' + examInfo : ''}
     }
     messages.push({ role: 'user', content: prompt });
 
-    const resp = await fetch('https://api.deepseek.com/v1/chat/completions', {
+    const resp = await fetch(this.DEEPSEEK_URL, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'deepseek-chat',
+        model: this.DEEPSEEK_MODEL,
         messages,
         temperature: 0.3,
         max_tokens: 1024,
