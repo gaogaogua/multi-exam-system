@@ -676,6 +676,7 @@ const App = {
 
     if (!confirm(`发现 ${missing.length} 道题目缺少答案或解析，是否使用AI智能分析补全？\n\n（每道题约需2-5秒，请耐心等待）`)) return;
 
+    Loading.progress('AI 智能解析中...');
     this.showAiProgress(missing.length);
 
     try {
@@ -691,11 +692,13 @@ const App = {
       });
 
       const applied = this.applyAiResults(results);
+      Loading.hide();
       this.closeAiProgress();
       this.renderQuestionBank();
       this.updateStats();
       this.showToast(`AI分析完成：成功 ${applied.success} 道，失败 ${applied.failed} 道`, applied.failed > 0 ? 'info' : 'success');
     } catch (e) {
+      Loading.hide();
       this.closeAiProgress();
       this.showToast('AI分析失败: ' + e.message, 'error');
     }
@@ -715,25 +718,26 @@ const App = {
     if (!q) return;
 
     this.closeModal();
-    this.showToast('正在AI分析题目...', 'info');
+    Loading.progress('AI 解析中...');
 
     try {
       const results = await ApiConfig.aiAnalyze([{
         id: q.id, title: q.title, type: q.type, options: q.options || [],
       }]);
 
+      Loading.hide();
       if (results.length > 0 && results[0].success) {
         const r = results[0];
         QuestionBank.update(id, { answer: r.answer, analysis: r.analysis });
         this.renderQuestionBank();
         this.updateStats();
         this.showToast('AI解析完成！', 'success');
-        // 重新打开详情
         this.showQuestionDetail(id);
       } else {
         this.showToast('AI分析失败: ' + (results[0]?.error || '未知错误'), 'error');
       }
     } catch (e) {
+      Loading.hide();
       this.showToast('AI分析失败: ' + e.message, 'error');
     }
   },

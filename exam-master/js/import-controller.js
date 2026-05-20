@@ -33,8 +33,9 @@ const ImportController = {
       return;
     }
 
-    App.showToast(`正在解析 ${files.length} 个PDF文件...`, 'info');
+    Loading.progress(`正在解析 ${files.length} 个PDF...`);
     const { totalAdded, totalDup, importedIds, engineUsed } = await this._processPdfFiles(files);
+    Loading.hide();
     this._finishPdfImport(files, importedIds, engineUsed, totalAdded, totalDup);
     input.value = '';
     App.renderQuestionBank();
