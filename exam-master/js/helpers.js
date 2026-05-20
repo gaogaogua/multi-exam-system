@@ -25,12 +25,22 @@ const Utils = {
     return (prefix || 'id_') + Date.now().toString(36) + '_' + Math.random().toString(36).substring(2, 8);
   },
 
-  /** 题型图标 */
-  TYPE_ICONS: { single: '①', multiple: '②', judge: '③', fill: '④', essay: '⑤' },
+  /** 题型图标 — 委托 CONFIG */
+  get TYPE_ICONS() {
+    const icons = {};
+    for (const [k, v] of Object.entries(CONFIG.QUESTION_TYPES)) icons[k] = v.icon;
+    return icons;
+  },
 
-  /** 题型名称 */
-  TYPE_NAMES: { single: '单选题', multiple: '多选题', judge: '判断题', fill: '填空题', essay: '问答题' },
+  get TYPE_NAMES() {
+    const names = {};
+    for (const [k, v] of Object.entries(CONFIG.QUESTION_TYPES)) names[k] = v.name;
+    return names;
+  },
 
-  /** 题库标签 */
-  BANK_LABELS: { gongji: '公基', tumu: '土木' },
+  get BANK_LABELS() {
+    const labels = {};
+    for (const [k, v] of Object.entries(CONFIG.BANKS)) labels[k] = v.label;
+    return labels;
+  },
 };

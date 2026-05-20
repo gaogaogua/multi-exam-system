@@ -583,16 +583,7 @@ const App = {
   /**
    * 获取题型名称
    */
-  getTypeName(type) {
-    const names = {
-      single: '单选题',
-      multiple: '多选题',
-      judge: '判断题',
-      fill: '填空题',
-      essay: '问答题',
-    };
-    return names[type] || type;
-  },
+  getTypeName(type) { return CONFIG.getTypeName(type); },
 
   // ─── DeepSeek API Key 管理 ─────────────────────────
 

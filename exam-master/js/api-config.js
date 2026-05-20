@@ -5,8 +5,8 @@ const ApiConfig = {
   // 后端服务地址
   BASE_URL: 'http://localhost:8765',
   STRATEGY: 'auto',
-  DEEPSEEK_URL: 'https://api.deepseek.com/v1/chat/completions',
-  DEEPSEEK_MODEL: 'deepseek-chat',
+  DEEPSEEK_URL: CONFIG.DEEPSEEK_URL,
+  DEEPSEEK_MODEL: CONFIG.DEEPSEEK_MODEL,
 
   // 请求超时(毫秒)
   TIMEOUT: 120000,
