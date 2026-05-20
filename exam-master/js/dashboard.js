@@ -69,6 +69,104 @@ const Dashboard = {
       </div>`).join('');
   },
 
+  // ─── 每日学习目标 ─────────────────────────────────
+
+  _getGoal() {
+    try {
+      return JSON.parse(localStorage.getItem('daily_goal') || 'null');
+    } catch (_) { return null; }
+  },
+
+  _saveGoal(goal) {
+    localStorage.setItem('daily_goal', JSON.stringify(goal));
+  },
+
+  /** 渲染今日目标卡片 */
+  renderDailyGoal() {
+    const card = document.getElementById('daily-goal-card');
+    if (!card) return;
+    const today = new Date().toISOString().split('T')[0];
+    const goal = this._getGoal();
+
+    if (!goal || goal.date !== today) {
+      // 新的一天，重置
+      const newGoal = { date: today, practiceTarget: 20, errorTarget: 5, practiceDone: 0, errorDone: 0 };
+      this._saveGoal(newGoal);
+      this._renderGoalUI(newGoal);
+      return;
+    }
+
+    this._renderGoalUI(goal);
+  },
+
+  _renderGoalUI(goal) {
+    const stats = QuestionBank.getStats();
+    const log = Storage.get(Storage.KEYS.PRACTICE_LOG) || [];
+    const today = new Date().toISOString().split('T')[0];
+    const todayLog = log.filter(l => l.timestamp && l.timestamp.startsWith(today));
+    const todayCorrect = todayLog.filter(l => l.correct).length;
+
+    const practiceDone = todayLog.length;
+    const errors = ErrorNotebook.getAll();
+    const masteredToday = errors.filter(e => e.mastered && e.masteredAt && e.masteredAt.startsWith(today)).length;
+
+    // Update stored progress
+    goal.practiceDone = practiceDone;
+    goal.errorDone = masteredToday;
+    this._saveGoal(goal);
+
+    const practicePct = goal.practiceTarget > 0 ? Math.min(100, Math.round(practiceDone / goal.practiceTarget * 100)) : 0;
+    const totalPct = Math.round((practicePct + (goal.errorTarget > 0 ? Math.min(100, masteredToday / goal.errorTarget * 100) : 0)) / 2);
+
+    const el = document.getElementById('daily-goal-fill');
+    if (el) el.style.width = totalPct + '%';
+
+    const statsEl = document.getElementById('daily-goal-stats');
+    if (statsEl) {
+      if (totalPct >= 100) {
+        statsEl.innerHTML = '<span class="daily-goal-done">✓ 今日目标完成！</span>';
+      } else {
+        statsEl.textContent = `练习 ${practiceDone}/${goal.practiceTarget} · 错题 ${masteredToday}/${goal.errorTarget}`;
+      }
+    }
+
+    if (typeof App !== 'undefined') App.updateStats();
+  },
+
+  /** 显示目标设置模态框 */
+  showGoalSetting() {
+    const goal = this._getGoal() || { practiceTarget: 20, errorTarget: 5 };
+    const overlay = document.createElement('div');
+    overlay.className = 'modal-overlay';
+    overlay.style.display = 'flex';
+    overlay.style.zIndex = '10001';
+    overlay.innerHTML = `
+      <div class="modal" style="max-width:380px;">
+        <div class="modal-header"><h3>⚙ 每日目标设置</h3><button class="modal-close" onclick="this.closest('.modal-overlay').remove()">&times;</button></div>
+        <div class="modal-body">
+          <div class="form-group"><label>目标练习题数</label><input type="number" id="goal-practice" value="${goal.practiceTarget}" min="1" max="500"></div>
+          <div class="form-group"><label>目标消灭错题数</label><input type="number" id="goal-error" value="${goal.errorTarget}" min="0" max="200"></div>
+          <button class="btn btn-primary" onclick="Dashboard._applyGoalSetting()" style="width:100%;">保存目标</button>
+        </div>
+      </div>`;
+    document.body.appendChild(overlay);
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) overlay.remove(); });
+  },
+
+  _applyGoalSetting() {
+    const practiceTarget = parseInt(document.getElementById('goal-practice')?.value) || 20;
+    const errorTarget = parseInt(document.getElementById('goal-error')?.value) || 5;
+    const today = new Date().toISOString().split('T')[0];
+    const goal = this._getGoal() || { practiceDone: 0, errorDone: 0 };
+    goal.date = today;
+    goal.practiceTarget = practiceTarget;
+    goal.errorTarget = errorTarget;
+    this._saveGoal(goal);
+    document.querySelector('.modal-overlay')?.remove();
+    this.renderDailyGoal();
+    Feedback.showToast('目标已保存', 'success');
+  },
+
   /** 初始化演示数据 */
   initDemoData() {
     if (Storage.get(Storage.KEYS.QUESTIONS)) return;

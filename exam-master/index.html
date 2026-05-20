@@ -3,10 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="
+  default-src 'self';
+  script-src 'self' 'unsafe-inline' cdnjs.cloudflare.com;
+  style-src 'self' 'unsafe-inline';
+  connect-src 'self' http://localhost:8765 https://api.deepseek.com https://gitee.com https://raw.githubusercontent.com;
+  img-src 'self' data: blob:;
+  font-src 'self';
+  frame-src 'none';
+  object-src 'none';
+  base-uri 'self';
+  form-action 'self';
+">
 <title>智能题库管理系统 - 考试宝风格</title>
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/skeleton.css">
 </head>
 <body>
+<!-- 移动端汉堡菜单 + 深色模式切换 -->
+<button class="hamburger-btn" id="hamburger-btn" onclick="App.toggleSidebar()" aria-label="菜单">☰</button>
+<button class="theme-toggle" id="theme-toggle" onclick="App.toggleTheme()" aria-label="切换主题" title="深色/浅色模式">🌙</button>
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="App.closeSidebar()"></div>
+
 <!-- 侧边栏 -->
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-header">
@@ -65,6 +83,15 @@
       <h1>学习仪表盘</h1>
       <p class="subtitle">欢迎回来，查看你的学习进度</p>
     </header>
+    <!-- 每日目标卡片 -->
+    <div class="daily-goal-card" id="daily-goal-card">
+      <div class="daily-goal-header">
+        <span class="daily-goal-title">🎯 今日目标</span>
+        <span class="daily-goal-stats" id="daily-goal-stats">加载中...</span>
+        <button class="btn btn-sm btn-outline" onclick="Dashboard.showGoalSetting()" style="font-size:11px;">⚙ 设置</button>
+      </div>
+      <div class="daily-goal-track"><div class="daily-goal-fill" id="daily-goal-fill" style="width:0%"></div></div>
+    </div>
     <div class="stats-grid">
       <div class="stat-card" style="--card-color: #667eea">
         <div class="stat-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
@@ -99,7 +126,10 @@
   <section class="page" id="page-bank">
     <header class="page-header">
       <h1>题库管理</h1>
-      <span id="bank-stats-summary" style="font-size:13px;color:var(--text-secondary);"></span>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span id="bank-stats-summary" style="font-size:13px;color:var(--text-secondary);"></span>
+        <input type="number" class="jump-input" id="bank-jump-input" placeholder="跳转到题号" min="1" onkeydown="if(event.key==='Enter')App.jumpToQuestion(parseInt(this.value))" style="width:110px;">
+      </div>
     </header>
 
     <!-- 工具栏 -->
@@ -182,6 +212,9 @@
   <section class="page" id="page-errors">
     <header class="page-header">
       <h1>错题本</h1>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <input type="number" class="jump-input" id="error-jump-input" placeholder="跳转到题号" min="1" onkeydown="if(event.key==='Enter')App.jumpToErrorQuestion(parseInt(this.value))" style="width:110px;">
+      </div>
       <div class="header-actions">
         <button class="btn btn-primary" onclick="ErrorNotebook.startReview()">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
@@ -235,6 +268,9 @@
         <label style="margin-left:12px;font-size:13px;color:var(--text-primary);cursor:pointer;">
           <input type="checkbox" id="skip-practiced" onchange="Practice._saveSkipPracticed()" style="margin-right:4px;">跳过已练题目
         </label>
+        <label class="auto-jump-toggle" style="margin-left:8px;">
+          <input type="checkbox" id="auto-jump" onchange="Practice._saveAutoJump()">答题后自动跳转
+        </label>
         <span id="resume-hint" style="font-size:12px;color:#722ed1;margin-left:auto;display:none;cursor:pointer;" onclick="Practice._resumeLast()"></span>
       </div>
     </div>
@@ -264,9 +300,36 @@
         <h3>背题模式</h3>
         <p>直接看答案和解析，不计入练习</p>
       </div>
+      <div class="card practice-card smart-card" onclick="Practice.start('smart')">
+        <div class="practice-icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#eb2f96" stroke-width="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+        <h3>智能推荐</h3>
+        <p>根据错题和练习记录智能选题</p>
+      </div>
+      <div class="card practice-card" onclick="Practice.start('category')" style="border-color:#13c2c2;">
+        <div class="practice-icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#13c2c2" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="13" y2="11"/></svg></div>
+        <h3>专项练习</h3>
+        <p>按知识点/章节定向突破</p>
+      </div>
+      <div class="card practice-card" onclick="PracticeModes.showAssembleModal()" style="border-color:#722ed1;">
+        <div class="practice-icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#722ed1" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="3" x2="9" y2="21"/></svg></div>
+        <h3>组卷练习</h3>
+        <p>自定义混合组卷</p>
+      </div>
+      <div class="card practice-card" onclick="PracticeModes.startChallenge()" style="border-color:#fa8c16;">
+        <div class="practice-icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#fa8c16" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <h3>闯关模式</h3>
+        <p>逐关挑战，星级评定</p>
+      </div>
+      <div class="card practice-card" onclick="PracticeModes.startReview()" style="border-color:#2f54eb;">
+        <div class="practice-icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#2f54eb" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <h3>今日复习</h3>
+        <p>基于遗忘曲线的间隔重复</p>
+      </div>
     </div>
     <!-- 练习区域(动态渲染) -->
     <div id="practice-area" style="display:none;"></div>
+    <!-- 答题卡容器 -->
+    <div id="answer-sheet-container" style="margin-top:16px;background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);"></div>
   </section>
 
   <!-- 模拟考试页面 -->
@@ -323,6 +386,16 @@
       <div class="card-header"><h3>易错知识点排行</h3></div>
       <div class="card-body" id="weak-categories"><p class="empty-state">暂无数据</p></div>
     </div>
+    <div class="card-row">
+      <div class="card">
+        <div class="card-header"><h3>学习日历热力图</h3></div>
+        <div class="card-body" id="heatmap-container" style="overflow-x:auto;"><p class="empty-state">加载中...</p></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><h3>能力雷达图</h3></div>
+        <div class="card-body" id="radar-container"><p class="empty-state">加载中...</p></div>
+      </div>
+    </div>
   </section>
 
   <!-- 学习计划页面 -->
@@ -339,9 +412,19 @@
 <!-- Toast 通知 -->
 <div class="toast-container" id="toast-container"></div>
 
-<script src="js/storage.js" defer></script>
+<script src="js/datastore.js?v=20260520b" defer></script>
+<script src="js/crypto-utils.js?v=20260520b" defer></script>
+<script src="js/storage.js?v=20260520b" defer></script>
 <script src="js/config.js" defer></script>
+<script src="js/error-handler.js?v=20260520b" defer></script>
 <script src="js/helpers.js" defer></script>
+<script src="js/feedback.js?v=20260520c" defer></script>
+<script src="js/loading-utils.js?v=20260520c" defer></script>
+<script src="js/practice-notes.js?v=20260520d" defer></script>
+<script src="js/practice-answer-sheet.js?v=20260520d" defer></script>
+<script src="js/practice-stats-widget.js?v=20260520d" defer></script>
+<script src="js/practice-modes.js?v=20260520d" defer></script>
+<script src="js/practice-report.js?v=20260520d" defer></script>
 <script src="js/data-loader.js?v=20260520a" defer></script>
 <script src="js/sync.js?v=20260520a" defer></script>
 	<script src="js/api-config.js?v=20260520a" defer></script>
@@ -362,6 +445,8 @@
 <script src="js/modal.js" defer></script>
 <script src="js/loading.js" defer></script>
 	<script src="js/ui-controller.js" defer></script>
-<script src="js/app.js?v=20260520a" defer></script>
+<script src="js/keyboard.js?v=20260520c" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
+<script src="js/app.js?v=20260520c" defer></script>
 </body>
 </html>

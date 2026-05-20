@@ -13,6 +13,24 @@ const App = {
   async _ensurePdfJs() { return ImportController._ensurePdfJs(); },
 
   async init() {
+    // 初始化全局错误捕获（必须在最前面）
+    ErrorHandler.init();
+
+    // 初始化 IndexedDB 数据层（迁移 localStorage → IDB）
+    // 失败时优雅降级：Storage 会自动回退到 localStorage
+    try {
+      await DataStore.init();
+    } catch (e) {
+      console.warn('[App] DataStore 初始化失败，使用 localStorage 降级:', e.message);
+    }
+
+    // 初始化加密模块并加载 API Key（加密存储 + 内存解密）
+    try {
+      await ApiConfig.initApiKey();
+    } catch (e) {
+      console.warn('[App] API Key 加载失败:', e.message);
+    }
+
     // 手机端首次访问时自动从服务器加载题库
     await DataLoader.autoLoad();
 
@@ -27,6 +45,20 @@ const App = {
     // 探测后端引擎
     this.detectEngine();
 
+    // 初始化键盘快捷键
+    Keyboard.init();
+
+    // 恢复深色模式偏好
+    this._initTheme();
+
+    // 渲染今日目标
+    Dashboard.renderDailyGoal();
+
+    // 桥接 App.showToast → Feedback.showToast
+    if (typeof Feedback !== 'undefined') {
+      App.showToast = (msg, type, dur) => Feedback.showToast(msg, type, dur);
+    }
+
     // 绑定导航事件
     document.querySelectorAll('.nav-item').forEach(item => {
       item.addEventListener('click', (e) => {
@@ -34,6 +66,20 @@ const App = {
         const page = item.dataset.page;
         this.navigateTo(page);
       });
+    });
+
+    // 订阅 DataStore 变更事件，自动刷新关联视图
+    DataStore.on('questions:changed', () => {
+      if (this.currentPage === 'bank') this.renderQuestionBank();
+      this.updateStats();
+    });
+    DataStore.on('errorBook:changed', () => {
+      if (this.currentPage === 'errors') this.renderErrorList();
+      this.updateStats();
+    });
+    DataStore.on('practiceLog:changed', () => {
+      this.updateStats();
+      if (this.currentPage === 'dashboard') this.renderRecentPractice();
     });
 
     // 更新统计
@@ -111,6 +157,8 @@ const App = {
         break;
       case 'analysis':
         Analysis.render();
+        PracticeReport.renderCalendarHeatmap('heatmap-container');
+        PracticeReport.renderRadarChart('radar-container');
         break;
       case 'plan':
         Plan.render();
@@ -157,7 +205,7 @@ const App = {
     if (catSelect) {
       const prevVal = catSelect.value;
       catSelect.innerHTML = '<option value="">全部分类</option>' +
-        categories.map(c => `<option value="${c}" ${c === prevVal ? 'selected' : ''}>${c}</option>`).join('');
+        categories.map(c => `<option value="${Utils.escapeHtml(c)}" ${c === prevVal ? 'selected' : ''}>${Utils.escapeHtml(c)}</option>`).join('');
     }
 
     const result = QuestionBank.search({ keyword, category, type, bank, page: this.bankPage, pageSize: this.bankPageSize });
@@ -532,12 +580,15 @@ const App = {
   /**
    * 删除题目
    */
-  deleteQuestion(id) {
-    if (!confirm('确定要删除这道题目吗？相关的错题记录也会被移除。')) return;
+  async deleteQuestion(id) {
+    const ok = typeof Feedback !== 'undefined'
+      ? await Feedback.confirmAction('确定要删除这道题目吗？相关的错题记录也会被移除。')
+      : confirm('确定要删除这道题目吗？相关的错题记录也会被移除。');
+    if (!ok) return;
     QuestionBank.remove(id);
     this.renderQuestionBank();
     this.updateStats();
-    this.showToast('题目已删除', 'info');
+    Feedback.showToast('题目已删除', 'info');
   },
 
   /**
@@ -816,6 +867,81 @@ const App = {
     const div = document.createElement('div');
     div.textContent = str;
     return div.innerHTML;
+  },
+
+  // ─── 侧边栏（移动端） ─────────────────────────
+
+  toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    if (!sidebar) return;
+    const isOpen = sidebar.classList.contains('open');
+    if (isOpen) { this.closeSidebar(); }
+    else { sidebar.classList.add('open'); if (overlay) overlay.classList.add('show'); }
+  },
+
+  closeSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    if (sidebar) sidebar.classList.remove('open');
+    if (overlay) overlay.classList.remove('show');
+  },
+
+  // ─── 深色模式 ─────────────────────────────────
+
+  _initTheme() {
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+    this._updateThemeIcon();
+  },
+
+  toggleTheme() {
+    const el = document.documentElement;
+    const isDark = el.getAttribute('data-theme') === 'dark';
+    if (isDark) { el.removeAttribute('data-theme'); localStorage.setItem('theme', 'light'); }
+    else { el.setAttribute('data-theme', 'dark'); localStorage.setItem('theme', 'dark'); }
+    this._updateThemeIcon();
+  },
+
+  _updateThemeIcon() {
+    const btn = document.getElementById('theme-toggle');
+    if (!btn) return;
+    btn.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙';
+  },
+
+  // ─── 快速跳转 ─────────────────────────────────
+
+  jumpToQuestion(num) {
+    if (!num || num < 1) return;
+    const all = QuestionBank.getAll();
+    if (num > all.length) { Feedback.showToast(`题库共 ${all.length} 题，输入超出范围`, 'warning'); return; }
+    const page = Math.ceil(num / this.bankPageSize);
+    this.bankPage = page;
+    this.renderQuestionBank();
+    Feedback.showToast(`已跳转到第 ${num} 题`, 'info', 1500);
+  },
+
+  jumpToErrorQuestion(num) {
+    const errors = ErrorNotebook.getAll();
+    if (!num || num < 1 || num > errors.length) {
+      Feedback.showToast(`错题本共 ${errors.length} 题，输入超出范围`, 'warning');
+      return;
+    }
+    const e = errors[num - 1];
+    if (e && e.questionId) {
+      this.navigateTo('bank');
+      const all = QuestionBank.getAll();
+      const idx = all.findIndex(q => q.id === e.questionId);
+      if (idx >= 0) this.jumpToQuestion(idx + 1);
+      else Feedback.showToast('该错题对应的题目已不在题库中', 'warning');
+    }
+  },
+
+  // ─── 删除确认 ─────────────────────────────────
+
+  async confirmDelete(msg) {
+    if (typeof Feedback !== 'undefined') return Feedback.confirmAction(msg || '确定要删除吗？此操作不可撤销。');
+    return confirm(msg || '确定要删除吗？');
   },
 };
 

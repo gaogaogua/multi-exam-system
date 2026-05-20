@@ -31,7 +31,18 @@ node tools/classify_tumu_chapters.js  # Re-classify 土木 by exam chapter (1-13
 
 **Page flow**: 7 SPA pages (dashboard → bank → errors → practice → exam → analysis → plan), navigated by `App.navigateTo()`. Each page is a dedicated JS module loaded in order from `index.html`.
 
-**Critical module order**: `storage.js` → `api-config.js` → `auto-categorizer.js` → `import-manager.js` → `pdf-parser.js` → `dedup.js` → `question-bank.js` → `error-notebook.js` → `practice.js` → `exam.js` → `analysis.js` → `plan.js` → `app.js`
+**Critical module order**: `datastore.js` → `storage.js` → `config.js` → `helpers.js` → `data-loader.js` → `sync.js` → `api-config.js` → `knowledge-base.js` → `auto-categorizer.js` → `import-manager.js` → `pdf-parser.js` → `dedup.js` → `question-bank.js` → `error-notebook.js` → `practice.js` → `exam.js` → `analysis.js` → `exam-dates.js` → `plan.js` → `dashboard.js` → `import-controller.js` → `modal.js` → `loading.js` → `ui-controller.js` → `app.js`
+
+**Data layer**: DataStore (IndexedDB + memory cache) replaces direct localStorage access. `storage.js` is a backward-compatible bridge — reads from DataStore cache synchronously, writes update cache immediately then persist to IDB in background. All existing modules use `Storage.get/set` and get IDB benefits transparently.
+
+**DataStore architecture** (`datastore.js`):
+- IDB database `exam_system_db` with 8 object stores: questions, errorBook, practiceLog, examLog, categories, importBatches, plans, todayProgress
+- In-memory cache (`DataStore.cache.questions` etc.) — all reads are synchronous from cache
+- Optimistic updates: cache updated immediately → event emitted → IDB write in background → rollback on failure
+- Pub-sub via EventTarget: `DataStore.on('questions:changed', fn)` notifies components when data changes
+- `DataStore.commit(store, items)` is the synchronous cache-update method used by Storage bridge
+- JSON import with resume: `DataStore.importJSON(store, data, {resume: true})` saves checkpoints to localStorage `ds_resume_*`
+- Auto-migration from localStorage to IDB on first init
 
 **Data layer**: All localStorage. `Storage.KEYS` defines the keys: `exam_questions`, `exam_error_book`, `exam_practice_log`, `exam_exam_log`, `exam_categories`. Plan module adds `exam_plans` and `today_progress`.
 

@@ -3,6 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="
+  default-src 'self';
+  script-src 'self' 'unsafe-inline';
+  style-src 'self' 'unsafe-inline';
+  connect-src 'self';
+  img-src 'self' data: blob:;
+  font-src 'self';
+  frame-src 'none';
+  object-src 'none';
+  base-uri 'self';
+  form-action 'self';
+">
 <title>题库JSON导入工具</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -88,17 +100,28 @@ h1 { font-size: 20px; margin-bottom: 16px; color: #1a1a2e; }
 </p>
 </div>
 
+<script src="js/datastore.js?v=20260520b"></script>
+<script src="js/storage.js?v=20260520b"></script>
 <script>
-// ---- Storage wrapper (mirrors storage.js) ----
+// ---- Storage wrapper (via DataStore bridge) ----
 const STORAGE_KEY = 'exam_questions';
+const ERR_KEY = 'exam_error_book';
+const PRACTICE_KEY = 'exam_practice_log';
+const EXAM_KEY = 'exam_exam_log';
+const CAT_KEY = 'exam_categories';
+
+let _dsReady = false;
+async function ensureDS() {
+  if (_dsReady) return;
+  await DataStore.init();
+  _dsReady = true;
+}
 
 function getQuestions() {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
-  catch(e) { return []; }
+  return Storage.get(STORAGE_KEY) || [];
 }
 function setQuestions(qs) {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(qs)); return true; }
-  catch(e) { alert('存储空间不足！请先清理部分题目。'); return false; }
+  return Storage.set(STORAGE_KEY, qs);
 }
 
 // ---- UI ----
@@ -216,6 +239,7 @@ function findDuplicate(newQ, existing) {
 // ---- Import ----
 btnImport.addEventListener('click', async () => {
   if (parsedData.length === 0) return;
+  await ensureDS();
 
   const existing = getQuestions();
   let added = 0, skipped = 0;
@@ -271,7 +295,7 @@ btnImport.addEventListener('click', async () => {
 
   // 同步更新分类列表
   const allCats = [...new Set(existing.map(q => q.category).filter(Boolean))];
-  localStorage.setItem('exam_categories', JSON.stringify(allCats));
+  Storage.set(CAT_KEY, allCats);
 
   document.getElementById('progressFill').style.width = '100%';
   document.getElementById('progressText').textContent = '完成!';
@@ -312,35 +336,38 @@ function clearBank(bank) {
   setQuestions(after);
 
   // 同步清理错题本
-  const errKey = 'exam_error_book';
   try {
-    const errors = JSON.parse(localStorage.getItem(errKey) || '[]');
+    const errors = Storage.get(ERR_KEY) || [];
     const afterBankIds = new Set(after.map(q => q.id));
-    localStorage.setItem(errKey, JSON.stringify(errors.filter(e => afterBankIds.has(e.questionId))));
+    Storage.set(ERR_KEY, errors.filter(e => afterBankIds.has(e.questionId)));
   } catch(e) { /* ignore */ }
 
   log(`已删除 ${before - after.length} 道 ${bankName} 题目`, 'warn');
   // 同步更新分类列表
   const allCats = [...new Set(after.map(q => q.category).filter(Boolean))];
-  localStorage.setItem('exam_categories', JSON.stringify(allCats));
+  Storage.set(CAT_KEY, allCats);
   updateStats();
   // 强制刷新按钮状态
   location.reload();
 }
 
-btnClear.addEventListener('click', () => {
+btnClear.addEventListener('click', async () => {
   if (!confirm('确定清空全部题库？错题本和练习记录也会一并清理。此操作不可恢复！')) return;
-  localStorage.removeItem(STORAGE_KEY);
-  localStorage.removeItem('exam_error_book');
-  localStorage.removeItem('exam_practice_log');
-  localStorage.removeItem('exam_exam_log');
-  localStorage.removeItem('exam_categories');
+  await ensureDS();
+  Storage.remove(STORAGE_KEY);
+  Storage.remove(ERR_KEY);
+  Storage.remove(PRACTICE_KEY);
+  Storage.remove(EXAM_KEY);
+  Storage.remove(CAT_KEY);
   log('题库已清空', 'warn');
   updateStats();
 });
 
 // ---- Init ----
-try { updateStats(); } catch(e) { console.error('init error:', e); }
+(async () => {
+  await ensureDS();
+  try { updateStats(); } catch(e) { console.error('init error:', e); }
+})();
 </script>
 </body>
 </html>

@@ -480,7 +480,7 @@ body {
 }
 .tag-no-answer { background: #fef2f2; color: #e74c3c; }
 
-/* ===== Responsive ===== */
+/* ===== Responsive (Legacy — overridden by newer mobile rules below) ===== */
 @media (max-width: 768px) {
   .sidebar { width: 60px; }
   .sidebar .logo span, .sidebar .nav-item span, .sidebar-footer span:first-child { display: none; }
@@ -490,6 +490,7 @@ body {
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
   .card-row { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }
+  .theme-toggle { top: 8px; right: 8px; }
 }
 /* ===== 学习计划页面 ===== */
 .plan-progress-track {
@@ -662,3 +663,278 @@ body {
   .stats-grid { grid-template-columns: 1fr; }
   .week-grid { grid-template-columns: repeat(4, 1fr); }
 }
+
+/* ================================================================
+   夜间模式
+   ================================================================ */
+[data-theme="dark"] {
+  --bg: #141414;
+  --card-bg: #1f1f1f;
+  --text: #e8e8e8;
+  --text-secondary: #999;
+  --border: #333;
+  --shadow: 0 2px 8px rgba(0,0,0,.3);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,.4);
+}
+[data-theme="dark"] body { background: var(--bg); color: var(--text); }
+[data-theme="dark"] .stat-card { background: var(--card-bg); }
+[data-theme="dark"] .card { background: var(--card-bg); }
+[data-theme="dark"] .question-item { background: var(--card-bg); }
+[data-theme="dark"] .practice-question-card { background: var(--card-bg); }
+[data-theme="dark"] .toolbar-card { background: var(--card-bg); }
+[data-theme="dark"] .option-item { background: var(--card-bg); }
+[data-theme="dark"] .option-item:hover { background: #2a2a3e; }
+[data-theme="dark"] .option-item.selected { background: #1a2740; }
+[data-theme="dark"] .option-item.correct { background: #0d2818; }
+[data-theme="dark"] .option-item.wrong { background: #2d1215; }
+[data-theme="dark"] .filter-bar select,
+[data-theme="dark"] .filter-group select { background: var(--card-bg); color: var(--text); }
+[data-theme="dark"] .search-input { background: var(--card-bg); color: var(--text); }
+[data-theme="dark"] .page-btn { background: var(--card-bg); color: var(--text); }
+[data-theme="dark"] .modal { background: var(--card-bg); }
+[data-theme="dark"] .exam-nav-btn { background: var(--card-bg); color: var(--text); }
+[data-theme="dark"] .plan-task { background: var(--card-bg); }
+[data-theme="dark"] .week-day-card { background: var(--card-bg); }
+[data-theme="dark"] .plan-tabs { background: var(--card-bg); }
+[data-theme="dark"] .plan-tab:hover:not(.active) { background: #333; }
+[data-theme="dark"] .error-stats { background: var(--card-bg); }
+[data-theme="dark"] .exam-header { background: var(--card-bg); }
+[data-theme="dark"] .form-group input,
+[data-theme="dark"] .form-group select,
+[data-theme="dark"] .form-group textarea { background: var(--card-bg); color: var(--text); }
+[data-theme="dark"] .toast { box-shadow: 0 4px 12px rgba(0,0,0,.4); }
+[data-theme="dark"] .practice-result { background: transparent; }
+[data-theme="dark"] .pq-nav-btn { background: var(--card-bg); }
+[data-theme="dark"] .empty-state { color: #666; }
+[data-theme="dark"] .chart-bar-track { background: #333; }
+[data-theme="dark"] .btn-outline { color: var(--text); }
+[data-theme="dark"] .modal-overlay { background: rgba(0,0,0,.7); }
+[data-theme="dark"] .feedback-confirm-overlay > div { background: var(--card-bg); color: var(--text); }
+
+/* 夜间模式切换按钮 */
+.theme-toggle {
+  position: fixed; top: 12px; right: 16px; z-index: 200;
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 1.5px solid var(--border); background: var(--card-bg);
+  cursor: pointer; font-size: 20px; display: flex;
+  align-items: center; justify-content: center;
+  box-shadow: var(--shadow); transition: var(--transition);
+}
+.theme-toggle:hover { transform: scale(1.1); }
+
+/* ================================================================
+   响应式侧边栏（移动端）
+   ================================================================ */
+.hamburger-btn {
+  display: none; position: fixed; top: 10px; left: 10px; z-index: 300;
+  width: 44px; height: 44px; border-radius: 10px; border: none;
+  background: var(--primary); color: #fff; font-size: 22px;
+  cursor: pointer; align-items: center; justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,.2);
+}
+.sidebar-overlay {
+  display: none; position: fixed; inset: 0; background: rgba(0,0,0,.45);
+  z-index: 250;
+}
+
+@media (max-width: 768px) {
+  .hamburger-btn { display: flex; }
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform .3s ease;
+    width: 260px;
+  }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-overlay.show { display: block; }
+  .main-content { margin-left: 0; padding: 16px; padding-top: 60px; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .card-row { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+}
+
+/* ================================================================
+   触摸优化
+   ================================================================ */
+.btn, .nav-item, .page-btn, .option-item, .pq-nav-btn,
+.exam-nav-btn, .question-item, .practice-card, .plan-tab,
+button, select, .search-input, .plan-task, .week-day-card,
+.theme-toggle, .hamburger-btn {
+  min-width: 44px; min-height: 44px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.option-item { padding: 14px 18px; gap: 10px; }
+@media (max-width: 768px) {
+  .options-list { gap: 12px; }
+  .option-item { padding: 16px; font-size: 16px; }
+  .practice-question-card { padding: 20px; }
+}
+
+/* ================================================================
+   倒计时闪烁（考试最后 5 分钟）
+   ================================================================ */
+@keyframes countdown-flash {
+  0%, 100% { color: #ff4d4f; }
+  50% { color: #fff; background: #ff4d4f; border-radius: 4px; padding: 2px 8px; }
+}
+.exam-timer.urgent { animation: countdown-flash 1s infinite; }
+
+/* 10 秒警告模态框 */
+.countdown-warn-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.6);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 10000; animation: fadeIn .3s;
+}
+.countdown-warn-box {
+  background: #fff; border-radius: 16px; padding: 32px; text-align: center;
+  box-shadow: 0 8px 40px rgba(255,77,79,.3); max-width: 360px; width: 90%;
+}
+.countdown-warn-box h2 { color: #ff4d4f; font-size: 48px; margin: 0; }
+
+/* ================================================================
+   答案高亮对比 — 用户答案蓝色、正确答案绿色、错误红色
+   ================================================================ */
+.option-item.user-pick { border-color: #1890ff; background: #e6f7ff; }
+.option-item.user-pick.correct { border-color: #52c41a; background: #f6ffed; }
+.option-item.user-pick.wrong { border-color: #ff4d4f; background: #fff2f0; }
+.option-item.correct-answer { border-color: #52c41a; background: #f6ffed; }
+
+[data-theme="dark"] .option-item.user-pick { background: #102840; }
+[data-theme="dark"] .option-item.user-pick.correct { background: #0d2818; }
+[data-theme="dark"] .option-item.user-pick.wrong { background: #2d1215; }
+[data-theme="dark"] .option-item.correct-answer { background: #0d2818; }
+
+/* ================================================================
+   快速跳转输入框
+   ================================================================ */
+.jump-input {
+  width: 72px; padding: 6px 10px; border: 1.5px solid var(--border);
+  border-radius: 6px; font-size: 14px; text-align: center;
+  font-family: inherit; transition: var(--transition);
+}
+.jump-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 2px rgba(102,126,234,.15); }
+
+/* ================================================================
+   答题后自动跳转开关
+   ================================================================ */
+.auto-jump-toggle {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; color: var(--text-secondary); cursor: pointer;
+  padding: 6px 12px; border-radius: 6px; border: 1px solid var(--border);
+  background: var(--card-bg); transition: var(--transition);
+}
+.auto-jump-toggle:hover { border-color: var(--primary); }
+.auto-jump-toggle input[type="checkbox"] { width: 16px; height: 16px; cursor: pointer; }
+
+/* ================================================================
+   每日目标卡片
+   ================================================================ */
+.daily-goal-card {
+  background: linear-gradient(135deg, #667eea15, #764ba215);
+  border: 1.5px solid #667eea40; border-radius: var(--radius);
+  padding: 18px 20px; margin-bottom: 20px; box-shadow: var(--shadow);
+}
+.daily-goal-header {
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 8px;
+}
+.daily-goal-title {
+  font-size: 15px; font-weight: 700; color: var(--primary);
+}
+.daily-goal-stats { font-size: 13px; color: var(--text-secondary); }
+.daily-goal-track {
+  height: 10px; border-radius: 5px; background: #f0f0f0;
+  margin-top: 10px; overflow: hidden;
+}
+.daily-goal-fill {
+  height: 100%; border-radius: 5px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  transition: width .5s ease;
+}
+.daily-goal-done {
+  display: inline-block; padding: 2px 10px; border-radius: 12px;
+  background: #f6ffed; color: #52c41a; font-size: 13px; font-weight: 600;
+}
+[data-theme="dark"] .daily-goal-card { background: linear-gradient(135deg, #667eea20, #764ba220); }
+
+/* ================================================================
+   智能推荐模式按钮
+   ================================================================ */
+.practice-card.smart-card { border-color: #eb2f96; }
+.practice-card.smart-card .practice-icon { background: linear-gradient(135deg, #fff0f6, #f0e6ff); color: #eb2f96; }
+
+/* ================================================================
+   移动端滑动切换题目指示
+   ================================================================ */
+.swipe-hint {
+  position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
+  z-index: 50; font-size: 11px; color: var(--text-secondary);
+  background: var(--card-bg); padding: 4px 12px; border-radius: 12px;
+  box-shadow: var(--shadow); opacity: 0; transition: opacity .3s;
+  pointer-events: none;
+}
+.swipe-hint.show { opacity: 0.8; }
+
+/* ================================================================
+   答题卡
+   ================================================================ */
+.answer-sheet-header { user-select: none; }
+.answer-sheet-header:hover { background: var(--bg); border-radius: 8px 8px 0 0; }
+.as-cell:hover { transform: scale(1.15); box-shadow: 0 2px 8px rgba(0,0,0,.15); }
+
+/* ================================================================
+   闯关地图
+   ================================================================ */
+.challenge-map { display: flex; flex-wrap: wrap; gap: 10px; padding: 12px; }
+
+/* ================================================================
+   专项练习分类列表
+   ================================================================ */
+.cat-list-item {
+  display: flex; align-items: center; gap: 10px; padding: 10px 14px;
+  border-radius: 8px; cursor: pointer; transition: var(--transition);
+  border: 1px solid var(--border); margin-bottom: 6px;
+}
+.cat-list-item:hover { border-color: var(--primary); background: #f8f9ff; }
+.cat-list-name { font-size: 14px; font-weight: 500; flex: 1; }
+.cat-list-bar {
+  width: 80px; height: 6px; border-radius: 3px; background: #f0f0f0; overflow: hidden;
+}
+.cat-list-fill { height: 100%; border-radius: 3px; background: var(--primary); transition: width .3s; }
+.cat-list-stat { font-size: 12px; color: var(--text-secondary); min-width: 50px; text-align: right; }
+
+/* ================================================================
+   热力图、雷达图容器
+   ================================================================ */
+#heatmap-container { overflow-x: auto; padding: 12px 0; }
+#radar-container { min-height: 280px; display: flex; align-items: center; justify-content: center; }
+
+/* ================================================================
+   答题统计悬浮窗（深色主题适配）
+   ================================================================ */
+#stats-widget { transition: opacity .2s; }
+[data-theme="dark"] #stats-widget { background: rgba(255,255,255,.1); color: #e8e8e8; }
+
+/* ================================================================
+   组卷模态框样式
+   ================================================================ */
+#template-list { max-height: 120px; overflow-y: auto; }
+#asm-bank, #asm-type-count { font-family: inherit; }
+.asm-cat { accent-color: var(--primary); }
+
+/* ================================================================
+   解析关键词高亮
+   ================================================================ */
+.analysis-highlight {
+  background: #fff3cd; padding: 1px 3px; border-radius: 3px;
+  font-weight: 600;
+}
+[data-theme="dark"] .analysis-highlight { background: #5a4a00; color: #ffc107; }
+
+/* ================================================================
+   练习模式卡片（扩展配色）
+   ================================================================ */
+.practice-card[style*="border-color:#13c2c2"] .practice-icon { background: linear-gradient(135deg, #e6fffb, #f0e6ff); color: #13c2c2; }
+.practice-card[style*="border-color:#722ed1"] .practice-icon { background: linear-gradient(135deg, #f9f0ff, #e6f7ff); color: #722ed1; }
+.practice-card[style*="border-color:#fa8c16"] .practice-icon { background: linear-gradient(135deg, #fff7e6, #f0e6ff); color: #fa8c16; }
+.practice-card[style*="border-color:#2f54eb"] .practice-icon { background: linear-gradient(135deg, #f0f5ff, #e6fffb); color: #2f54eb; }

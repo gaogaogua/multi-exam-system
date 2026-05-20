@@ -136,28 +136,70 @@ const ApiConfig = {
   _deepseekApiKeyLoaded: false,
 
   /**
-   * 获取 DeepSeek API Key
+   * 初始化 API Key — 从加密存储加载并解密到内存
+   * 应在 DataStore.init() 之后、首次使用 AI 之前调用
+   */
+  async initApiKey() {
+    if (this._deepseekApiKeyLoaded) return;
+    try {
+      if (typeof CryptoUtils !== 'undefined') {
+        await CryptoUtils.init();
+        this._deepseekApiKey = await CryptoUtils.loadApiKey();
+      }
+    } catch (e) {
+      console.warn('[ApiConfig] CryptoUtils 不可用，尝试明文读取');
+    }
+    // 回退：直接读 localStorage 明文（旧版本兼容）
+    if (!this._deepseekApiKey) {
+      this._deepseekApiKey = localStorage.getItem('deepseek_api_key') || '';
+    }
+    this._deepseekApiKeyLoaded = true;
+  },
+
+  /**
+   * 获取 DeepSeek API Key（同步，需先调用 initApiKey）
    */
   getDeepSeekApiKey() {
-    if (this._deepseekApiKeyLoaded) return this._deepseekApiKey;
-    this._deepseekApiKey = localStorage.getItem('deepseek_api_key') || '';
-    this._deepseekApiKeyLoaded = true;
+    if (!this._deepseekApiKeyLoaded) {
+      // 尚未初始化，尝试同步读取（回退路径）
+      this._deepseekApiKey = localStorage.getItem('deepseek_api_key') || '';
+      this._deepseekApiKeyLoaded = true;
+    }
     return this._deepseekApiKey;
   },
 
   /**
-   * 保存 DeepSeek API Key
+   * 保存 DeepSeek API Key（内存即时更新 + 后台加密存储）
    */
   setDeepSeekApiKey(key) {
     this._deepseekApiKey = key;
-    localStorage.setItem('deepseek_api_key', key);
+    this._deepseekApiKeyLoaded = true;
+
+    // 后台加密存储
+    if (typeof CryptoUtils !== 'undefined' && CryptoUtils.isReady()) {
+      CryptoUtils.storeApiKey(key).catch(e =>
+        console.warn('[ApiConfig] 加密存储失败:', e)
+      );
+    } else {
+      // 回退明文
+      if (key) {
+        localStorage.setItem('deepseek_api_key', key);
+      } else {
+        localStorage.removeItem('deepseek_api_key');
+      }
+    }
   },
 
   /**
    * 是否有可用的 API Key
    */
   hasDeepSeekApiKey() {
-    return !!this.getDeepSeekApiKey();
+    if (this._deepseekApiKeyLoaded) return !!this._deepseekApiKey;
+    // 快速检查（不解密，仅判断是否存在）
+    if (typeof CryptoUtils !== 'undefined') {
+      return CryptoUtils.hasStoredKey();
+    }
+    return !!localStorage.getItem('deepseek_api_key');
   },
 
   /**
@@ -196,7 +238,7 @@ const ApiConfig = {
   },
 
   /**
-   * 直连 DeepSeek API 逐题分析
+   * 直连 DeepSeek API 逐题分析（带重试队列）
    */
   async _aiAnalyzeDirect(questions, apiKey, onProgress) {
     const results = [];
@@ -205,14 +247,82 @@ const ApiConfig = {
     for (let i = 0; i < total; i++) {
       const q = questions[i];
       try {
-        const result = await this._callDeepSeekSingle(q, apiKey);
+        const result = await this._fetchWithTimeout(
+          () => this._callDeepSeekSingle(q, apiKey),
+          15000
+        );
         results.push({ id: q.id, ...result, success: true });
       } catch (e) {
         results.push({ id: q.id, answer: '', analysis: '', success: false, error: e.message });
+        // 添加到失败队列
+        if (/network|fetch|timeout|abort|超时/i.test(e.message || '')) {
+          this._enqueueFailedTask(q);
+        }
       }
       if (onProgress) onProgress(i + 1, total);
     }
     return results;
+  },
+
+  /**
+   * 带超时的 fetch 包装
+   */
+  async _fetchWithTimeout(fn, timeoutMs) {
+    return new Promise((resolve, reject) => {
+      const timer = setTimeout(() => reject(new Error('请求超时')), timeoutMs);
+      fn().then(r => { clearTimeout(timer); resolve(r); })
+          .catch(e => { clearTimeout(timer); reject(e); });
+    });
+  },
+
+  /**
+   * 将失败任务加入重试队列
+   */
+  _enqueueFailedTask(q) {
+    try {
+      const queue = JSON.parse(localStorage.getItem('ai_retry_queue') || '[]');
+      if (!queue.find(t => t.id === q.id)) {
+        queue.push({ id: q.id, title: q.title, type: q.type, options: q.options || [] });
+        localStorage.setItem('ai_retry_queue', JSON.stringify(queue));
+      }
+    } catch (_) {}
+  },
+
+  /**
+   * 获取重试队列
+   */
+  getRetryQueue() {
+    try { return JSON.parse(localStorage.getItem('ai_retry_queue') || '[]'); }
+    catch (_) { return []; }
+  },
+
+  /**
+   * 重试失败队列中的所有任务
+   */
+  async retryFailedTasks(onProgress) {
+    const queue = this.getRetryQueue();
+    if (queue.length === 0) {
+      if (typeof Feedback !== 'undefined') Feedback.showToast('没有失败的任务需要重试', 'info');
+      return [];
+    }
+
+    if (typeof Feedback !== 'undefined') Feedback.showToast(`正在重试 ${queue.length} 个失败任务...`, 'info');
+    const results = await this.aiAnalyze(queue, onProgress);
+
+    // 清除成功和失败的任务（用户可再次重试完全的失败）
+    const successIds = new Set(results.filter(r => r.success).map(r => r.id));
+    const remaining = queue.filter(t => !successIds.has(t.id));
+    localStorage.setItem('ai_retry_queue', JSON.stringify(remaining));
+
+    if (typeof Feedback !== 'undefined') {
+      Feedback.showToast(`重试完成: ${successIds.size} 成功, ${remaining.length} 仍需重试`, remaining.length > 0 ? 'warning' : 'success');
+    }
+    return results;
+  },
+
+  /** 获取重试队列数量 */
+  getRetryQueueCount() {
+    return this.getRetryQueue().length;
   },
 
   /**

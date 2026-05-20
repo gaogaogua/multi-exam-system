@@ -271,10 +271,13 @@ const ErrorNotebook = {
   /**
    * 清空错题本
    */
-  clearAll() {
-    if (!confirm('确定要清空所有错题记录吗？此操作不可恢复。')) return;
+  async clearAll() {
+    const ok = typeof Feedback !== 'undefined'
+      ? await Feedback.confirmAction('确定要清空所有错题记录吗？此操作不可恢复。')
+      : confirm('确定要清空所有错题记录吗？此操作不可恢复。');
+    if (!ok) return;
     Storage.set(Storage.KEYS.ERROR_BOOK, []);
-    App.showToast('错题本已清空', 'success');
+    (Feedback || App).showToast('错题本已清空', 'success');
     App.renderErrorList();
     App.updateStats();
   },

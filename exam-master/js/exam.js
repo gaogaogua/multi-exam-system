@@ -8,6 +8,9 @@ const Exam = {
   timeLeft: 0,
   totalTime: 0,
   submitted: false,
+  _touchStartX: 0,
+  _touchStartY: 0,
+  _warned10s: false,
 
   // Delegate shuffle to Practice utility
 /**
@@ -74,6 +77,10 @@ const Exam = {
     this.submitted = false;
     this.totalTime = time * 60;
     this.timeLeft = this.totalTime;
+    this._warned10s = false;
+
+    // 保存进度到 sessionStorage
+    this._saveExamProgress();
 
     document.getElementById('exam-setup').style.display = 'none';
     document.getElementById('exam-area').style.display = 'block';
@@ -88,14 +95,40 @@ const Exam = {
    * 开始计时器
    */
   startTimer() {
+    this._warned10s = false;
     this.updateTimer();
     this.timer = setInterval(() => {
       this.timeLeft--;
       this.updateTimer();
+      // 最后 10 秒警告
+      if (this.timeLeft <= 10 && this.timeLeft > 0 && !this._warned10s) {
+        this._warned10s = true;
+        this._show10sWarning();
+      }
+      // 最后 5 分钟红色闪烁
+      if (this.timeLeft <= 300 && this.timeLeft > 0) {
+        const el = document.getElementById('exam-timer-display');
+        if (el) el.classList.add('urgent');
+      }
       if (this.timeLeft <= 0) {
         this.autoSubmit();
       }
     }, 1000);
+  },
+
+  _show10sWarning() {
+    const overlay = document.createElement('div');
+    overlay.className = 'countdown-warn-overlay';
+    overlay.innerHTML = `<div class="countdown-warn-box"><h2 id="countdown-num">10</h2><p style="font-size:16px;color:#666;margin:8px 0;">还剩 10 秒，请尽快交卷！</p><button class="btn btn-primary" onclick="this.closest('.countdown-warn-overlay').remove()">我知道了</button></div>`;
+    document.body.appendChild(overlay);
+    let n = 10;
+    const iv = setInterval(() => {
+      n--;
+      const el = document.getElementById('countdown-num');
+      if (el) el.textContent = n;
+      if (n <= 0) { clearInterval(iv); overlay.remove(); }
+    }, 1000);
+    setTimeout(() => { clearInterval(iv); overlay.remove(); }, 10000);
   },
 
   /**
@@ -144,6 +177,7 @@ const Exam = {
       </div>`;
 
     area.innerHTML = html;
+    this._bindExamTouch();
     this.goToQuestion(0);
   },
 
@@ -228,6 +262,7 @@ const Exam = {
         ? current.replace(label, '')
         : (current + label).split('').sort().join('');
     }
+    this._saveExamProgress();
     this.goToQuestion(this.getCurrentIndex());
   },
 
@@ -236,6 +271,7 @@ const Exam = {
    */
   saveTextAnswer(questionId, value) {
     this.userAnswers[questionId] = value;
+    this._saveExamProgress();
   },
 
   /**
@@ -405,7 +441,71 @@ const Exam = {
     this.submitted = false;
     this.questions = [];
     this.userAnswers = {};
+    sessionStorage.removeItem('exam_progress');
     document.getElementById('exam-area').style.display = 'none';
     document.getElementById('exam-setup').style.display = 'block';
+  },
+
+  _saveExamProgress() {
+    try {
+      sessionStorage.setItem('exam_progress', JSON.stringify({
+        questions: this.questions,
+        userAnswers: this.userAnswers,
+        timeLeft: this.timeLeft,
+        totalTime: this.totalTime,
+        submitted: this.submitted,
+      }));
+    } catch (_) {}
+  },
+
+  restoreExamProgress() {
+    try {
+      const raw = sessionStorage.getItem('exam_progress');
+      if (!raw) return false;
+      return JSON.parse(raw);
+    } catch (_) { return false; }
+  },
+
+  checkAndRestoreExam() {
+    const state = this.restoreExamProgress();
+    if (!state || !state.questions || state.questions.length === 0 || state.submitted) return;
+    if (typeof Feedback !== 'undefined') {
+      Feedback.confirmAction('检测到上次未完成的考试，是否继续？').then(yes => {
+        if (yes) {
+          this.questions = state.questions;
+          this.userAnswers = state.userAnswers || {};
+          this.timeLeft = state.timeLeft || 0;
+          this.totalTime = state.totalTime || 0;
+          this.submitted = false;
+          this._warned10s = false;
+          document.getElementById('exam-setup').style.display = 'none';
+          document.getElementById('exam-area').style.display = 'block';
+          this.renderExam();
+          if (this.totalTime > 0) this.startTimer();
+          Feedback.showToast('考试已恢复', 'info');
+        } else {
+          sessionStorage.removeItem('exam_progress');
+        }
+      });
+    }
+  },
+
+  // 触摸滑动切换（考试页面）
+  _bindExamTouch() {
+    const area = document.getElementById('exam-area');
+    if (!area) return;
+    area.addEventListener('touchstart', (e) => {
+      this._touchStartX = e.touches[0].clientX;
+      this._touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+    area.addEventListener('touchend', (e) => {
+      const dx = e.changedTouches[0].clientX - this._touchStartX;
+      const dy = e.changedTouches[0].clientY - this._touchStartY;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+        const idx = this.getCurrentIndex();
+        if (dx < -30) this.goToQuestion(idx + 1);
+        else if (dx > 30) this.goToQuestion(idx - 1);
+      }
+    }, { passive: true });
   },
 };

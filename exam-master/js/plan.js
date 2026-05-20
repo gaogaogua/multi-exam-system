@@ -80,16 +80,14 @@ const Plan = {
   // ══════════════════════════════════════════
 
   _getPlans() {
-    try { return JSON.parse(localStorage.getItem(this.PLANS_KEY)) || []; }
-    catch (e) { return []; }
+    return Storage.get(this.PLANS_KEY) || [];
   },
-  _savePlans(plans) { localStorage.setItem(this.PLANS_KEY, JSON.stringify(plans)); },
+  _savePlans(plans) { Storage.set(this.PLANS_KEY, plans); },
 
   _getProgress() {
-    try { return JSON.parse(localStorage.getItem(this.PROGRESS_KEY)) || null; }
-    catch (e) { return null; }
+    return Storage.get(this.PROGRESS_KEY);
   },
-  _saveProgress(p) { localStorage.setItem(this.PROGRESS_KEY, JSON.stringify(p)); },
+  _saveProgress(p) { Storage.set(this.PROGRESS_KEY, p); },
 
   _getGoals() {
     try { return JSON.parse(localStorage.getItem(this.MONTHLY_GOALS_KEY)) || []; }

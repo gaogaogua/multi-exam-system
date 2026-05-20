@@ -125,10 +125,10 @@ const ImportController = {
     container.innerHTML = sorted.map(b => {
       const date = new Date(b.importedAt).toLocaleString('zh-CN');
       const sizeStr = b.fileSize > 1048576 ? (b.fileSize / 1048576).toFixed(1) + ' MB' : (b.fileSize / 1024).toFixed(0) + ' KB';
-      const displayName = b.filename.length > 28 ? b.filename.slice(0, 28) + '...' : b.filename;
+      const displayName = b.filename.length > 28 ? Utils.escapeHtml(b.filename.slice(0, 28)) + '...' : Utils.escapeHtml(b.filename);
       return `<div class="import-batch-item" id="batch-${b.id}">
         <div class="import-batch-info">
-          <span class="import-batch-name" title="${Utils.escapeHtml(b.filename)}">${Utils.escapeHtml(displayName)}</span>
+          <span class="import-batch-name" title="${Utils.escapeHtml(b.filename)}">${displayName}</span>
           <span class="import-batch-meta">${b.questionCount} 题 | ${sizeStr} | ${date}</span>
           ${b.engine ? `<span class="question-tag tag-type" style="font-size:10px;">${b.engine}</span>` : ''}
         </div>

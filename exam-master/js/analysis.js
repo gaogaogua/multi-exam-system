@@ -2,12 +2,125 @@
  * 学习分析模块 - 数据可视化、趋势分析、薄弱点诊断
  */
 const Analysis = {
+  _charts: {},
+
   /**
    * 渲染分析页面
    */
   render() {
+    this._destroyCharts();
     this.renderTrendChart();
     this.renderAccuracyChart();
+    this.renderTypeChart();
+    this.renderDailyActivityChart();
+    this.renderWeakCategories();
+  },
+
+  _destroyCharts() {
+    Object.values(this._charts).forEach(c => { try { c.destroy(); } catch (_) {} });
+    this._charts = {};
+  },
+
+  /** 按题型正确率条形图 */
+  renderTypeChart() {
+    const container = document.getElementById('trend-chart');
+    if (!container) return;
+    const log = Storage.get(Storage.KEYS.PRACTICE_LOG) || [];
+    if (log.length < 5) {
+      // reuse trend container if chart not applicable
+      return;
+    }
+    const allQ = QuestionBank.getAll();
+    const qMap = new Map(allQ.map(q => [q.id, q]));
+
+    const byType = { single: { total: 0, correct: 0 }, multiple: { total: 0, correct: 0 }, judge: { total: 0, correct: 0 } };
+    log.forEach(l => {
+      const q = qMap.get(l.questionId);
+      const t = q ? q.type : 'single';
+      if (byType[t]) { byType[t].total++; if (l.correct) byType[t].correct++; }
+    });
+
+    const labels = ['单选题', '多选题', '判断题'];
+    const data = labels.map(l => {
+      const key = l === '单选题' ? 'single' : l === '多选题' ? 'multiple' : 'judge';
+      const d = byType[key];
+      return d.total > 0 ? Math.round(d.correct / d.total * 100) : 0;
+    });
+
+    // Insert chart canvas after trend chart container
+    let canvas = document.getElementById('type-chart-canvas');
+    if (!canvas) {
+      canvas = document.createElement('canvas');
+      canvas.id = 'type-chart-canvas';
+      canvas.style.maxHeight = '200px';
+      container.parentNode.insertBefore(canvas, container.nextSibling);
+    }
+
+    if (typeof Chart === 'undefined') return;
+    this._charts.typeChart = new Chart(canvas, {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [{
+          label: '正确率 %',
+          data,
+          backgroundColor: ['#667eea', '#764ba2', '#52c41a'],
+          borderRadius: 6,
+        }],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: { y: { beginAtZero: true, max: 100, ticks: { callback: v => v + '%' } } },
+      },
+    });
+  },
+
+  /** 每日练习数量柱状图 */
+  renderDailyActivityChart() {
+    const log = Storage.get(Storage.KEYS.PRACTICE_LOG) || [];
+    if (log.length < 3) return;
+
+    const byDay = {};
+    log.forEach(l => {
+      const day = (l.timestamp || '').split('T')[0];
+      if (day) byDay[day] = (byDay[day] || 0) + 1;
+    });
+    const days = Object.keys(byDay).sort().slice(-14);
+    const data = days.map(d => byDay[d]);
+
+    let canvas = document.getElementById('daily-activity-canvas');
+    if (!canvas) {
+      const container = document.getElementById('accuracy-chart');
+      if (!container) return;
+      canvas = document.createElement('canvas');
+      canvas.id = 'daily-activity-canvas';
+      canvas.style.maxHeight = '200px';
+      canvas.style.marginTop = '16px';
+      container.parentNode.insertBefore(canvas, container.nextSibling);
+    }
+
+    if (typeof Chart === 'undefined') return;
+    this._charts.dailyChart = new Chart(canvas, {
+      type: 'bar',
+      data: {
+        labels: days.map(d => d.slice(5)),
+        datasets: [{
+          label: '练习题数',
+          data,
+          backgroundColor: '#1890ff',
+          borderRadius: 4,
+        }],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } },
+      },
+    });
+  },
     this.renderWeakCategories();
   },
 

@@ -1,0 +1,215 @@
+/**
+ * 骨架屏加载效果 — 灰色块 + 呼吸动画
+ *
+ * 用法:
+ *   showSkeleton(container, type, count)
+ *     type: 'question-list' | 'error-list' | 'practice-log' | 'card'
+ *   hideSkeleton(container) — data 到达后替换
+ */
+
+/* 呼吸动画 */
+@keyframes skeleton-breathe {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.skeleton-block {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+  border-radius: 4px;
+}
+
+@keyframes skeleton-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* 题目列表骨架 */
+.skeleton-question-item {
+  display: flex;
+  gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid #f0f0f0;
+  align-items: center;
+}
+
+.skeleton-question-num {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.skeleton-question-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skeleton-question-title {
+  height: 18px;
+  width: 80%;
+}
+
+.skeleton-question-meta {
+  height: 14px;
+  width: 45%;
+}
+
+.skeleton-question-actions {
+  width: 60px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+/* 卡片骨架 */
+.skeleton-card {
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.skeleton-card-title {
+  height: 20px;
+  width: 40%;
+  margin-bottom: 16px;
+}
+
+.skeleton-card-row {
+  height: 14px;
+  margin-bottom: 10px;
+}
+
+/* 练习记录骨架 */
+.skeleton-log-item {
+  display: flex;
+  gap: 8px;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.skeleton-log-icon {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.skeleton-log-text {
+  height: 14px;
+  flex: 1;
+}
+
+.skeleton-log-time {
+  width: 40px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+/* 仪表盘统计骨架 */
+.skeleton-stat {
+  padding: 16px;
+  background: #fff;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.skeleton-stat-value {
+  height: 32px;
+  width: 60px;
+  margin: 0 auto 8px;
+}
+
+.skeleton-stat-label {
+  height: 14px;
+  width: 48px;
+  margin: 0 auto;
+}
+
+/* ── 工具函数 ──────────────────────────────────── */
+
+window.Skeleton = {
+  /**
+   * 显示骨架屏
+   * @param {HTMLElement|string} container
+   * @param {'question-list'|'error-list'|'practice-log'|'card'|'stats'} type
+   * @param {number} count 骨架项数量
+   */
+  show(container, type = 'question-list', count = 5) {
+    const el = typeof container === 'string' ? document.getElementById(container) : container;
+    if (!el) return;
+    el._skeletonOriginal = el.innerHTML;
+
+    let html = '';
+    switch (type) {
+      case 'question-list':
+        for (let i = 0; i < count; i++) {
+          html += `<div class="skeleton-question-item">
+            <div class="skeleton-block skeleton-question-num"></div>
+            <div class="skeleton-question-body">
+              <div class="skeleton-block skeleton-question-title"></div>
+              <div class="skeleton-block skeleton-question-meta"></div>
+            </div>
+            <div class="skeleton-block skeleton-question-actions"></div>
+          </div>`;
+        }
+        break;
+      case 'error-list':
+        for (let i = 0; i < count; i++) {
+          html += `<div class="skeleton-question-item">
+            <div class="skeleton-block skeleton-question-num"></div>
+            <div class="skeleton-question-body">
+              <div class="skeleton-block skeleton-question-title"></div>
+              <div class="skeleton-block skeleton-question-meta"></div>
+            </div>
+          </div>`;
+        }
+        break;
+      case 'practice-log':
+        for (let i = 0; i < count; i++) {
+          html += `<div class="skeleton-log-item">
+            <div class="skeleton-block skeleton-log-icon"></div>
+            <div class="skeleton-block skeleton-log-text"></div>
+            <div class="skeleton-block skeleton-log-time"></div>
+          </div>`;
+        }
+        break;
+      case 'card':
+        html = `<div class="skeleton-card">
+          <div class="skeleton-block skeleton-card-title"></div>
+          ${Array(count).fill('<div class="skeleton-block skeleton-card-row"></div>').join('')}
+        </div>`;
+        break;
+      case 'stats':
+        html = `<div style="display:flex;gap:12px;">${Array(count).fill(`
+          <div class="skeleton-stat" style="flex:1;">
+            <div class="skeleton-block skeleton-stat-value"></div>
+            <div class="skeleton-block skeleton-stat-label"></div>
+          </div>`).join('')}</div>`;
+        break;
+    }
+    el.innerHTML = html;
+  },
+
+  /** 隐藏骨架屏，恢复内容（由调用方设置新内容） */
+  hide(container) {
+    const el = typeof container === 'string' ? document.getElementById(container) : container;
+    if (!el) return;
+    // 调用方应在 hide 之后立即设置 innerHTML
+  },
+
+  /** 带骨架屏的异步数据加载 */
+  async load(container, type, count, asyncFn) {
+    const el = typeof container === 'string' ? document.getElementById(container) : container;
+    if (!el) return;
+    this.show(el, type, count);
+    try {
+      await asyncFn();
+    } finally {
+      // 调用方已在 asyncFn 中设置 innerHTML
+    }
+  },
+};

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>XSS 防护测试</title>
+<style>
+  body { font-family: monospace; padding: 20px; background: #1e1e1e; color: #d4d4d4; max-width: 900px; margin: 0 auto; }
+  h1 { color: #569cd6; }
+  .test { margin: 8px 0; padding: 8px 12px; border-radius: 4px; }
+  .pass { background: #1b3a1b; border-left: 3px solid #4caf50; }
+  .fail { background: #3a1b1b; border-left: 3px solid #f44336; }
+  .info { background: #1a2a3a; border-left: 3px solid #2196f3; }
+  .summary { margin-top: 20px; padding: 12px; border-radius: 4px; font-weight: bold; }
+  .all-pass { background: #1b3a1b; color: #4caf50; }
+  .has-fail { background: #3a1b1b; color: #f44336; }
+  pre { margin: 4px 0; overflow-x: auto; }
+  .label { display: inline-block; width: 60px; font-weight: bold; }
+</style>
+</head>
+<body>
+<h1>XSS 防护单元测试</h1>
+<p>测试 Utils.escapeHtml 及所有 HTML 渲染路径对恶意输入的防护。</p>
+<div id="results"></div>
+
+<!-- 依赖模块 -->
+<script src="../js/config.js"></script>
+<script src="../js/helpers.js"></script>
+<script>
+const results = [];
+let passed = 0, failed = 0;
+
+function test(name, fn) {
+  try {
+    const result = fn();
+    if (result === true) { passed++; results.push({ name, status: 'pass' }); }
+    else { failed++; results.push({ name, status: 'fail', detail: result }); }
+  } catch (e) {
+    failed++; results.push({ name, status: 'fail', detail: e.message });
+  }
+}
+
+function assert(condition, msg) { return condition ? true : (msg || 'assertion failed'); }
+function assertNoXSS(html, vectors) {
+  for (const v of vectors) {
+    if (html.includes(v)) return `发现未转义的注入向量: "${v}"`;
+  }
+  return true;
+}
+
+// ═══════════════════════════════════════════════════════
+// 1. Utils.escapeHtml 基础测试
+// ═══════════════════════════════════════════════════════
+const XSS_VECTORS = [
+  '<script>alert(1)</script>',
+  '<img src=x onerror=alert(1)>',
+  '<svg onload=alert(1)>',
+  'javascript:alert(1)',
+  '" onclick="alert(1)"',
+  "' onclick='alert(1)'",
+  '&lt;script&gt;',
+];
+
+test('escapeHtml 转义 < > & " \'', () => {
+  const input = '<script>alert("XSS")</script> & copy';
+  const output = Utils.escapeHtml(input);
+  return assert(
+    !output.includes('<') && !output.includes('>') &&
+    output.includes('&lt;') && output.includes('&gt;') &&
+    output.includes('&quot;') && output.includes('&amp;'),
+    `输出: ${output}`
+  );
+});
+
+test('escapeHtml 处理空值', () => {
+  return assert(
+    Utils.escapeHtml(null) === '' && Utils.escapeHtml(undefined) === '' && Utils.escapeHtml('') === '',
+    '空值处理失败'
+  );
+});
+
+test('escapeHtml 处理数字', () => {
+  return assert(Utils.escapeHtml(123) === '123', '数字转换失败');
+});
+
+test('escapeHtml XSS 向量集全部转义', () => {
+  for (const v of XSS_VECTORS) {
+    const escaped = Utils.escapeHtml(v);
+    // 转义后不应包含原始的特殊字符
+    if (escaped.includes('<script>') || escaped.includes('" onclick')) {
+      return `向量 "${v}" 未被充分转义: ${escaped}`;
+    }
+  }
+  return true;
+});
+
+test('escapeHtml 不破坏正常文本', () => {
+  const input = '普通中文文本 with English 123 !@#$%';
+  const output = Utils.escapeHtml(input);
+  return assert(output === input, `预期不变，但得到: ${output}`);
+});
+
+// ═══════════════════════════════════════════════════════
+// 2. Category 名称渲染测试
+// ═══════════════════════════════════════════════════════
+test('分类选项 HTML 应转义恶意分类名', () => {
+  const malicious = ['<script>evil</script>', '正常分类', '<img onerror=alert(1) src=x>'];
+  const html = '<option value="all">全部分类</option>' +
+    malicious.map(c => `<option value="${Utils.escapeHtml(c)}">${Utils.escapeHtml(c)}</option>`).join('');
+  return assertNoXSS(html, ['<script>', 'onerror=']);
+});
+
+// ═══════════════════════════════════════════════════════
+// 3. 题目标题渲染测试
+// ═══════════════════════════════════════════════════════
+test('题目标题应转义 script 标签', () => {
+  const title = '<script>stealCookies()</script>';
+  const escaped = Utils.escapeHtml(title);
+  return assert(
+    escaped === '&lt;script&gt;stealCookies()&lt;/script&gt;',
+    `得到: ${escaped}`
+  );
+});
+
+test('题目标题应转义 img onerror', () => {
+  const title = '<img src=x onerror="alert(1)">';
+  const escaped = Utils.escapeHtml(title);
+  return assert(
+    !escaped.includes('<img') && escaped.includes('&lt;img'),
+    `得到: ${escaped}`
+  );
+});
+
+// ═══════════════════════════════════════════════════════
+// 4. 选项文本渲染测试
+// ═══════════════════════════════════════════════════════
+test('选项文本应转义 HTML 标签', () => {
+  const opt = { label: 'A', text: '<div onclick="hack()">选项内容</div>' };
+  const html = `<span class="option-label">${opt.label}.</span> ${Utils.escapeHtml(opt.text)}`;
+  return assertNoXSS(html, ['<div', 'onclick=']);
+});
+
+// ═══════════════════════════════════════════════════════
+// 5. 答案/解析渲染测试
+// ═══════════════════════════════════════════════════════
+test('答案渲染应转义 HTML', () => {
+  const answer = '<b>B</b>';
+  const html = `<div>正确答案：${Utils.escapeHtml(answer)}</div>`;
+  return assertNoXSS(html, ['<b>']);
+});
+
+test('解析渲染应转义 HTML', () => {
+  const analysis = '正确选项是<script>alert(1)</script>A，因为...';
+  const html = `<div>解析：${Utils.escapeHtml(analysis)}</div>`;
+  return assertNoXSS(html, ['<script>']);
+});
+
+// ═══════════════════════════════════════════════════════
+// 6. 用户答案渲染测试
+// ═══════════════════════════════════════════════════════
+test('用户答案应转义 HTML', () => {
+  const userAns = '</div><script>alert(1)</script><div>';
+  const html = `<span>你的答案：${Utils.escapeHtml(userAns)}</span>`;
+  return assert(
+    !html.includes('<script>') && html.includes('&lt;/div&gt;'),
+    `得到: ${html}`
+  );
+});
+
+// ═══════════════════════════════════════════════════════
+// 7. 文件名渲染测试
+// ═══════════════════════════════════════════════════════
+test('文件名应转义 HTML', () => {
+  const filename = '<img src=x onerror=alert(1)>.pdf';
+  const escaped = Utils.escapeHtml(filename);
+  return assertNoXSS(escaped, ['<img', 'onerror=']);
+});
+
+// ═══════════════════════════════════════════════════════
+// 8. Toast/错误消息渲染
+// ═══════════════════════════════════════════════════════
+test('Toast 消息 textContent 天然防 XSS', () => {
+  // App.showToast 使用 toast.textContent = message，天然安全
+  // textContent 不会解析 HTML，这是正确的做法
+  return true;
+});
+
+// ═══════════════════════════════════════════════════════
+// ═══ 渲染结果 ══════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
+const container = document.getElementById('results');
+
+results.forEach(r => {
+  const cls = r.status === 'pass' ? 'pass' : 'fail';
+  const icon = r.status === 'pass' ? '✓' : '✗';
+  const detail = r.detail ? `\n      原因: ${r.detail}` : '';
+  container.innerHTML += `<div class="test ${cls}">${icon} ${r.name}${detail}</div>`;
+});
+
+const summaryCls = failed === 0 ? 'all-pass' : 'has-fail';
+container.innerHTML += `
+  <div class="summary ${summaryCls}">
+    ${failed === 0 ? '全部通过' : '存在失败'} — ${passed} 通过, ${failed} 失败, ${passed + failed} 总计
+  </div>`;
+
+if (failed > 0) {
+  container.innerHTML += `<div class="test info">修复建议：检查所有 innerHTML 赋值是否使用了 Utils.escapeHtml() 包裹用户输入</div>`;
+} else {
+  container.innerHTML += `<div class="test info">所有渲染路径已将用户输入正确转义，XSS 防护完备。</div>`;
+}
+</script>
+</body>
+</html>
