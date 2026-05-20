@@ -54,8 +54,39 @@ const PracticeModes = {
     return Object.values(stats).sort((a, b) => b.total - a.total);
   },
 
+  /** 显示分类选择器 */
+  showCategoryPicker() {
+    const stats = this.getCategoryStats();
+    let h = '<div style="max-height:420px;overflow-y:auto;">';
+    stats.forEach(s => {
+      const pct = s.total > 0 ? Math.round(s.done / s.total * 100) : 0;
+      h += `
+        <div class="cat-list-item" onclick="PracticeModes.startCategoryPractice('${Utils.escapeHtml(s.label)}');Modal.close();">
+          <span class="cat-list-name">${Utils.escapeHtml(s.label)}</span>
+          <span style="font-size:11px;color:#999;">${s.done}/${s.total}题</span>
+          <div class="cat-list-bar"><div class="cat-list-fill" style="width:${pct}%"></div></div>
+          <span class="cat-list-stat">${s.accuracy}%</span>
+        </div>`;
+    });
+    h += '</div>';
+    h += `<div style="margin-top:12px;display:flex;gap:6px;flex-wrap:wrap;">
+      <span style="font-size:12px;color:#999;line-height:32px;">题型:</span>
+      <button class="btn-sm btn-outline" onclick="PracticeModes._filterCategoryPicker('all')" style="font-size:11px;">全部</button>
+      <button class="btn-sm btn-outline" onclick="PracticeModes._filterCategoryPicker('single')" style="font-size:11px;">单选</button>
+      <button class="btn-sm btn-outline" onclick="PracticeModes._filterCategoryPicker('multiple')" style="font-size:11px;">多选</button>
+      <button class="btn-sm btn-outline" onclick="PracticeModes._filterCategoryPicker('judge')" style="font-size:11px;">判断</button>
+    </div>`;
+    Modal.show({ title: '📚 专项练习 · 选择知识点', body: h, size: 'lg' });
+    this._catPickerTypeFilter = 'all';
+  },
+
+  _filterCategoryPicker(typeFilter) {
+    this._catPickerTypeFilter = typeFilter;
+  },
+
   /** 启动专项练习（按分类标签） */
   startCategoryPractice(category, typeFilter = 'all') {
+    const tf = typeFilter === 'all' ? (this._catPickerTypeFilter || 'all') : typeFilter;
     let pool = QuestionBank.getAll().filter(q => (q.category || '未分类') === category);
     if (typeFilter !== 'all') pool = pool.filter(q => q.type === typeFilter);
     if (pool.length === 0) {

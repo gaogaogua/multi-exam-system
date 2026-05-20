@@ -1190,9 +1190,13 @@ const Practice = {
       </div>`;
 
     StatsWidget.stop();
-    // 立即显示报告
+    // 显示报告（捕获变量避免 setTimeout 中 this 丢失）
+    const _questions = this.questions;
+    const _userAnswers = this.userAnswers;
+    const _mode = this.mode;
+    const _startTime = this._startTime;
     if (typeof PracticeReport !== 'undefined') {
-      setTimeout(() => PracticeReport.showPracticeReport(this.questions, this.userAnswers, this.mode, this._startTime), 400);
+      setTimeout(() => PracticeReport.showPracticeReport(_questions, _userAnswers, _mode, _startTime), 400);
     }
 
     // 闯关模式回调

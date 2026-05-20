@@ -66,11 +66,40 @@ const Modal = {
 
   /** 关闭 */
   close(id) {
+    // 无参数时关闭最近打开的 modal
+    if (!id) {
+      if (this._stack.length > 0) id = this._stack[this._stack.length - 1];
+      else return;
+    }
     const overlay = document.getElementById(`modal-overlay-${id}`);
     if (!overlay) return;
     if (overlay._onClose) { overlay._onClose(); delete overlay._onClose; }
     overlay.style.display = 'none';
     this._stack = this._stack.filter(s => s !== id);
+  },
+
+  // ── 便捷 API（兼容 practice-modes / practice-report 调用） ──
+
+  /**
+   * 简化版 show，自动生成 ID
+   * @param opts.title / opts.body / opts.size / opts.onReady
+   */
+  show(opts = {}) {
+    const id = opts.id || 'modal_' + Date.now().toString(36);
+    this.open({
+      id,
+      title: opts.title || '',
+      body: opts.body || '',
+      size: opts.size || '',
+      closable: opts.closable !== false,
+      backdrop: opts.backdrop !== false,
+      onClose: opts.onClose,
+    });
+    // onReady callback — 在下一帧执行（DOM 已挂载）
+    if (opts.onReady) {
+      requestAnimationFrame(() => opts.onReady());
+    }
+    return id;
   },
 
   /** 关闭全部 */

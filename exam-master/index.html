@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="Content-Security-Policy" content="
   default-src 'self';
-  script-src 'self' 'unsafe-inline' cdnjs.cloudflare.com;
+  script-src 'self' 'unsafe-inline' cdnjs.cloudflare.com cdn.jsdelivr.net;
   style-src 'self' 'unsafe-inline';
-  connect-src 'self' http://localhost:8765 https://api.deepseek.com https://gitee.com https://raw.githubusercontent.com;
+  connect-src 'self' http://localhost:8765 https://api.deepseek.com https://gitee.com https://raw.githubusercontent.com https://cdn.jsdelivr.net;
   img-src 'self' data: blob:;
   font-src 'self';
   frame-src 'none';
@@ -305,7 +305,7 @@
         <h3>智能推荐</h3>
         <p>根据错题和练习记录智能选题</p>
       </div>
-      <div class="card practice-card" onclick="Practice.start('category')" style="border-color:#13c2c2;">
+      <div class="card practice-card" onclick="PracticeModes.showCategoryPicker()" style="border-color:#13c2c2;">
         <div class="practice-icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#13c2c2" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="13" y2="11"/></svg></div>
         <h3>专项练习</h3>
         <p>按知识点/章节定向突破</p>
